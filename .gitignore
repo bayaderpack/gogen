@@ -1,8 +1,7 @@
 auth/
 db/
 handlers/
-json_schema/
+json_schemas/
 models/
 routes/
-templates/
 views/
