@@ -1,0 +1,71 @@
+{
+  "name": "sheet",
+  "columns": [
+    {
+      "name": "sheet_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "parent_id",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "weight",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "weight_unit",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "thickness",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "thickness_unit",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "price",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "1.0000"
+    },
+    {
+      "name": "media_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "status",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "sort_order",
+      "type": "int(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

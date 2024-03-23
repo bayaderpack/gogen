@@ -1,0 +1,17 @@
+{
+  "name": "sample_quotation",
+  "columns": [
+    {
+      "name": "sample_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quotation_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

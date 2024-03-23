@@ -1,0 +1,47 @@
+{
+  "name": "cart",
+  "columns": [
+    {
+      "name": "item_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "customer_id",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quantity",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "options",
+      "type": "mediumtext",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "item_type",
+      "type": "tinyint(4)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

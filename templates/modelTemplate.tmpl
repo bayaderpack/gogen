@@ -1,0 +1,71 @@
+package models
+
+import (
+	^needsTime^
+	"errors"
+	"gorm.io/gorm"
+)
+
+
+// ^tableName^ is struct that represent data in Database
+type ^CtableName^ struct {
+	gorm.Model
+	^columns^
+}
+
+// ^CtableName^ is interface that that model needs to implement
+type ^CtableName^Repository interface {
+	Create(^tableNameSingular^ *^CtableName^) error
+	GetSingle(id int) (*^CtableName^, error)
+	GetAll() ([]^CtableName^, error)
+	Update(^tableNameSingular^ *^CtableName^) error
+	Delete(id int) error
+}
+
+type ^tableNameSingular^Repository struct {
+	db *gorm.DB
+}
+
+
+// Create new instance
+func New^CtableName^Repository(db *gorm.DB) ^CtableName^Repository {
+	return &^tableNameSingular^Repository{db: db}
+}
+
+// Function to create data in database it take model parameter
+func (r *^tableNameSingular^Repository) Create(^tableNameSingular^ *^CtableName^) error {
+	return r.db.Create(^tableNameSingular^).Error
+}
+
+
+//Function to get single instance of ^tableNameSingular^ 
+func (r *^tableNameSingular^Repository) GetSingle(id int) (*^CtableName^, error) {
+	var ^tableNameSingular^ ^CtableName^
+	err := r.db.First(&^tableNameSingular^, id).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil // Record not found
+		}
+		return nil, err
+	}
+	return &^tableNameSingular^, nil
+}
+
+
+//Function to get all instances of ^tableName^ 
+func (r *^tableNameSingular^Repository) GetAll() ([]^CtableName^, error) {
+	var ^tableName^ []^CtableName^
+	err := r.db.Find(&^tableName^).Error
+	return ^tableName^, err
+}
+
+//Function to update existing instances of ^tableNameSingular^ 
+func (r *^tableNameSingular^Repository) Update(^tableNameSingular^ *^CtableName^) error {
+	return r.db.Save(^tableNameSingular^).Error
+}
+
+//Function to delete single instances of ^tableNameSingular^ 
+func (r *^tableNameSingular^Repository) Delete(id int) error {
+	result := r.db.Delete(&^CtableName^{}, id)
+	return result.Error
+}

@@ -1,0 +1,23 @@
+{
+  "name": "feature_description",
+  "columns": [
+    {
+      "name": "feature_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "language",
+      "type": "varchar(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "description",
+      "type": "text",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

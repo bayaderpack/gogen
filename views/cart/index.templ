@@ -1,0 +1,88 @@
+package cart
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ CartList(titlePage string,  carts []models.Cart) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/cart/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Item Id</th>
+<th class="text-center">Product Id</th>
+<th class="text-center">Customer Id</th>
+<th class="text-center">Quantity</th>
+<th class="text-center">Options</th>
+<th class="text-center">Item Type</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(carts) != 0 {
+				<tbody>
+					for _, cart := range carts {
+						<tr>
+							<th>{ strconv.Itoa(int(cart.ID)) }</th>
+                            cart
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/cart/edit/%d", cart.ID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/cart/delete/%d", cart.ID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the cart with ID #%d?", cart.ID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							cart is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ CartIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

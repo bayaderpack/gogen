@@ -1,0 +1,139 @@
+package quotation_invoice
+
+templ CreateQuotationInvoice() {
+	<h1 class="text-2xl font-bold text-center mb-8">
+		Enter Quotation Invoice
+	</h1>
+	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
+        <label class="flex flex-col justify-start gap-2">
+		Invoice Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="invoice_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Quotation Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="quotation_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Upfront Payment:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="upfront_payment"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Quantity Diff:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="quantity_diff"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Delivery Days:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="delivery_days"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Valid Days:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="valid_days"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Admin Comment:
+		<input
+			class="input input-bordered input-primary"
+			type="text"
+			name="admin_comment"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Customer Comment:
+		<textarea
+			class="textarea textarea-primary h-36 max-h-36"
+			customer_comment
+			name=""
+			maxlength="255"
+		></textarea>
+	</label><div class="form-control">
+	  <label class="label cursor-pointer">
+		<span class="label-text">Customer Visible</span> 
+		<input type="checkbox" name="customer_visible" class="checkbox" required />
+	  </label>
+	</div>
+		<div class="form-control">
+	  <label class="label cursor-pointer">
+		<span class="label-text">Customer Totals</span> 
+		<input type="checkbox" name="customer_totals" class="checkbox" required />
+	  </label>
+	</div>
+		<label class="flex flex-col justify-start gap-2">
+		Created By:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="created_by"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Modified By:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="modified_by"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label>
+			<footer class="card-actions flex gap-4 justify-end">
+				<button class="btn btn-primary hover:scale-[1.1]">
+					Save
+				</button>
+				<a href="/quotation_invoice/list" class="btn btn-error hover:scale-[1.1]">
+					Cancel
+				</a>
+			</footer>
+		</form>
+	</section>
+}

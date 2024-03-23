@@ -1,0 +1,20 @@
+package ^tableName^
+
+templ Create^CtableName^() {
+	<h1 class="text-2xl font-bold text-center mb-8">
+		Enter ^tableNameSpaces^
+	</h1>
+	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
+        ^formFields^
+			<footer class="card-actions flex gap-4 justify-end">
+				<button class="btn btn-primary hover:scale-[1.1]">
+					Save
+				</button>
+				<a href="/^tableName^/list" class="btn btn-error hover:scale-[1.1]">
+					Cancel
+				</a>
+			</footer>
+		</form>
+	</section>
+}

@@ -1,0 +1,29 @@
+{
+  "name": "statuses",
+  "columns": [
+    {
+      "name": "status_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "language",
+      "type": "varchar(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "text",
+      "type": "varchar(128)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "code",
+      "type": "varchar(32)",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+package job_order_product_delivery
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ JobOrderProductDeliveryList(titlePage string,  job_order_product_deliveries []models.JobOrderProductDelivery) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/job_order_product_delivery/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Job Order Product Id</th>
+<th class="text-center">Quantity</th>
+<th class="text-center">Boxes</th>
+<th class="text-center">Filling</th>
+<th class="text-center">Last Filling</th>
+<th class="text-center">Note</th>
+<th class="text-center">Delivery Date</th>
+<th class="text-center">Admin Id</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(job_order_product_deliveries) != 0 {
+				<tbody>
+					for _, job_order_product_delivery := range job_order_product_deliveries {
+						<tr>
+							<th>{ strconv.Itoa(int(job_order_product_delivery.ID)) }</th>
+                            job_order_product_delivery
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/job_order_product_delivery/edit/%d", job_order_product_delivery.ID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/job_order_product_delivery/delete/%d", job_order_product_delivery.ID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_product_delivery with ID #%d?", job_order_product_delivery.ID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							job_order_product_delivery is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ JobOrderProductDeliveryIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

@@ -1,0 +1,114 @@
+package quotation_products
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ QuotationProductsList(titlePage string,  quotation_products []models.QuotationProducts) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/quotation_products/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Quotation Product Id</th>
+<th class="text-center">Product Id</th>
+<th class="text-center">Quotation Id</th>
+<th class="text-center">Title</th>
+<th class="text-center">Length</th>
+<th class="text-center">Width</th>
+<th class="text-center">Height</th>
+<th class="text-center">Quantity</th>
+<th class="text-center">Die Value</th>
+<th class="text-center">Die Cost</th>
+<th class="text-center">Magnetic Value</th>
+<th class="text-center">Magnetic Cost</th>
+<th class="text-center">Filling</th>
+<th class="text-center">Miscellaneous</th>
+<th class="text-center">Miscellaneous Notice</th>
+<th class="text-center">Rope Value</th>
+<th class="text-center">Rope Cost</th>
+<th class="text-center">Designer Notice</th>
+<th class="text-center">Designer Files</th>
+<th class="text-center">Comment</th>
+<th class="text-center">Operational</th>
+<th class="text-center">Revenue</th>
+<th class="text-center">Discount</th>
+<th class="text-center">Discount Type</th>
+<th class="text-center">Revenue Type</th>
+<th class="text-center">Unit Price Commission</th>
+<th class="text-center">Commission Salesman</th>
+<th class="text-center">Unit Price</th>
+<th class="text-center">Gross</th>
+<th class="text-center">Net</th>
+<th class="text-center">Sort Order</th>
+<th class="text-center">Version</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(quotation_products) != 0 {
+				<tbody>
+					for _, quotation_products := range quotation_products {
+						<tr>
+							<th>{ strconv.Itoa(int(quotation_products.ID)) }</th>
+                            quotation_products
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/quotation_products/edit/%d", quotation_products.ID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/quotation_products/delete/%d", quotation_products.ID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation_products with ID #%d?", quotation_products.ID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							quotation_products is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ QuotationProductsIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

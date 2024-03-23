@@ -1,0 +1,52 @@
+package purchase_product_property
+
+import (
+	"strconv"
+
+	"bajscheme/models"
+)
+
+templ UpdatePurchaseProductProperty(purchase_product_property models.PurchaseProductProperty, tz string) {
+	<h1 class="text-2xl font-bold text-center mb-8">
+		Update Purchase Product Property #{ strconv.Itoa(int(purchase_product_property.ID)) }
+	</h1>
+	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
+        <label class="flex flex-col justify-start gap-2">
+		Purchase Product Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="purchase_product_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={strconv.Itoa(int(purchase_product_property.PurchaseProductID))}
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Material Property Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="material_property_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={strconv.Itoa(int(purchase_product_property.MaterialPropertyID))}
+		/>
+	</label>
+			<footer class="card-actions flex justify-between">
+				<div class="flex gap-4">
+					<button class="btn btn-primary p-4 hover:scale-[1.1]">
+						Update
+					</button>
+					<a href="/purchase_product_property/list" class="btn btn-neutral p-4 hover:scale-[1.1]">
+						Cancel
+					</a>
+				</div>
+			</footer>
+		</form>
+	</section>
+}

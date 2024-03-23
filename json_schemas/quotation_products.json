@@ -1,0 +1,197 @@
+{
+  "name": "quotation_products",
+  "columns": [
+    {
+      "name": "quotation_product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "quotation_id",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "title",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "length",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "width",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "height",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "quantity",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "die_value",
+      "type": "decimal(8,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "die_cost",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "magnetic_value",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "magnetic_cost",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "filling",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "miscellaneous",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "miscellaneous_notice",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "rope_value",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "rope_cost",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "designer_notice",
+      "type": "text",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "designer_files",
+      "type": "text",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "comment",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "operational",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "revenue",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "discount",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "discount_type",
+      "type": "enum('P','F')",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "revenue_type",
+      "type": "enum('P','F')",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "unit_price_commission",
+      "type": "int(11)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "commission_salesman",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "unit_price",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "gross",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "net",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "sort_order",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "version",
+      "type": "int(11)",
+      "nullable": "YES",
+      "default": "0"
+    }
+  ]
+}

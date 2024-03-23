@@ -1,0 +1,17 @@
+{
+  "name": "gallery_media",
+  "columns": [
+    {
+      "name": "gallery_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "media_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

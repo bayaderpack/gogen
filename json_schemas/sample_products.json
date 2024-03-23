@@ -1,0 +1,59 @@
+{
+  "name": "sample_products",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "sample_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quotation_product_id",
+      "type": "int(11) unsigned",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "edited_quotation_product_id",
+      "type": "int(11) unsigned",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "priority",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "design",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "die",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "quantity",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "note",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    }
+  ]
+}

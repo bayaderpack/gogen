@@ -1,0 +1,47 @@
+{
+  "name": "taxonomy_description",
+  "columns": [
+    {
+      "name": "taxonomy_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "language",
+      "type": "varchar(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "title",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "description",
+      "type": "mediumtext",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "meta_title",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "meta_description",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "meta_keywords",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    }
+  ]
+}

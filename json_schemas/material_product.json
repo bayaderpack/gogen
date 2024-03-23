@@ -1,0 +1,35 @@
+{
+  "name": "material_product",
+  "columns": [
+    {
+      "name": "material_product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "material_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "calculation_method",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "static_price",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

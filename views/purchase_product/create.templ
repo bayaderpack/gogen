@@ -1,0 +1,108 @@
+package purchase_product
+
+templ CreatePurchaseProduct() {
+	<h1 class="text-2xl font-bold text-center mb-8">
+		Enter Purchase Product
+	</h1>
+	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
+        <label class="flex flex-col justify-start gap-2">
+		Purchase Product Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="purchase_product_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Purchase Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="purchase_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Material Product Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="material_product_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Unit Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="unit_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Supplier Ref Number:
+		<input
+			class="input input-bordered input-primary"
+			type="text"
+			name="supplier_ref_number"
+			
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Comment:
+		<input
+			class="input input-bordered input-primary"
+			type="text"
+			name="comment"
+			
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Tax Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="tax_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Quantity:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="quantity"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+		/>
+	</label>
+			<footer class="card-actions flex gap-4 justify-end">
+				<button class="btn btn-primary hover:scale-[1.1]">
+					Save
+				</button>
+				<a href="/purchase_product/list" class="btn btn-error hover:scale-[1.1]">
+					Cancel
+				</a>
+			</footer>
+		</form>
+	</section>
+}

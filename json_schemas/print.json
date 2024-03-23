@@ -1,0 +1,47 @@
+{
+  "name": "print",
+  "columns": [
+    {
+      "name": "print_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "qmf",
+      "type": "decimal(6,2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "rmf",
+      "type": "decimal(6,2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "raf",
+      "type": "text",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "status",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "sort_order",
+      "type": "int(2)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

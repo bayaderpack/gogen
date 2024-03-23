@@ -1,0 +1,65 @@
+{
+  "name": "product_option_value",
+  "columns": [
+    {
+      "name": "product_option_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "option_value_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "media_id",
+      "type": "int(11)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "carousel_display",
+      "type": "tinyint(4)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "quantity",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "minimum",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "price_prefix",
+      "type": "varchar(1)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "price",
+      "type": "decimal(11,4)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "ocp",
+      "type": "text",
+      "nullable": "YES",
+      "default": "'{}'"
+    },
+    {
+      "name": "docp",
+      "type": "text",
+      "nullable": "YES",
+      "default": "'[]'"
+    }
+  ]
+}

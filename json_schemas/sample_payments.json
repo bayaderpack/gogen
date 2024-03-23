@@ -1,0 +1,47 @@
+{
+  "name": "sample_payments",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "sample_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "admin_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "amount",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "remaining",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "0.0000"
+    },
+    {
+      "name": "note",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

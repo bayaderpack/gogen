@@ -1,0 +1,86 @@
+package option_value_description
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ OptionValueDescriptionList(titlePage string,  option_value_descriptions []models.OptionValueDescription) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/option_value_description/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Option Value Id</th>
+<th class="text-center">Language</th>
+<th class="text-center">Title</th>
+<th class="text-center">Description</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(option_value_descriptions) != 0 {
+				<tbody>
+					for _, option_value_description := range option_value_descriptions {
+						<tr>
+							<th>{ strconv.Itoa(int(option_value_description.ID)) }</th>
+                            option_value_description
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/option_value_description/edit/%d", option_value_description.ID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/option_value_description/delete/%d", option_value_description.ID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the option_value_description with ID #%d?", option_value_description.ID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							option_value_description is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ OptionValueDescriptionIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

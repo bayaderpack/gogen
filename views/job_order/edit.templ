@@ -1,0 +1,108 @@
+package job_order
+
+import (
+	"strconv"
+
+	"bajscheme/models"
+)
+
+templ UpdateJobOrder(job_order models.JobOrder, tz string) {
+	<h1 class="text-2xl font-bold text-center mb-8">
+		Update Job Order #{ strconv.Itoa(int(job_order.ID)) }
+	</h1>
+	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
+        <label class="flex flex-col justify-start gap-2">
+		Job Order Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="job_order_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={strconv.Itoa(int(job_order.JobOrderID))}
+		/>
+	</label><div class="form-control">
+	  <label class="label cursor-pointer">
+		<span class="label-text">Type</span> 
+		<input type="checkbox" name="type" class="checkbox" value={strconv.FormatBool(job_order.Type)} required />
+	  </label>
+	</div>
+		<label class="flex flex-col justify-start gap-2">
+		Deadline:
+		<input class="input" name="deadline" type="datetime-local" required value={job_order.Deadline.String()} />
+	</label><label class="flex flex-col justify-start gap-2">
+		Authorization Letter:
+		<textarea
+			class="textarea textarea-primary h-36 max-h-36"
+			authorization_letter
+			name=""
+			maxlength="255"
+		>{job_order.AuthorizationLetter}</textarea>
+	</label><label class="flex flex-col justify-start gap-2">
+		Agency Letter:
+		<textarea
+			class="textarea textarea-primary h-36 max-h-36"
+			agency_letter
+			name=""
+			maxlength="255"
+		>{job_order.AgencyLetter}</textarea>
+	</label><label class="flex flex-col justify-start gap-2">
+		Uuid:
+		<input
+			class="input input-bordered input-primary"
+			type="text"
+			name="uuid"
+			
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={job_order.Uuid}
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Signature:
+		<textarea
+			class="textarea textarea-primary h-36 max-h-36"
+			signature
+			name=""
+			maxlength="255"
+		>{job_order.Signature}</textarea>
+	</label><label class="flex flex-col justify-start gap-2">
+		Stamp:
+		<textarea
+			class="textarea textarea-primary h-36 max-h-36"
+			stamp
+			name=""
+			maxlength="255"
+		>{job_order.Stamp}</textarea>
+	</label><label class="flex flex-col justify-start gap-2">
+		Signed Date:
+		<input class="input" name="signed_date" type="datetime-local"  value={job_order.SignedDate.String()} />
+	</label><label class="flex flex-col justify-start gap-2">
+		Printed By:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="printed_by"
+			
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={strconv.Itoa(int(job_order.PrintedBy))}
+		/>
+	</label>
+			<footer class="card-actions flex justify-between">
+				<div class="flex gap-4">
+					<button class="btn btn-primary p-4 hover:scale-[1.1]">
+						Update
+					</button>
+					<a href="/job_order/list" class="btn btn-neutral p-4 hover:scale-[1.1]">
+						Cancel
+					</a>
+				</div>
+			</footer>
+		</form>
+	</section>
+}

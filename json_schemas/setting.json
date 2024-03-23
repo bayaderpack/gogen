@@ -1,0 +1,35 @@
+{
+  "name": "setting",
+  "columns": [
+    {
+      "name": "setting_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "code",
+      "type": "varchar(128)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "key_id",
+      "type": "varchar(128)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "value",
+      "type": "text",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "media_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    }
+  ]
+}

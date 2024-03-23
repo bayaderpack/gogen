@@ -1,0 +1,17 @@
+{
+  "name": "admin_role",
+  "columns": [
+    {
+      "name": "admin_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "role",
+      "type": "varchar(50)",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

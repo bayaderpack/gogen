@@ -1,0 +1,41 @@
+{
+  "name": "language",
+  "columns": [
+    {
+      "name": "language_id",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "language",
+      "type": "varchar(32)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "code",
+      "type": "varchar(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "text",
+      "type": "mediumtext",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "is_primary",
+      "type": "int(1) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "status",
+      "type": "int(1) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}
