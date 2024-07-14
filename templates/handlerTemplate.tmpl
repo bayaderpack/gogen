@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"errors"
 
 	"bajscheme/models"
 	"bajscheme/db"
@@ -12,6 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
+	"gorm.io/gorm"
 )
 
 
@@ -86,102 +88,100 @@ func update^CtableName^Handler(c *gin.Context) error {
 	if err != nil {
 		return err
 	}
+	new^CtableName^ := models.New^CtableName^Repository(db.DB)
+	
+	^tableName^Model , err := new^CtableName^.GetSingle(idParams)
 
-	t := services.Todo{
-		ID:        idParams,
-		CreatedBy: c.Get(user_id_key).(int),
-	}
-
-	todo, err := th.TodoServices.GetTodoById(t)
 	if err != nil {
-		if strings.Contains(err.Error(), "no rows in result set") {
-
-			return echo.NewHTTPError(
-				echo.ErrNotFound.Code,
-				fmt.Sprintf(
-					"something went wrong: %s",
-					err,
-				))
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.AbortWithError(http.StatusNotFound, fmt.Errorf(
+				"something went wrong: %s",
+				err,
+			))
 		}
-
-		return echo.NewHTTPError(
-			echo.ErrInternalServerError.Code,
-			fmt.Sprintf(
+		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
 				"something went wrong: %s",
 				err,
 			))
 	}
+		//^tableName^Model := models.^CtableName^{}
+	c.Bind(^tableName^Model)
+	//err := ctx.ShouldBindJSON(&createTagRequest)
+	//helper.ErrorPanic(err)
 
-	if c.Request().Method == "POST" {
-		var status bool
-		if c.FormValue("status") == "on" {
-			status = true
-		} else {
-			status = false
+	//new^CtableName^ := models.New^CtableName^Repository(db.DB)
+	err = new^CtableName^.Update(^tableName^Model)
+
+	if err != nil {
+		if strings.Contains(err.Error(), "no rows in result set") {
+
+			c.AbortWithError(http.StatusNotFound, fmt.Errorf(
+				"something went wrong: %s",
+				err,
+			))
+			
+
 		}
 
-		todo := services.Todo{
-			Title:       strings.Trim(c.FormValue("title"), " "),
-			Description: strings.Trim(c.FormValue("description"), " "),
-			Status:      status,
-			CreatedBy:   c.Get(user_id_key).(int),
-			ID:          idParams,
-		}
+		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
+			"something went wrong: %s",
+			err,
+		))
 
-		_, err := th.TodoServices.UpdateTodo(todo)
-		if err != nil {
-			return err
-		}
-
-		setFlashmessages(c, "success", "Task successfully updated!!")
-
-		return c.Redirect(http.StatusSeeOther, "/todo/list")
 	}
 
-	return renderView(c, todo_views.TodoIndex(
-		fmt.Sprintf("| Edit Todo #%d", todo.ID),
-		c.Get(username_key).(string),
+
+		setFlashmessages(c, "success", "^CtableName^ successfully updated!!")
+
+	//	return c.Redirect(http.StatusSeeOther, "/^tableName^/list")
+	//}
+
+username, _ := c.Get(username_key)
+tz, _ := c.Get(tzone_key)
+		return renderView(c, ^tableName^.^CtableName^Index(
+		fmt.Sprintf("| Edit ^CtableName^ #%d", ^tableName^Model),
+		username.(string),
 		fromProtected,
 		isError,
 		getFlashmessages(c, "error"),
 		getFlashmessages(c, "success"), // ↓ getting time zone from context ↓
-		todo_views.UpdateTodo(todo, c.Get(tzone_key).(string)),
+		^tableName^.Update^CtableName^(*^tableName^Model, tz.(string)),
 	))
+
 }
 
-func deleteTodoHandler(c echo.Context) error {
+func delete^CtableName^Handler(c *gin.Context) {
 	idParams, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		fmt.Println(err)
-		return err
 	}
 
-	t := services.Todo{
-		CreatedBy: c.Get(user_id_key).(int),
-		ID:        idParams,
-	}
+	//t := models.^CtableName^{
+	//	CreatedBy: c.Get(user_id_key).(int),
+	//	ID:        idParams,
+	//}
 
-	err = th.TodoServices.DeleteTodo(t)
+	new^CtableName^ := models.New^CtableName^Repository(db.DB)
+	err = new^CtableName^.Delete(idParams)
 	if err != nil {
 		if strings.Contains(err.Error(), "an affected row was expected") {
 
-			return echo.NewHTTPError(
-				echo.ErrNotFound.Code,
-				fmt.Sprintf(
-					"something went wrong: %s",
-					err,
-				))
-		}
-
-		return echo.NewHTTPError(
-			echo.ErrInternalServerError.Code,
-			fmt.Sprintf(
+			c.AbortWithError(http.StatusNotFound, fmt.Errorf(
 				"something went wrong: %s",
 				err,
 			))
+			
+
+		}
+
+		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
+			"something went wrong: %s",
+			err,
+		))
+
 	}
 
-	setFlashmessages(c, "success", "Task successfully deleted!!")
+	setFlashmessages(c, "success", "^CtableName^ successfully deleted!!")
 
-	return c.Redirect(http.StatusSeeOther, "/todo/list")
+	c.Redirect(http.StatusSeeOther, "/^tableName^/list")
 }

@@ -3,7 +3,7 @@ module bajscheme
 go 1.21.4
 
 require (
-	github.com/a-h/templ v0.2.598
+	github.com/a-h/templ v0.2.747
 	github.com/anfen93/goPasetoV4 v1.0.3
 	github.com/emarifer/go-echo-templ-htmx v0.0.0-20231229190456-8442f8ba22a8
 	github.com/gertd/go-pluralize v0.2.1
@@ -43,9 +43,9 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.21.0 // indirect
-	golang.org/x/net v0.21.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/crypto v0.22.0 // indirect
+	golang.org/x/net v0.24.0 // indirect
+	golang.org/x/sys v0.21.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
