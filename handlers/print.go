@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/print"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createPrintHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	printModel := models.Print{}
-	c.Bind(&printModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		printModel := models.Print{}
+		c.Bind(&printModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newPrint := models.NewPrintRepository(db.DB)
-	newPrint.Create(&printModel)
+		newPrint := models.NewPrintRepository(db.DB)
+		newPrint.Create(&printModel)
 
-setFlashmessages(c, "success", "Print created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Print created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func printListHandler(c *gin.Context) error {
 	allPrint, err := newPrint.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Print List",
@@ -89,8 +88,8 @@ func updatePrintHandler(c *gin.Context) error {
 		return err
 	}
 	newPrint := models.NewPrintRepository(db.DB)
-	
-	printModel , err := newPrint.GetSingle(idParams)
+
+	printModel, err := newPrint.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updatePrintHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//printModel := models.Print{}
+	//printModel := models.Print{}
 	c.Bind(printModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updatePrintHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updatePrintHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Print successfully updated!!")
+	setFlashmessages(c, "success", "Print successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/print/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, print.PrintIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, print.PrintIndex(
 		fmt.Sprintf("| Edit Print #%d", printModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deletePrintHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

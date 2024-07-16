@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/orders"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createOrdersHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	ordersModel := models.Orders{}
-	c.Bind(&ordersModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		ordersModel := models.Orders{}
+		c.Bind(&ordersModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newOrders := models.NewOrdersRepository(db.DB)
-	newOrders.Create(&ordersModel)
+		newOrders := models.NewOrdersRepository(db.DB)
+		newOrders.Create(&ordersModel)
 
-setFlashmessages(c, "success", "Orders created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Orders created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func ordersListHandler(c *gin.Context) error {
 	allOrders, err := newOrders.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Orders List",
@@ -89,8 +88,8 @@ func updateOrdersHandler(c *gin.Context) error {
 		return err
 	}
 	newOrders := models.NewOrdersRepository(db.DB)
-	
-	ordersModel , err := newOrders.GetSingle(idParams)
+
+	ordersModel, err := newOrders.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateOrdersHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//ordersModel := models.Orders{}
+	//ordersModel := models.Orders{}
 	c.Bind(ordersModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateOrdersHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateOrdersHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Orders successfully updated!!")
+	setFlashmessages(c, "success", "Orders successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/orders/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, orders.OrdersIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, orders.OrdersIndex(
 		fmt.Sprintf("| Edit Orders #%d", ordersModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteOrdersHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

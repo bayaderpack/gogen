@@ -1,14 +1,13 @@
 package customer_point
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ CustomerPointList(titlePage string,  customer_points []models.CustomerPoint) {
+templ CustomerPointList(titlePage string, customer_points []models.CustomerPoint) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,9 +23,8 @@ templ CustomerPointList(titlePage string,  customer_points []models.CustomerPoin
 				<tr>
 					<th></th>
 					<th class="text-center">Customer Id</th>
-<th class="text-center">Order Id</th>
-<th class="text-center">Points</th>
-
+					<th class="text-center">Order Id</th>
+					<th class="text-center">Points</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -34,22 +32,23 @@ templ CustomerPointList(titlePage string,  customer_points []models.CustomerPoin
 				<tbody>
 					for _, customer_point := range customer_points {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",customer_point.CustomerID)} </td>\n<td>{fmt.Sprintf("%s",customer_point.OrderID)} </td>\n<td>{fmt.Sprintf("%s",customer_point.Points)} </td>\n
+							<td>{ fmt.Sprintf("%s",customer_point.CustomerID) } </td>\n
+							<td>{ fmt.Sprintf("%s",customer_point.OrderID) } </td>\n
+							<td>{ fmt.Sprintf("%s",customer_point.Points) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/customer_point/edit/%d", customer_point.CustomerID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/customer_point/edit/%d", customer_point.CustomerID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/customer_point/delete/%d", customer_point.CustomerID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the customer_point with ID #%d?", customer_point.CustomerID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/customer_point/delete/%d", customer_point.CustomerID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the customer_point with ID #%d?", customer_point.CustomerID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -71,13 +70,13 @@ templ CustomerPointList(titlePage string,  customer_points []models.CustomerPoin
 }
 
 templ CustomerPointIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

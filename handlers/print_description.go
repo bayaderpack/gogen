@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/print_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createPrintDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	print_descriptionModel := models.PrintDescription{}
-	c.Bind(&print_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		print_descriptionModel := models.PrintDescription{}
+		c.Bind(&print_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newPrintDescription := models.NewPrintDescriptionRepository(db.DB)
-	newPrintDescription.Create(&print_descriptionModel)
+		newPrintDescription := models.NewPrintDescriptionRepository(db.DB)
+		newPrintDescription.Create(&print_descriptionModel)
 
-setFlashmessages(c, "success", "PrintDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "PrintDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func print_descriptionListHandler(c *gin.Context) error {
 	allPrintDescription, err := newPrintDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's PrintDescription List",
@@ -89,8 +88,8 @@ func updatePrintDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newPrintDescription := models.NewPrintDescriptionRepository(db.DB)
-	
-	print_descriptionModel , err := newPrintDescription.GetSingle(idParams)
+
+	print_descriptionModel, err := newPrintDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updatePrintDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//print_descriptionModel := models.PrintDescription{}
+	//print_descriptionModel := models.PrintDescription{}
 	c.Bind(print_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updatePrintDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updatePrintDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "PrintDescription successfully updated!!")
+	setFlashmessages(c, "success", "PrintDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/print_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, print_description.PrintDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, print_description.PrintDescriptionIndex(
 		fmt.Sprintf("| Edit PrintDescription #%d", print_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deletePrintDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

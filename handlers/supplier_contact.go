@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/supplier_contact"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSupplierContactHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	supplier_contactModel := models.SupplierContact{}
-	c.Bind(&supplier_contactModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		supplier_contactModel := models.SupplierContact{}
+		c.Bind(&supplier_contactModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSupplierContact := models.NewSupplierContactRepository(db.DB)
-	newSupplierContact.Create(&supplier_contactModel)
+		newSupplierContact := models.NewSupplierContactRepository(db.DB)
+		newSupplierContact.Create(&supplier_contactModel)
 
-setFlashmessages(c, "success", "SupplierContact created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "SupplierContact created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func supplier_contactListHandler(c *gin.Context) error {
 	allSupplierContact, err := newSupplierContact.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's SupplierContact List",
@@ -89,8 +88,8 @@ func updateSupplierContactHandler(c *gin.Context) error {
 		return err
 	}
 	newSupplierContact := models.NewSupplierContactRepository(db.DB)
-	
-	supplier_contactModel , err := newSupplierContact.GetSingle(idParams)
+
+	supplier_contactModel, err := newSupplierContact.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSupplierContactHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//supplier_contactModel := models.SupplierContact{}
+	//supplier_contactModel := models.SupplierContact{}
 	c.Bind(supplier_contactModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSupplierContactHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSupplierContactHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "SupplierContact successfully updated!!")
+	setFlashmessages(c, "success", "SupplierContact successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/supplier_contact/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, supplier_contact.SupplierContactIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, supplier_contact.SupplierContactIndex(
 		fmt.Sprintf("| Edit SupplierContact #%d", supplier_contactModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSupplierContactHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

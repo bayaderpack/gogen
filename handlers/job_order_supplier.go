@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/job_order_supplier"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createJobOrderSupplierHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	job_order_supplierModel := models.JobOrderSupplier{}
-	c.Bind(&job_order_supplierModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		job_order_supplierModel := models.JobOrderSupplier{}
+		c.Bind(&job_order_supplierModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newJobOrderSupplier := models.NewJobOrderSupplierRepository(db.DB)
-	newJobOrderSupplier.Create(&job_order_supplierModel)
+		newJobOrderSupplier := models.NewJobOrderSupplierRepository(db.DB)
+		newJobOrderSupplier.Create(&job_order_supplierModel)
 
-setFlashmessages(c, "success", "JobOrderSupplier created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "JobOrderSupplier created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func job_order_supplierListHandler(c *gin.Context) error {
 	allJobOrderSupplier, err := newJobOrderSupplier.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's JobOrderSupplier List",
@@ -89,8 +88,8 @@ func updateJobOrderSupplierHandler(c *gin.Context) error {
 		return err
 	}
 	newJobOrderSupplier := models.NewJobOrderSupplierRepository(db.DB)
-	
-	job_order_supplierModel , err := newJobOrderSupplier.GetSingle(idParams)
+
+	job_order_supplierModel, err := newJobOrderSupplier.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateJobOrderSupplierHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//job_order_supplierModel := models.JobOrderSupplier{}
+	//job_order_supplierModel := models.JobOrderSupplier{}
 	c.Bind(job_order_supplierModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateJobOrderSupplierHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateJobOrderSupplierHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "JobOrderSupplier successfully updated!!")
+	setFlashmessages(c, "success", "JobOrderSupplier successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/job_order_supplier/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, job_order_supplier.JobOrderSupplierIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, job_order_supplier.JobOrderSupplierIndex(
 		fmt.Sprintf("| Edit JobOrderSupplier #%d", job_order_supplierModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteJobOrderSupplierHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

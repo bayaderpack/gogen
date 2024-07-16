@@ -1,14 +1,13 @@
 package quotation
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ QuotationList(titlePage string,  quotations []models.Quotation) {
+templ QuotationList(titlePage string, quotations []models.Quotation) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,10 +23,9 @@ templ QuotationList(titlePage string,  quotations []models.Quotation) {
 				<tr>
 					<th></th>
 					<th class="text-center">Quotation Id</th>
-<th class="text-center">Customer Id</th>
-<th class="text-center">Number</th>
-<th class="text-center">Viewed</th>
-
+					<th class="text-center">Customer Id</th>
+					<th class="text-center">Number</th>
+					<th class="text-center">Viewed</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -35,22 +33,24 @@ templ QuotationList(titlePage string,  quotations []models.Quotation) {
 				<tbody>
 					for _, quotation := range quotations {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",quotation.QuotationID)} </td>\n<td>{fmt.Sprintf("%s",quotation.CustomerID)} </td>\n<td>{fmt.Sprintf("%s",quotation.Number)} </td>\n<td>{fmt.Sprintf("%s",quotation.Viewed)} </td>\n
+							<td>{ fmt.Sprintf("%s",quotation.QuotationID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation.CustomerID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation.Number) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation.Viewed) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/quotation/edit/%d", quotation.QuotationID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/quotation/edit/%d", quotation.QuotationID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/quotation/delete/%d", quotation.QuotationID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation with ID #%d?", quotation.QuotationID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/quotation/delete/%d", quotation.QuotationID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation with ID #%d?", quotation.QuotationID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -72,13 +72,13 @@ templ QuotationList(titlePage string,  quotations []models.Quotation) {
 }
 
 templ QuotationIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/event_history"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createEventHistoryHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	event_historyModel := models.EventHistory{}
-	c.Bind(&event_historyModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		event_historyModel := models.EventHistory{}
+		c.Bind(&event_historyModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newEventHistory := models.NewEventHistoryRepository(db.DB)
-	newEventHistory.Create(&event_historyModel)
+		newEventHistory := models.NewEventHistoryRepository(db.DB)
+		newEventHistory.Create(&event_historyModel)
 
-setFlashmessages(c, "success", "EventHistory created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "EventHistory created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func event_historyListHandler(c *gin.Context) error {
 	allEventHistory, err := newEventHistory.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's EventHistory List",
@@ -89,8 +88,8 @@ func updateEventHistoryHandler(c *gin.Context) error {
 		return err
 	}
 	newEventHistory := models.NewEventHistoryRepository(db.DB)
-	
-	event_historyModel , err := newEventHistory.GetSingle(idParams)
+
+	event_historyModel, err := newEventHistory.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateEventHistoryHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//event_historyModel := models.EventHistory{}
+	//event_historyModel := models.EventHistory{}
 	c.Bind(event_historyModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateEventHistoryHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateEventHistoryHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "EventHistory successfully updated!!")
+	setFlashmessages(c, "success", "EventHistory successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/event_history/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, event_history.EventHistoryIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, event_history.EventHistoryIndex(
 		fmt.Sprintf("| Edit EventHistory #%d", event_historyModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteEventHistoryHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

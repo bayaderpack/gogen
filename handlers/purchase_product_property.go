@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/purchase_product_property"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createPurchaseProductPropertyHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	purchase_product_propertyModel := models.PurchaseProductProperty{}
-	c.Bind(&purchase_product_propertyModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		purchase_product_propertyModel := models.PurchaseProductProperty{}
+		c.Bind(&purchase_product_propertyModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newPurchaseProductProperty := models.NewPurchaseProductPropertyRepository(db.DB)
-	newPurchaseProductProperty.Create(&purchase_product_propertyModel)
+		newPurchaseProductProperty := models.NewPurchaseProductPropertyRepository(db.DB)
+		newPurchaseProductProperty.Create(&purchase_product_propertyModel)
 
-setFlashmessages(c, "success", "PurchaseProductProperty created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "PurchaseProductProperty created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func purchase_product_propertyListHandler(c *gin.Context) error {
 	allPurchaseProductProperty, err := newPurchaseProductProperty.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's PurchaseProductProperty List",
@@ -89,8 +88,8 @@ func updatePurchaseProductPropertyHandler(c *gin.Context) error {
 		return err
 	}
 	newPurchaseProductProperty := models.NewPurchaseProductPropertyRepository(db.DB)
-	
-	purchase_product_propertyModel , err := newPurchaseProductProperty.GetSingle(idParams)
+
+	purchase_product_propertyModel, err := newPurchaseProductProperty.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updatePurchaseProductPropertyHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//purchase_product_propertyModel := models.PurchaseProductProperty{}
+	//purchase_product_propertyModel := models.PurchaseProductProperty{}
 	c.Bind(purchase_product_propertyModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updatePurchaseProductPropertyHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updatePurchaseProductPropertyHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "PurchaseProductProperty successfully updated!!")
+	setFlashmessages(c, "success", "PurchaseProductProperty successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/purchase_product_property/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, purchase_product_property.PurchaseProductPropertyIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, purchase_product_property.PurchaseProductPropertyIndex(
 		fmt.Sprintf("| Edit PurchaseProductProperty #%d", purchase_product_propertyModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deletePurchaseProductPropertyHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

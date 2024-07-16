@@ -1,14 +1,13 @@
 package sheet
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ SheetList(titlePage string,  sheets []models.Sheet) {
+templ SheetList(titlePage string, sheets []models.Sheet) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,16 +23,15 @@ templ SheetList(titlePage string,  sheets []models.Sheet) {
 				<tr>
 					<th></th>
 					<th class="text-center">Sheet Id</th>
-<th class="text-center">Parent Id</th>
-<th class="text-center">Weight</th>
-<th class="text-center">Weight Unit</th>
-<th class="text-center">Thickness</th>
-<th class="text-center">Thickness Unit</th>
-<th class="text-center">Price</th>
-<th class="text-center">Media Id</th>
-<th class="text-center">Status</th>
-<th class="text-center">Sort Order</th>
-
+					<th class="text-center">Parent Id</th>
+					<th class="text-center">Weight</th>
+					<th class="text-center">Weight Unit</th>
+					<th class="text-center">Thickness</th>
+					<th class="text-center">Thickness Unit</th>
+					<th class="text-center">Price</th>
+					<th class="text-center">Media Id</th>
+					<th class="text-center">Status</th>
+					<th class="text-center">Sort Order</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -41,22 +39,30 @@ templ SheetList(titlePage string,  sheets []models.Sheet) {
 				<tbody>
 					for _, sheet := range sheets {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",sheet.SheetID)} </td>\n<td>{fmt.Sprintf("%s",sheet.ParentID)} </td>\n<td>{fmt.Sprintf("%s",sheet.Weight)} </td>\n<td>{fmt.Sprintf("%s",sheet.WeightUnit)} </td>\n<td>{fmt.Sprintf("%s",sheet.Thickness)} </td>\n<td>{fmt.Sprintf("%s",sheet.ThicknessUnit)} </td>\n<td>{fmt.Sprintf("%s",sheet.Price)} </td>\n<td>{fmt.Sprintf("%s",sheet.MediaID)} </td>\n<td>{fmt.Sprintf("%s",sheet.Status)} </td>\n<td>{fmt.Sprintf("%s",sheet.SortOrder)} </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.SheetID) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.ParentID) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.Weight) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.WeightUnit) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.Thickness) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.ThicknessUnit) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.Price) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.MediaID) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.Status) } </td>\n
+							<td>{ fmt.Sprintf("%s",sheet.SortOrder) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/sheet/edit/%d", sheet.SheetID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/sheet/edit/%d", sheet.SheetID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/sheet/delete/%d", sheet.SheetID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the sheet with ID #%d?", sheet.SheetID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/sheet/delete/%d", sheet.SheetID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the sheet with ID #%d?", sheet.SheetID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -78,13 +84,13 @@ templ SheetList(titlePage string,  sheets []models.Sheet) {
 }
 
 templ SheetIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

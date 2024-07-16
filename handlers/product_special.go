@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/product_special"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createProductSpecialHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	product_specialModel := models.ProductSpecial{}
-	c.Bind(&product_specialModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		product_specialModel := models.ProductSpecial{}
+		c.Bind(&product_specialModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newProductSpecial := models.NewProductSpecialRepository(db.DB)
-	newProductSpecial.Create(&product_specialModel)
+		newProductSpecial := models.NewProductSpecialRepository(db.DB)
+		newProductSpecial.Create(&product_specialModel)
 
-setFlashmessages(c, "success", "ProductSpecial created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "ProductSpecial created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func product_specialListHandler(c *gin.Context) error {
 	allProductSpecial, err := newProductSpecial.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's ProductSpecial List",
@@ -89,8 +88,8 @@ func updateProductSpecialHandler(c *gin.Context) error {
 		return err
 	}
 	newProductSpecial := models.NewProductSpecialRepository(db.DB)
-	
-	product_specialModel , err := newProductSpecial.GetSingle(idParams)
+
+	product_specialModel, err := newProductSpecial.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateProductSpecialHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//product_specialModel := models.ProductSpecial{}
+	//product_specialModel := models.ProductSpecial{}
 	c.Bind(product_specialModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateProductSpecialHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateProductSpecialHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "ProductSpecial successfully updated!!")
+	setFlashmessages(c, "success", "ProductSpecial successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/product_special/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, product_special.ProductSpecialIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, product_special.ProductSpecialIndex(
 		fmt.Sprintf("| Edit ProductSpecial #%d", product_specialModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteProductSpecialHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

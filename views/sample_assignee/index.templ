@@ -1,14 +1,13 @@
 package sample_assignee
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ SampleAssigneeList(titlePage string,  sample_assignees []models.SampleAssignee) {
+templ SampleAssigneeList(titlePage string, sample_assignees []models.SampleAssignee) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,8 +23,7 @@ templ SampleAssigneeList(titlePage string,  sample_assignees []models.SampleAssi
 				<tr>
 					<th></th>
 					<th class="text-center">Sample Id</th>
-<th class="text-center">Admin Id</th>
-
+					<th class="text-center">Admin Id</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -33,22 +31,22 @@ templ SampleAssigneeList(titlePage string,  sample_assignees []models.SampleAssi
 				<tbody>
 					for _, sample_assignee := range sample_assignees {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",sample_assignee.SampleID)} </td>\n<td>{fmt.Sprintf("%s",sample_assignee.AdminID)} </td>\n
+							<td>{ fmt.Sprintf("%s",sample_assignee.SampleID) } </td>\n
+							<td>{ fmt.Sprintf("%s",sample_assignee.AdminID) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/sample_assignee/edit/%d", sample_assignee.SampleID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/sample_assignee/edit/%d", sample_assignee.SampleID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/sample_assignee/delete/%d", sample_assignee.SampleID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the sample_assignee with ID #%d?", sample_assignee.SampleID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/sample_assignee/delete/%d", sample_assignee.SampleID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the sample_assignee with ID #%d?", sample_assignee.SampleID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -70,13 +68,13 @@ templ SampleAssigneeList(titlePage string,  sample_assignees []models.SampleAssi
 }
 
 templ SampleAssigneeIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

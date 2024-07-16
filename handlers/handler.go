@@ -8,8 +8,10 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
-	var isError = false
-	var fromProtected bool = false
+
+var isError = false
+var fromProtected bool = false
+
 const (
 	auth_sessions_key string = "authenticate-sessions"
 	auth_key          string = "authenticated"
@@ -31,7 +33,7 @@ func getCookieStore() cookie.Store {
 
 // Set adds a new message to the cookie store
 func setFlashmessages(c *gin.Context, kind, value string) {
-	
+
 	session, _ := getCookieStore().Get(c.Request, session_name)
 
 	session.AddFlash(value, kind)

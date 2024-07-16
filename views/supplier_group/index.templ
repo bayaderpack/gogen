@@ -1,14 +1,13 @@
 package supplier_group
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ SupplierGroupList(titlePage string,  supplier_groups []models.SupplierGroup) {
+templ SupplierGroupList(titlePage string, supplier_groups []models.SupplierGroup) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,8 +23,7 @@ templ SupplierGroupList(titlePage string,  supplier_groups []models.SupplierGrou
 				<tr>
 					<th></th>
 					<th class="text-center">Group Id</th>
-<th class="text-center">Status</th>
-
+					<th class="text-center">Status</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -33,22 +31,22 @@ templ SupplierGroupList(titlePage string,  supplier_groups []models.SupplierGrou
 				<tbody>
 					for _, supplier_group := range supplier_groups {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",supplier_group.GroupID)} </td>\n<td>{fmt.Sprintf("%s",supplier_group.Status)} </td>\n
+							<td>{ fmt.Sprintf("%s",supplier_group.GroupID) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier_group.Status) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/supplier_group/edit/%d", supplier_group.GroupID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/supplier_group/edit/%d", supplier_group.GroupID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/supplier_group/delete/%d", supplier_group.GroupID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the supplier_group with ID #%d?", supplier_group.GroupID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/supplier_group/delete/%d", supplier_group.GroupID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the supplier_group with ID #%d?", supplier_group.GroupID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -70,13 +68,13 @@ templ SupplierGroupList(titlePage string,  supplier_groups []models.SupplierGrou
 }
 
 templ SupplierGroupIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

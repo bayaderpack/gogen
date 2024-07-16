@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/quotation_invoice"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createQuotationInvoiceHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	quotation_invoiceModel := models.QuotationInvoice{}
-	c.Bind(&quotation_invoiceModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		quotation_invoiceModel := models.QuotationInvoice{}
+		c.Bind(&quotation_invoiceModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newQuotationInvoice := models.NewQuotationInvoiceRepository(db.DB)
-	newQuotationInvoice.Create(&quotation_invoiceModel)
+		newQuotationInvoice := models.NewQuotationInvoiceRepository(db.DB)
+		newQuotationInvoice.Create(&quotation_invoiceModel)
 
-setFlashmessages(c, "success", "QuotationInvoice created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "QuotationInvoice created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func quotation_invoiceListHandler(c *gin.Context) error {
 	allQuotationInvoice, err := newQuotationInvoice.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's QuotationInvoice List",
@@ -89,8 +88,8 @@ func updateQuotationInvoiceHandler(c *gin.Context) error {
 		return err
 	}
 	newQuotationInvoice := models.NewQuotationInvoiceRepository(db.DB)
-	
-	quotation_invoiceModel , err := newQuotationInvoice.GetSingle(idParams)
+
+	quotation_invoiceModel, err := newQuotationInvoice.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateQuotationInvoiceHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//quotation_invoiceModel := models.QuotationInvoice{}
+	//quotation_invoiceModel := models.QuotationInvoice{}
 	c.Bind(quotation_invoiceModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateQuotationInvoiceHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateQuotationInvoiceHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "QuotationInvoice successfully updated!!")
+	setFlashmessages(c, "success", "QuotationInvoice successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/quotation_invoice/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, quotation_invoice.QuotationInvoiceIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, quotation_invoice.QuotationInvoiceIndex(
 		fmt.Sprintf("| Edit QuotationInvoice #%d", quotation_invoiceModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteQuotationInvoiceHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

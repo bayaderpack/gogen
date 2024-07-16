@@ -1,14 +1,13 @@
 package quotation_product_material
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ QuotationProductMaterialList(titlePage string,  quotation_product_materials []models.QuotationProductMaterial) {
+templ QuotationProductMaterialList(titlePage string, quotation_product_materials []models.QuotationProductMaterial) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,41 +23,40 @@ templ QuotationProductMaterialList(titlePage string,  quotation_product_material
 				<tr>
 					<th></th>
 					<th class="text-center">Material Id</th>
-<th class="text-center">Quotation Product Id</th>
-<th class="text-center">Title</th>
-<th class="text-center">Per Sheet</th>
-<th class="text-center">Total Sheet</th>
-<th class="text-center">Waste</th>
-<th class="text-center">Sheet Size</th>
-<th class="text-center">Sheet Price</th>
-<th class="text-center">Sheet Info</th>
-<th class="text-center">Print Machine Id</th>
-<th class="text-center">Print Id</th>
-<th class="text-center">Lamination Machine Id</th>
-<th class="text-center">Lamination Id</th>
-<th class="text-center">Lamination Type Id</th>
-<th class="text-center">Lamination Width</th>
-<th class="text-center">Plate</th>
-<th class="text-center">Merging Machine Id</th>
-<th class="text-center">Merging Faces</th>
-<th class="text-center">Creasing Machine Id</th>
-<th class="text-center">Creasing Id</th>
-<th class="text-center">Foil</th>
-<th class="text-center">Foil Width</th>
-<th class="text-center">Foil Length</th>
-<th class="text-center">Spotuv</th>
-<th class="text-center">Stick Id</th>
-<th class="text-center">Stick Points</th>
-<th class="text-center">Bagstick Id</th>
-<th class="text-center">Bagstick Type</th>
-<th class="text-center">Bagstick Basesheet</th>
-<th class="text-center">Binding Id</th>
-<th class="text-center">Binding Pieces</th>
-<th class="text-center">Foam Per Sheet</th>
-<th class="text-center">Foam Sheet Price</th>
-<th class="text-center">Unit Price</th>
-<th class="text-center">Total</th>
-
+					<th class="text-center">Quotation Product Id</th>
+					<th class="text-center">Title</th>
+					<th class="text-center">Per Sheet</th>
+					<th class="text-center">Total Sheet</th>
+					<th class="text-center">Waste</th>
+					<th class="text-center">Sheet Size</th>
+					<th class="text-center">Sheet Price</th>
+					<th class="text-center">Sheet Info</th>
+					<th class="text-center">Print Machine Id</th>
+					<th class="text-center">Print Id</th>
+					<th class="text-center">Lamination Machine Id</th>
+					<th class="text-center">Lamination Id</th>
+					<th class="text-center">Lamination Type Id</th>
+					<th class="text-center">Lamination Width</th>
+					<th class="text-center">Plate</th>
+					<th class="text-center">Merging Machine Id</th>
+					<th class="text-center">Merging Faces</th>
+					<th class="text-center">Creasing Machine Id</th>
+					<th class="text-center">Creasing Id</th>
+					<th class="text-center">Foil</th>
+					<th class="text-center">Foil Width</th>
+					<th class="text-center">Foil Length</th>
+					<th class="text-center">Spotuv</th>
+					<th class="text-center">Stick Id</th>
+					<th class="text-center">Stick Points</th>
+					<th class="text-center">Bagstick Id</th>
+					<th class="text-center">Bagstick Type</th>
+					<th class="text-center">Bagstick Basesheet</th>
+					<th class="text-center">Binding Id</th>
+					<th class="text-center">Binding Pieces</th>
+					<th class="text-center">Foam Per Sheet</th>
+					<th class="text-center">Foam Sheet Price</th>
+					<th class="text-center">Unit Price</th>
+					<th class="text-center">Total</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -66,22 +64,55 @@ templ QuotationProductMaterialList(titlePage string,  quotation_product_material
 				<tbody>
 					for _, quotation_product_material := range quotation_product_materials {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",quotation_product_material.MaterialID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.QuotationProductID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.Title)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.PerSheet)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.TotalSheet)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.Waste)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.SheetSize)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.SheetPrice)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.SheetInfo)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.PrintMachineID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.PrintID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.LaminationMachineID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.LaminationID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.LaminationTypeID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.LaminationWidth)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.Plate)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.MergingMachineID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.MergingFaces)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.CreasingMachineID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.CreasingID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.Foil)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.FoilWidth)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.FoilLength)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.Spotuv)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.StickID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.StickPoints)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.BagstickID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.BagstickType)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.BagstickBasesheet)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.BindingID)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.BindingPieces)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.FoamPerSheet)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.FoamSheetPrice)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.UnitPrice)} </td>\n<td>{fmt.Sprintf("%s",quotation_product_material.Total)} </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.MaterialID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.QuotationProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.Title) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.PerSheet) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.TotalSheet) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.Waste) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.SheetSize) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.SheetPrice) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.SheetInfo) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.PrintMachineID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.PrintID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.LaminationMachineID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.LaminationID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.LaminationTypeID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.LaminationWidth) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.Plate) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.MergingMachineID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.MergingFaces) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.CreasingMachineID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.CreasingID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.Foil) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.FoilWidth) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.FoilLength) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.Spotuv) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.StickID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.StickPoints) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.BagstickID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.BagstickType) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.BagstickBasesheet) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.BindingID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.BindingPieces) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.FoamPerSheet) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.FoamSheetPrice) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.UnitPrice) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_product_material.Total) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/quotation_product_material/edit/%d", quotation_product_material.MaterialID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/quotation_product_material/edit/%d", quotation_product_material.MaterialID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/quotation_product_material/delete/%d", quotation_product_material.MaterialID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation_product_material with ID #%d?", quotation_product_material.MaterialID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/quotation_product_material/delete/%d", quotation_product_material.MaterialID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation_product_material with ID #%d?", quotation_product_material.MaterialID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -103,13 +134,13 @@ templ QuotationProductMaterialList(titlePage string,  quotation_product_material
 }
 
 templ QuotationProductMaterialIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

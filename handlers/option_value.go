@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/option_value"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createOptionValueHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	option_valueModel := models.OptionValue{}
-	c.Bind(&option_valueModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		option_valueModel := models.OptionValue{}
+		c.Bind(&option_valueModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newOptionValue := models.NewOptionValueRepository(db.DB)
-	newOptionValue.Create(&option_valueModel)
+		newOptionValue := models.NewOptionValueRepository(db.DB)
+		newOptionValue.Create(&option_valueModel)
 
-setFlashmessages(c, "success", "OptionValue created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "OptionValue created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func option_valueListHandler(c *gin.Context) error {
 	allOptionValue, err := newOptionValue.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's OptionValue List",
@@ -89,8 +88,8 @@ func updateOptionValueHandler(c *gin.Context) error {
 		return err
 	}
 	newOptionValue := models.NewOptionValueRepository(db.DB)
-	
-	option_valueModel , err := newOptionValue.GetSingle(idParams)
+
+	option_valueModel, err := newOptionValue.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateOptionValueHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//option_valueModel := models.OptionValue{}
+	//option_valueModel := models.OptionValue{}
 	c.Bind(option_valueModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateOptionValueHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateOptionValueHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "OptionValue successfully updated!!")
+	setFlashmessages(c, "success", "OptionValue successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/option_value/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, option_value.OptionValueIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, option_value.OptionValueIndex(
 		fmt.Sprintf("| Edit OptionValue #%d", option_valueModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteOptionValueHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

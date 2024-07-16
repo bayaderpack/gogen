@@ -1,14 +1,13 @@
 package language
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ LanguageList(titlePage string,  languages []models.Language) {
+templ LanguageList(titlePage string, languages []models.Language) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,12 +23,11 @@ templ LanguageList(titlePage string,  languages []models.Language) {
 				<tr>
 					<th></th>
 					<th class="text-center">Language Id</th>
-<th class="text-center">Language</th>
-<th class="text-center">Code</th>
-<th class="text-center">Text</th>
-<th class="text-center">Is Primary</th>
-<th class="text-center">Status</th>
-
+					<th class="text-center">Language</th>
+					<th class="text-center">Code</th>
+					<th class="text-center">Text</th>
+					<th class="text-center">Is Primary</th>
+					<th class="text-center">Status</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -37,22 +35,26 @@ templ LanguageList(titlePage string,  languages []models.Language) {
 				<tbody>
 					for _, language := range languages {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",language.LanguageID)} </td>\n<td>{fmt.Sprintf("%s",language.Language)} </td>\n<td>{fmt.Sprintf("%s",language.Code)} </td>\n<td>{fmt.Sprintf("%s",language.Text)} </td>\n<td>{fmt.Sprintf("%s",language.IsPrimary)} </td>\n<td>{fmt.Sprintf("%s",language.Status)} </td>\n
+							<td>{ fmt.Sprintf("%s",language.LanguageID) } </td>\n
+							<td>{ fmt.Sprintf("%s",language.Language) } </td>\n
+							<td>{ fmt.Sprintf("%s",language.Code) } </td>\n
+							<td>{ fmt.Sprintf("%s",language.Text) } </td>\n
+							<td>{ fmt.Sprintf("%s",language.IsPrimary) } </td>\n
+							<td>{ fmt.Sprintf("%s",language.Status) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/language/edit/%d", language.LanguageID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/language/edit/%d", language.LanguageID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/language/delete/%d", language.LanguageID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the language with ID #%d?", language.LanguageID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/language/delete/%d", language.LanguageID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the language with ID #%d?", language.LanguageID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -74,13 +76,13 @@ templ LanguageList(titlePage string,  languages []models.Language) {
 }
 
 templ LanguageIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

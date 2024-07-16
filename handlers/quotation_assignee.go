@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/quotation_assignee"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createQuotationAssigneeHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	quotation_assigneeModel := models.QuotationAssignee{}
-	c.Bind(&quotation_assigneeModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		quotation_assigneeModel := models.QuotationAssignee{}
+		c.Bind(&quotation_assigneeModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newQuotationAssignee := models.NewQuotationAssigneeRepository(db.DB)
-	newQuotationAssignee.Create(&quotation_assigneeModel)
+		newQuotationAssignee := models.NewQuotationAssigneeRepository(db.DB)
+		newQuotationAssignee.Create(&quotation_assigneeModel)
 
-setFlashmessages(c, "success", "QuotationAssignee created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "QuotationAssignee created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func quotation_assigneeListHandler(c *gin.Context) error {
 	allQuotationAssignee, err := newQuotationAssignee.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's QuotationAssignee List",
@@ -89,8 +88,8 @@ func updateQuotationAssigneeHandler(c *gin.Context) error {
 		return err
 	}
 	newQuotationAssignee := models.NewQuotationAssigneeRepository(db.DB)
-	
-	quotation_assigneeModel , err := newQuotationAssignee.GetSingle(idParams)
+
+	quotation_assigneeModel, err := newQuotationAssignee.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateQuotationAssigneeHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//quotation_assigneeModel := models.QuotationAssignee{}
+	//quotation_assigneeModel := models.QuotationAssignee{}
 	c.Bind(quotation_assigneeModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateQuotationAssigneeHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateQuotationAssigneeHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "QuotationAssignee successfully updated!!")
+	setFlashmessages(c, "success", "QuotationAssignee successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/quotation_assignee/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, quotation_assignee.QuotationAssigneeIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, quotation_assignee.QuotationAssigneeIndex(
 		fmt.Sprintf("| Edit QuotationAssignee #%d", quotation_assigneeModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteQuotationAssigneeHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

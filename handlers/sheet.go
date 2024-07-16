@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/sheet"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSheetHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	sheetModel := models.Sheet{}
-	c.Bind(&sheetModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		sheetModel := models.Sheet{}
+		c.Bind(&sheetModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSheet := models.NewSheetRepository(db.DB)
-	newSheet.Create(&sheetModel)
+		newSheet := models.NewSheetRepository(db.DB)
+		newSheet.Create(&sheetModel)
 
-setFlashmessages(c, "success", "Sheet created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Sheet created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func sheetListHandler(c *gin.Context) error {
 	allSheet, err := newSheet.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Sheet List",
@@ -89,8 +88,8 @@ func updateSheetHandler(c *gin.Context) error {
 		return err
 	}
 	newSheet := models.NewSheetRepository(db.DB)
-	
-	sheetModel , err := newSheet.GetSingle(idParams)
+
+	sheetModel, err := newSheet.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSheetHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//sheetModel := models.Sheet{}
+	//sheetModel := models.Sheet{}
 	c.Bind(sheetModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSheetHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSheetHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Sheet successfully updated!!")
+	setFlashmessages(c, "success", "Sheet successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/sheet/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, sheet.SheetIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, sheet.SheetIndex(
 		fmt.Sprintf("| Edit Sheet #%d", sheetModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSheetHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

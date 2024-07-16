@@ -1,14 +1,13 @@
 package gallery_media
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ GalleryMediaList(titlePage string,  gallery_medias []models.GalleryMedia) {
+templ GalleryMediaList(titlePage string, gallery_medias []models.GalleryMedia) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,8 +23,7 @@ templ GalleryMediaList(titlePage string,  gallery_medias []models.GalleryMedia) 
 				<tr>
 					<th></th>
 					<th class="text-center">Gallery Id</th>
-<th class="text-center">Media Id</th>
-
+					<th class="text-center">Media Id</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -33,22 +31,22 @@ templ GalleryMediaList(titlePage string,  gallery_medias []models.GalleryMedia) 
 				<tbody>
 					for _, gallery_media := range gallery_medias {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",gallery_media.GalleryID)} </td>\n<td>{fmt.Sprintf("%s",gallery_media.MediaID)} </td>\n
+							<td>{ fmt.Sprintf("%s",gallery_media.GalleryID) } </td>\n
+							<td>{ fmt.Sprintf("%s",gallery_media.MediaID) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/gallery_media/edit/%d", gallery_media.GalleryID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/gallery_media/edit/%d", gallery_media.GalleryID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/gallery_media/delete/%d", gallery_media.GalleryID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the gallery_media with ID #%d?", gallery_media.GalleryID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/gallery_media/delete/%d", gallery_media.GalleryID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the gallery_media with ID #%d?", gallery_media.GalleryID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -70,13 +68,13 @@ templ GalleryMediaList(titlePage string,  gallery_medias []models.GalleryMedia) 
 }
 
 templ GalleryMediaIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

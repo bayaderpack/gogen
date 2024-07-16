@@ -1,14 +1,13 @@
 package job_order_products
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ JobOrderProductsList(titlePage string,  job_order_products []models.JobOrderProducts) {
+templ JobOrderProductsList(titlePage string, job_order_products []models.JobOrderProducts) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,18 +23,17 @@ templ JobOrderProductsList(titlePage string,  job_order_products []models.JobOrd
 				<tr>
 					<th></th>
 					<th class="text-center">Job Order Id</th>
-<th class="text-center">Quotation Product Id</th>
-<th class="text-center">Edited Quotation Product Id</th>
-<th class="text-center">Samples</th>
-<th class="text-center">Printed</th>
-<th class="text-center">Priority</th>
-<th class="text-center">Design</th>
-<th class="text-center">Die</th>
-<th class="text-center">Note</th>
-<th class="text-center">Name</th>
-<th class="text-center">Quantity</th>
-<th class="text-center">Price</th>
-
+					<th class="text-center">Quotation Product Id</th>
+					<th class="text-center">Edited Quotation Product Id</th>
+					<th class="text-center">Samples</th>
+					<th class="text-center">Printed</th>
+					<th class="text-center">Priority</th>
+					<th class="text-center">Design</th>
+					<th class="text-center">Die</th>
+					<th class="text-center">Note</th>
+					<th class="text-center">Name</th>
+					<th class="text-center">Quantity</th>
+					<th class="text-center">Price</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -43,22 +41,32 @@ templ JobOrderProductsList(titlePage string,  job_order_products []models.JobOrd
 				<tbody>
 					for _, job_order_products := range job_order_products {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",job_order_products.JobOrderID)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.QuotationProductID)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.EditedQuotationProductID)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Samples)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Printed)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Priority)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Design)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Die)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Note)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Name)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Quantity)} </td>\n<td>{fmt.Sprintf("%s",job_order_products.Price)} </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.JobOrderID) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.QuotationProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.EditedQuotationProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Samples) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Printed) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Priority) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Design) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Die) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Note) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Name) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Quantity) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_products.Price) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/job_order_products/edit/%d", job_order_products.JobOrderID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/job_order_products/edit/%d", job_order_products.JobOrderID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/job_order_products/delete/%d", job_order_products.JobOrderID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_products with ID #%d?", job_order_products.JobOrderID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/job_order_products/delete/%d", job_order_products.JobOrderID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_products with ID #%d?", job_order_products.JobOrderID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -80,13 +88,13 @@ templ JobOrderProductsList(titlePage string,  job_order_products []models.JobOrd
 }
 
 templ JobOrderProductsIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/feature_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createFeatureDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	feature_descriptionModel := models.FeatureDescription{}
-	c.Bind(&feature_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		feature_descriptionModel := models.FeatureDescription{}
+		c.Bind(&feature_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newFeatureDescription := models.NewFeatureDescriptionRepository(db.DB)
-	newFeatureDescription.Create(&feature_descriptionModel)
+		newFeatureDescription := models.NewFeatureDescriptionRepository(db.DB)
+		newFeatureDescription.Create(&feature_descriptionModel)
 
-setFlashmessages(c, "success", "FeatureDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "FeatureDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func feature_descriptionListHandler(c *gin.Context) error {
 	allFeatureDescription, err := newFeatureDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's FeatureDescription List",
@@ -89,8 +88,8 @@ func updateFeatureDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newFeatureDescription := models.NewFeatureDescriptionRepository(db.DB)
-	
-	feature_descriptionModel , err := newFeatureDescription.GetSingle(idParams)
+
+	feature_descriptionModel, err := newFeatureDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateFeatureDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//feature_descriptionModel := models.FeatureDescription{}
+	//feature_descriptionModel := models.FeatureDescription{}
 	c.Bind(feature_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateFeatureDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateFeatureDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "FeatureDescription successfully updated!!")
+	setFlashmessages(c, "success", "FeatureDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/feature_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, feature_description.FeatureDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, feature_description.FeatureDescriptionIndex(
 		fmt.Sprintf("| Edit FeatureDescription #%d", feature_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteFeatureDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/coupon_history"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createCouponHistoryHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	coupon_historyModel := models.CouponHistory{}
-	c.Bind(&coupon_historyModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		coupon_historyModel := models.CouponHistory{}
+		c.Bind(&coupon_historyModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newCouponHistory := models.NewCouponHistoryRepository(db.DB)
-	newCouponHistory.Create(&coupon_historyModel)
+		newCouponHistory := models.NewCouponHistoryRepository(db.DB)
+		newCouponHistory.Create(&coupon_historyModel)
 
-setFlashmessages(c, "success", "CouponHistory created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "CouponHistory created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func coupon_historyListHandler(c *gin.Context) error {
 	allCouponHistory, err := newCouponHistory.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's CouponHistory List",
@@ -89,8 +88,8 @@ func updateCouponHistoryHandler(c *gin.Context) error {
 		return err
 	}
 	newCouponHistory := models.NewCouponHistoryRepository(db.DB)
-	
-	coupon_historyModel , err := newCouponHistory.GetSingle(idParams)
+
+	coupon_historyModel, err := newCouponHistory.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateCouponHistoryHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//coupon_historyModel := models.CouponHistory{}
+	//coupon_historyModel := models.CouponHistory{}
 	c.Bind(coupon_historyModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateCouponHistoryHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateCouponHistoryHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "CouponHistory successfully updated!!")
+	setFlashmessages(c, "success", "CouponHistory successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/coupon_history/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, coupon_history.CouponHistoryIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, coupon_history.CouponHistoryIndex(
 		fmt.Sprintf("| Edit CouponHistory #%d", coupon_historyModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteCouponHistoryHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

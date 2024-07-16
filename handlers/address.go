@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/address"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createAddressHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	addressModel := models.Address{}
-	c.Bind(&addressModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		addressModel := models.Address{}
+		c.Bind(&addressModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newAddress := models.NewAddressRepository(db.DB)
-	newAddress.Create(&addressModel)
+		newAddress := models.NewAddressRepository(db.DB)
+		newAddress.Create(&addressModel)
 
-setFlashmessages(c, "success", "Address created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Address created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func addressListHandler(c *gin.Context) error {
 	allAddress, err := newAddress.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Address List",
@@ -89,8 +88,8 @@ func updateAddressHandler(c *gin.Context) error {
 		return err
 	}
 	newAddress := models.NewAddressRepository(db.DB)
-	
-	addressModel , err := newAddress.GetSingle(idParams)
+
+	addressModel, err := newAddress.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateAddressHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//addressModel := models.Address{}
+	//addressModel := models.Address{}
 	c.Bind(addressModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateAddressHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateAddressHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Address successfully updated!!")
+	setFlashmessages(c, "success", "Address successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/address/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, address.AddressIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, address.AddressIndex(
 		fmt.Sprintf("| Edit Address #%d", addressModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteAddressHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

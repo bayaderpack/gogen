@@ -1,14 +1,13 @@
 package taxonomy
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ TaxonomyList(titlePage string,  taxonomies []models.Taxonomy) {
+templ TaxonomyList(titlePage string, taxonomies []models.Taxonomy) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,16 +23,15 @@ templ TaxonomyList(titlePage string,  taxonomies []models.Taxonomy) {
 				<tr>
 					<th></th>
 					<th class="text-center">Taxonomy Id</th>
-<th class="text-center">Parent Id</th>
-<th class="text-center">Media Id</th>
-<th class="text-center">Seo Media Id</th>
-<th class="text-center">Banner Id</th>
-<th class="text-center">Type</th>
-<th class="text-center">Slug</th>
-<th class="text-center">Filterable</th>
-<th class="text-center">Sort Order</th>
-<th class="text-center">Status</th>
-
+					<th class="text-center">Parent Id</th>
+					<th class="text-center">Media Id</th>
+					<th class="text-center">Seo Media Id</th>
+					<th class="text-center">Banner Id</th>
+					<th class="text-center">Type</th>
+					<th class="text-center">Slug</th>
+					<th class="text-center">Filterable</th>
+					<th class="text-center">Sort Order</th>
+					<th class="text-center">Status</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -41,22 +39,30 @@ templ TaxonomyList(titlePage string,  taxonomies []models.Taxonomy) {
 				<tbody>
 					for _, taxonomy := range taxonomies {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",taxonomy.TaxonomyID)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.ParentID)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.MediaID)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.SeoMediaID)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.BannerID)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.Type)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.Slug)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.Filterable)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.SortOrder)} </td>\n<td>{fmt.Sprintf("%s",taxonomy.Status)} </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.TaxonomyID) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.ParentID) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.MediaID) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.SeoMediaID) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.BannerID) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.Type) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.Slug) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.Filterable) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.SortOrder) } </td>\n
+							<td>{ fmt.Sprintf("%s",taxonomy.Status) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/taxonomy/edit/%d", taxonomy.TaxonomyID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/taxonomy/edit/%d", taxonomy.TaxonomyID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/taxonomy/delete/%d", taxonomy.TaxonomyID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the taxonomy with ID #%d?", taxonomy.TaxonomyID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/taxonomy/delete/%d", taxonomy.TaxonomyID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the taxonomy with ID #%d?", taxonomy.TaxonomyID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -78,13 +84,13 @@ templ TaxonomyList(titlePage string,  taxonomies []models.Taxonomy) {
 }
 
 templ TaxonomyIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

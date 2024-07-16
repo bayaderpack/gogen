@@ -1,26 +1,23 @@
 package models
 
 import (
-	
 	"errors"
+
 	"gorm.io/gorm"
 )
 
-
 // quotation is struct that represent data in Database
 type Quotation struct {
-
-	QuotationID int `gorm:"column:quotation_id;default:" json:"quotation_id"`
-CustomerID int `gorm:"column:customer_id;default:0" json:"customer_id"`
-Number string `gorm:"column:number;default:'0'" json:"number"`
-Viewed bool `gorm:"column:viewed;default:0" json:"viewed"`
-QuotationProducts []QuotationProducts `gorm:"foreignKey:QuotationID;references:QuotationID"`
-
-
+	QuotationID       int                 `gorm:"column:quotation_id;default:" json:"quotation_id"`
+	CustomerID        int                 `gorm:"column:customer_id;default:0" json:"customer_id"`
+	Number            string              `gorm:"column:number;default:'0'" json:"number"`
+	Viewed            bool                `gorm:"column:viewed;default:0" json:"viewed"`
+	QuotationProducts []QuotationProducts `gorm:"foreignKey:QuotationID;references:QuotationID"`
 }
+
 func (Quotation) TableName() string {
 	return "quotation"
-  }
+}
 
 // Quotation is interface that that model needs to implement
 type QuotationRepository interface {
@@ -35,7 +32,6 @@ type quotationRepository struct {
 	db *gorm.DB
 }
 
-
 // Create new instance
 func NewQuotationRepository(db *gorm.DB) QuotationRepository {
 	return &quotationRepository{db: db}
@@ -46,8 +42,7 @@ func (r *quotationRepository) Create(quotation *Quotation) error {
 	return r.db.Create(quotation).Error
 }
 
-
-//Function to get single instance of quotation 
+// Function to get single instance of quotation
 func (r *quotationRepository) GetSingle(id int) (*Quotation, error) {
 	var quotation Quotation
 	err := r.db.First(&quotation, id).Error
@@ -60,20 +55,19 @@ func (r *quotationRepository) GetSingle(id int) (*Quotation, error) {
 	return &quotation, nil
 }
 
-
-//Function to get all instances of quotation 
+// Function to get all instances of quotation
 func (r *quotationRepository) GetAll() ([]Quotation, error) {
 	var quotation []Quotation
 	err := r.db.Find(&quotation).Error
 	return quotation, err
 }
 
-//Function to update existing instances of quotation 
+// Function to update existing instances of quotation
 func (r *quotationRepository) Update(quotation *Quotation) error {
 	return r.db.Save(quotation).Error
 }
 
-//Function to delete single instances of quotation 
+// Function to delete single instances of quotation
 func (r *quotationRepository) Delete(id int) error {
 	result := r.db.Delete(&Quotation{}, id)
 	return result.Error

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/job_order_quotation"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createJobOrderQuotationHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	job_order_quotationModel := models.JobOrderQuotation{}
-	c.Bind(&job_order_quotationModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		job_order_quotationModel := models.JobOrderQuotation{}
+		c.Bind(&job_order_quotationModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newJobOrderQuotation := models.NewJobOrderQuotationRepository(db.DB)
-	newJobOrderQuotation.Create(&job_order_quotationModel)
+		newJobOrderQuotation := models.NewJobOrderQuotationRepository(db.DB)
+		newJobOrderQuotation.Create(&job_order_quotationModel)
 
-setFlashmessages(c, "success", "JobOrderQuotation created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "JobOrderQuotation created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func job_order_quotationListHandler(c *gin.Context) error {
 	allJobOrderQuotation, err := newJobOrderQuotation.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's JobOrderQuotation List",
@@ -89,8 +88,8 @@ func updateJobOrderQuotationHandler(c *gin.Context) error {
 		return err
 	}
 	newJobOrderQuotation := models.NewJobOrderQuotationRepository(db.DB)
-	
-	job_order_quotationModel , err := newJobOrderQuotation.GetSingle(idParams)
+
+	job_order_quotationModel, err := newJobOrderQuotation.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateJobOrderQuotationHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//job_order_quotationModel := models.JobOrderQuotation{}
+	//job_order_quotationModel := models.JobOrderQuotation{}
 	c.Bind(job_order_quotationModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateJobOrderQuotationHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateJobOrderQuotationHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "JobOrderQuotation successfully updated!!")
+	setFlashmessages(c, "success", "JobOrderQuotation successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/job_order_quotation/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, job_order_quotation.JobOrderQuotationIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, job_order_quotation.JobOrderQuotationIndex(
 		fmt.Sprintf("| Edit JobOrderQuotation #%d", job_order_quotationModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteJobOrderQuotationHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

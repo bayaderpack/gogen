@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/customer"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createCustomerHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	customerModel := models.Customer{}
-	c.Bind(&customerModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		customerModel := models.Customer{}
+		c.Bind(&customerModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newCustomer := models.NewCustomerRepository(db.DB)
-	newCustomer.Create(&customerModel)
+		newCustomer := models.NewCustomerRepository(db.DB)
+		newCustomer.Create(&customerModel)
 
-setFlashmessages(c, "success", "Customer created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Customer created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func customerListHandler(c *gin.Context) error {
 	allCustomer, err := newCustomer.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Customer List",
@@ -89,8 +88,8 @@ func updateCustomerHandler(c *gin.Context) error {
 		return err
 	}
 	newCustomer := models.NewCustomerRepository(db.DB)
-	
-	customerModel , err := newCustomer.GetSingle(idParams)
+
+	customerModel, err := newCustomer.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateCustomerHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//customerModel := models.Customer{}
+	//customerModel := models.Customer{}
 	c.Bind(customerModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateCustomerHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateCustomerHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Customer successfully updated!!")
+	setFlashmessages(c, "success", "Customer successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/customer/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, customer.CustomerIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, customer.CustomerIndex(
 		fmt.Sprintf("| Edit Customer #%d", customerModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteCustomerHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

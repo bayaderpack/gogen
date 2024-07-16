@@ -1,9 +1,8 @@
 package machine
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateMachine(machine models.Machine, tz string) {
@@ -12,85 +11,91 @@ templ UpdateMachine(machine models.Machine, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Machine Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="machine_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(machine.MachineID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Title:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="title"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={machine.Title}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Print Factors:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			print_factors
-			name="required"
-			maxlength="255"
-		>{machine.PrintFactors}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Spotuv Factors:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			spotuv_factors
-			name="required"
-			maxlength="255"
-		>{machine.SpotuvFactors}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Merging Factors:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			merging_factors
-			name="required"
-			maxlength="255"
-		>{machine.MergingFactors}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Bps Factor:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="bps_factor"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(machine.BpsFactor))}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(machine.Status)} required />
-	  </label>
-	</div>
-		<label class="flex flex-col justify-start gap-2">
-		Sort Order:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="sort_order"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(machine.SortOrder))}
-		/>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Machine Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="machine_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(machine.MachineID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Title:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="title"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ machine.Title }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Print Factors:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					print_factors
+					name="required"
+					maxlength="255"
+				>{ machine.PrintFactors }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Spotuv Factors:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					spotuv_factors
+					name="required"
+					maxlength="255"
+				>{ machine.SpotuvFactors }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Merging Factors:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					merging_factors
+					name="required"
+					maxlength="255"
+				>{ machine.MergingFactors }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Bps Factor:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="bps_factor"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(machine.BpsFactor)) }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(machine.Status) } required/>
+				</label>
+			</div>
+			<label class="flex flex-col justify-start gap-2">
+				Sort Order:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="sort_order"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(machine.SortOrder)) }
+				/>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

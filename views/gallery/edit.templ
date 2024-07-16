@@ -1,9 +1,8 @@
 package gallery
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateGallery(gallery models.Gallery, tz string) {
@@ -12,25 +11,25 @@ templ UpdateGallery(gallery models.Gallery, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Gallery Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="gallery_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(gallery.GalleryID))}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(gallery.Status)} required />
-	  </label>
-	</div>
-		
+			<label class="flex flex-col justify-start gap-2">
+				Gallery Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="gallery_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(gallery.GalleryID)) }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(gallery.Status) } required/>
+				</label>
+			</div>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

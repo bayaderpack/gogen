@@ -1,14 +1,13 @@
 package admin
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ AdminList(titlePage string,  admins []models.Admin) {
+templ AdminList(titlePage string, admins []models.Admin) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,21 +23,20 @@ templ AdminList(titlePage string,  admins []models.Admin) {
 				<tr>
 					<th></th>
 					<th class="text-center">Admin Id</th>
-<th class="text-center">Kid</th>
-<th class="text-center">Username</th>
-<th class="text-center">Firstname</th>
-<th class="text-center">Lastname</th>
-<th class="text-center">Email</th>
-<th class="text-center">Country Code</th>
-<th class="text-center">Mobile</th>
-<th class="text-center">Password</th>
-<th class="text-center">Ip</th>
-<th class="text-center">Lng</th>
-<th class="text-center">Status</th>
-<th class="text-center">Reset Token</th>
-<th class="text-center">Otp</th>
-<th class="text-center">Reset Expires</th>
-
+					<th class="text-center">Kid</th>
+					<th class="text-center">Username</th>
+					<th class="text-center">Firstname</th>
+					<th class="text-center">Lastname</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Country Code</th>
+					<th class="text-center">Mobile</th>
+					<th class="text-center">Password</th>
+					<th class="text-center">Ip</th>
+					<th class="text-center">Lng</th>
+					<th class="text-center">Status</th>
+					<th class="text-center">Reset Token</th>
+					<th class="text-center">Otp</th>
+					<th class="text-center">Reset Expires</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -46,22 +44,35 @@ templ AdminList(titlePage string,  admins []models.Admin) {
 				<tbody>
 					for _, admin := range admins {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",admin.AdminID)} </td>\n<td>{fmt.Sprintf("%s",admin.Kid)} </td>\n<td>{fmt.Sprintf("%s",admin.Username)} </td>\n<td>{fmt.Sprintf("%s",admin.Firstname)} </td>\n<td>{fmt.Sprintf("%s",admin.Lastname)} </td>\n<td>{fmt.Sprintf("%s",admin.Email)} </td>\n<td>{fmt.Sprintf("%s",admin.CountryCode)} </td>\n<td>{fmt.Sprintf("%s",admin.Mobile)} </td>\n<td>{fmt.Sprintf("%s",admin.Password)} </td>\n<td>{fmt.Sprintf("%s",admin.Ip)} </td>\n<td>{fmt.Sprintf("%s",admin.Lng)} </td>\n<td>{fmt.Sprintf("%s",admin.Status)} </td>\n<td>{fmt.Sprintf("%s",admin.ResetToken)} </td>\n<td>{fmt.Sprintf("%s",admin.Otp)} </td>\n<td>{fmt.Sprintf("%s",admin.ResetExpires)} </td>\n
+							<td>{ fmt.Sprintf("%s",admin.AdminID) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Kid) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Username) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Firstname) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Lastname) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Email) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.CountryCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Mobile) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Password) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Ip) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Lng) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Status) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.ResetToken) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.Otp) } </td>\n
+							<td>{ fmt.Sprintf("%s",admin.ResetExpires) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/admin/edit/%d", admin.AdminID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/admin/edit/%d", admin.AdminID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/admin/delete/%d", admin.AdminID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the admin with ID #%d?", admin.AdminID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/admin/delete/%d", admin.AdminID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the admin with ID #%d?", admin.AdminID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -83,13 +94,13 @@ templ AdminList(titlePage string,  admins []models.Admin) {
 }
 
 templ AdminIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

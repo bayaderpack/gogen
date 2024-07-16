@@ -1,14 +1,13 @@
 package contact_entry
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ ContactEntryList(titlePage string,  contact_entries []models.ContactEntry) {
+templ ContactEntryList(titlePage string, contact_entries []models.ContactEntry) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,17 +23,16 @@ templ ContactEntryList(titlePage string,  contact_entries []models.ContactEntry)
 				<tr>
 					<th></th>
 					<th class="text-center">Entry Id</th>
-<th class="text-center">Customer Id</th>
-<th class="text-center">Name</th>
-<th class="text-center">Country Code</th>
-<th class="text-center">Mobile</th>
-<th class="text-center">Email</th>
-<th class="text-center">Company</th>
-<th class="text-center">Content</th>
-<th class="text-center">Know</th>
-<th class="text-center">Ip</th>
-<th class="text-center">Viewed</th>
-
+					<th class="text-center">Customer Id</th>
+					<th class="text-center">Name</th>
+					<th class="text-center">Country Code</th>
+					<th class="text-center">Mobile</th>
+					<th class="text-center">Email</th>
+					<th class="text-center">Company</th>
+					<th class="text-center">Content</th>
+					<th class="text-center">Know</th>
+					<th class="text-center">Ip</th>
+					<th class="text-center">Viewed</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -42,22 +40,31 @@ templ ContactEntryList(titlePage string,  contact_entries []models.ContactEntry)
 				<tbody>
 					for _, contact_entry := range contact_entries {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",contact_entry.EntryID)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.CustomerID)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Name)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.CountryCode)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Mobile)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Email)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Company)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Content)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Know)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Ip)} </td>\n<td>{fmt.Sprintf("%s",contact_entry.Viewed)} </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.EntryID) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.CustomerID) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Name) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.CountryCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Mobile) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Email) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Company) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Content) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Know) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Ip) } </td>\n
+							<td>{ fmt.Sprintf("%s",contact_entry.Viewed) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/contact_entry/edit/%d", contact_entry.EntryID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/contact_entry/edit/%d", contact_entry.EntryID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/contact_entry/delete/%d", contact_entry.EntryID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the contact_entry with ID #%d?", contact_entry.EntryID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/contact_entry/delete/%d", contact_entry.EntryID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the contact_entry with ID #%d?", contact_entry.EntryID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -79,13 +86,13 @@ templ ContactEntryList(titlePage string,  contact_entries []models.ContactEntry)
 }
 
 templ ContactEntryIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

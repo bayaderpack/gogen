@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/admin"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createAdminHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	adminModel := models.Admin{}
-	c.Bind(&adminModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		adminModel := models.Admin{}
+		c.Bind(&adminModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newAdmin := models.NewAdminRepository(db.DB)
-	newAdmin.Create(&adminModel)
+		newAdmin := models.NewAdminRepository(db.DB)
+		newAdmin.Create(&adminModel)
 
-setFlashmessages(c, "success", "Admin created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Admin created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func adminListHandler(c *gin.Context) error {
 	allAdmin, err := newAdmin.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Admin List",
@@ -89,8 +88,8 @@ func updateAdminHandler(c *gin.Context) error {
 		return err
 	}
 	newAdmin := models.NewAdminRepository(db.DB)
-	
-	adminModel , err := newAdmin.GetSingle(idParams)
+
+	adminModel, err := newAdmin.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateAdminHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//adminModel := models.Admin{}
+	//adminModel := models.Admin{}
 	c.Bind(adminModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateAdminHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateAdminHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Admin successfully updated!!")
+	setFlashmessages(c, "success", "Admin successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/admin/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, admin.AdminIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, admin.AdminIndex(
 		fmt.Sprintf("| Edit Admin #%d", adminModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteAdminHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

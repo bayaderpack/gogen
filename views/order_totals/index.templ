@@ -1,14 +1,13 @@
 package order_totals
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ OrderTotalsList(titlePage string,  order_totals []models.OrderTotals) {
+templ OrderTotalsList(titlePage string, order_totals []models.OrderTotals) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,12 +23,11 @@ templ OrderTotalsList(titlePage string,  order_totals []models.OrderTotals) {
 				<tr>
 					<th></th>
 					<th class="text-center">Order Total Id</th>
-<th class="text-center">Order Id</th>
-<th class="text-center">Text</th>
-<th class="text-center">Code</th>
-<th class="text-center">Value</th>
-<th class="text-center">Sort Order</th>
-
+					<th class="text-center">Order Id</th>
+					<th class="text-center">Text</th>
+					<th class="text-center">Code</th>
+					<th class="text-center">Value</th>
+					<th class="text-center">Sort Order</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -37,22 +35,26 @@ templ OrderTotalsList(titlePage string,  order_totals []models.OrderTotals) {
 				<tbody>
 					for _, order_totals := range order_totals {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",order_totals.OrderTotalID)} </td>\n<td>{fmt.Sprintf("%s",order_totals.OrderID)} </td>\n<td>{fmt.Sprintf("%s",order_totals.Text)} </td>\n<td>{fmt.Sprintf("%s",order_totals.Code)} </td>\n<td>{fmt.Sprintf("%s",order_totals.Value)} </td>\n<td>{fmt.Sprintf("%s",order_totals.SortOrder)} </td>\n
+							<td>{ fmt.Sprintf("%s",order_totals.OrderTotalID) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_totals.OrderID) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_totals.Text) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_totals.Code) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_totals.Value) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_totals.SortOrder) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/order_totals/edit/%d", order_totals.OrderTotalID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/order_totals/edit/%d", order_totals.OrderTotalID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/order_totals/delete/%d", order_totals.OrderTotalID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the order_totals with ID #%d?", order_totals.OrderTotalID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/order_totals/delete/%d", order_totals.OrderTotalID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the order_totals with ID #%d?", order_totals.OrderTotalID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -74,13 +76,13 @@ templ OrderTotalsList(titlePage string,  order_totals []models.OrderTotals) {
 }
 
 templ OrderTotalsIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

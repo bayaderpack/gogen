@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/tax"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createTaxHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	taxModel := models.Tax{}
-	c.Bind(&taxModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		taxModel := models.Tax{}
+		c.Bind(&taxModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newTax := models.NewTaxRepository(db.DB)
-	newTax.Create(&taxModel)
+		newTax := models.NewTaxRepository(db.DB)
+		newTax.Create(&taxModel)
 
-setFlashmessages(c, "success", "Tax created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Tax created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func taxListHandler(c *gin.Context) error {
 	allTax, err := newTax.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Tax List",
@@ -89,8 +88,8 @@ func updateTaxHandler(c *gin.Context) error {
 		return err
 	}
 	newTax := models.NewTaxRepository(db.DB)
-	
-	taxModel , err := newTax.GetSingle(idParams)
+
+	taxModel, err := newTax.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateTaxHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//taxModel := models.Tax{}
+	//taxModel := models.Tax{}
 	c.Bind(taxModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateTaxHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateTaxHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Tax successfully updated!!")
+	setFlashmessages(c, "success", "Tax successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/tax/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, tax.TaxIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, tax.TaxIndex(
 		fmt.Sprintf("| Edit Tax #%d", taxModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteTaxHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

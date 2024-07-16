@@ -1,20 +1,19 @@
 package models
 
 import (
-	"time"
 	"errors"
+	"time"
+
 	"gorm.io/gorm"
 )
-
 
 // product_special is struct that represent data in Database
 type ProductSpecial struct {
 	gorm.Model
-	ProductID int `gorm:"column:product_id;default:" json:"product_id"`
-Price float32 `gorm:"column:price;default:0.00" json:"price"`
-Deadline *time.Time `gorm:"column:deadline;default:" json:"deadline"`
-Status bool `gorm:"column:status;default:1" json:"status"`
-
+	ProductID int        `gorm:"column:product_id;default:" json:"product_id"`
+	Price     float32    `gorm:"column:price;default:0.00" json:"price"`
+	Deadline  *time.Time `gorm:"column:deadline;default:" json:"deadline"`
+	Status    bool       `gorm:"column:status;default:1" json:"status"`
 }
 
 // ProductSpecial is interface that that model needs to implement
@@ -30,7 +29,6 @@ type product_specialRepository struct {
 	db *gorm.DB
 }
 
-
 // Create new instance
 func NewProductSpecialRepository(db *gorm.DB) ProductSpecialRepository {
 	return &product_specialRepository{db: db}
@@ -41,8 +39,7 @@ func (r *product_specialRepository) Create(product_special *ProductSpecial) erro
 	return r.db.Create(product_special).Error
 }
 
-
-//Function to get single instance of product_special 
+// Function to get single instance of product_special
 func (r *product_specialRepository) GetSingle(id int) (*ProductSpecial, error) {
 	var product_special ProductSpecial
 	err := r.db.First(&product_special, id).Error
@@ -55,20 +52,19 @@ func (r *product_specialRepository) GetSingle(id int) (*ProductSpecial, error) {
 	return &product_special, nil
 }
 
-
-//Function to get all instances of product_special 
+// Function to get all instances of product_special
 func (r *product_specialRepository) GetAll() ([]ProductSpecial, error) {
 	var product_special []ProductSpecial
 	err := r.db.Find(&product_special).Error
 	return product_special, err
 }
 
-//Function to update existing instances of product_special 
+// Function to update existing instances of product_special
 func (r *product_specialRepository) Update(product_special *ProductSpecial) error {
 	return r.db.Save(product_special).Error
 }
 
-//Function to delete single instances of product_special 
+// Function to delete single instances of product_special
 func (r *product_specialRepository) Delete(id int) error {
 	result := r.db.Delete(&ProductSpecial{}, id)
 	return result.Error

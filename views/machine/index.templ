@@ -1,14 +1,13 @@
 package machine
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ MachineList(titlePage string,  machines []models.Machine) {
+templ MachineList(titlePage string, machines []models.Machine) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,16 +23,15 @@ templ MachineList(titlePage string,  machines []models.Machine) {
 				<tr>
 					<th></th>
 					<th class="text-center">Machine Id</th>
-<th class="text-center">Title</th>
-<th class="text-center">Print Factors</th>
-<th class="text-center">Spotuv Factors</th>
-<th class="text-center">Merging Factors</th>
-<th class="text-center">Lamination Baseprice</th>
-<th class="text-center">Plate Price</th>
-<th class="text-center">Bps Factor</th>
-<th class="text-center">Status</th>
-<th class="text-center">Sort Order</th>
-
+					<th class="text-center">Title</th>
+					<th class="text-center">Print Factors</th>
+					<th class="text-center">Spotuv Factors</th>
+					<th class="text-center">Merging Factors</th>
+					<th class="text-center">Lamination Baseprice</th>
+					<th class="text-center">Plate Price</th>
+					<th class="text-center">Bps Factor</th>
+					<th class="text-center">Status</th>
+					<th class="text-center">Sort Order</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -41,22 +39,30 @@ templ MachineList(titlePage string,  machines []models.Machine) {
 				<tbody>
 					for _, machine := range machines {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",machine.MachineID)} </td>\n<td>{fmt.Sprintf("%s",machine.Title)} </td>\n<td>{fmt.Sprintf("%s",machine.PrintFactors)} </td>\n<td>{fmt.Sprintf("%s",machine.SpotuvFactors)} </td>\n<td>{fmt.Sprintf("%s",machine.MergingFactors)} </td>\n<td>{fmt.Sprintf("%s",machine.LaminationBaseprice)} </td>\n<td>{fmt.Sprintf("%s",machine.PlatePrice)} </td>\n<td>{fmt.Sprintf("%s",machine.BpsFactor)} </td>\n<td>{fmt.Sprintf("%s",machine.Status)} </td>\n<td>{fmt.Sprintf("%s",machine.SortOrder)} </td>\n
+							<td>{ fmt.Sprintf("%s",machine.MachineID) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.Title) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.PrintFactors) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.SpotuvFactors) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.MergingFactors) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.LaminationBaseprice) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.PlatePrice) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.BpsFactor) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.Status) } </td>\n
+							<td>{ fmt.Sprintf("%s",machine.SortOrder) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/machine/edit/%d", machine.MachineID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/machine/edit/%d", machine.MachineID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/machine/delete/%d", machine.MachineID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the machine with ID #%d?", machine.MachineID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/machine/delete/%d", machine.MachineID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the machine with ID #%d?", machine.MachineID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -78,13 +84,13 @@ templ MachineList(titlePage string,  machines []models.Machine) {
 }
 
 templ MachineIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

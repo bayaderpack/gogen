@@ -1,14 +1,13 @@
 package product_special
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ ProductSpecialList(titlePage string,  product_specials []models.ProductSpecial) {
+templ ProductSpecialList(titlePage string, product_specials []models.ProductSpecial) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,10 +23,9 @@ templ ProductSpecialList(titlePage string,  product_specials []models.ProductSpe
 				<tr>
 					<th></th>
 					<th class="text-center">Product Id</th>
-<th class="text-center">Price</th>
-<th class="text-center">Deadline</th>
-<th class="text-center">Status</th>
-
+					<th class="text-center">Price</th>
+					<th class="text-center">Deadline</th>
+					<th class="text-center">Status</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -35,22 +33,24 @@ templ ProductSpecialList(titlePage string,  product_specials []models.ProductSpe
 				<tbody>
 					for _, product_special := range product_specials {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",product_special.ProductID)} </td>\n<td>{fmt.Sprintf("%s",product_special.Price)} </td>\n<td>{fmt.Sprintf("%s",product_special.Deadline)} </td>\n<td>{fmt.Sprintf("%s",product_special.Status)} </td>\n
+							<td>{ fmt.Sprintf("%s",product_special.ProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_special.Price) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_special.Deadline) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_special.Status) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/product_special/edit/%d", product_special.ProductID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/product_special/edit/%d", product_special.ProductID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/product_special/delete/%d", product_special.ProductID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the product_special with ID #%d?", product_special.ProductID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/product_special/delete/%d", product_special.ProductID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the product_special with ID #%d?", product_special.ProductID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -72,13 +72,13 @@ templ ProductSpecialList(titlePage string,  product_specials []models.ProductSpe
 }
 
 templ ProductSpecialIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

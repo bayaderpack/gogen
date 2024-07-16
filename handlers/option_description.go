@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/option_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createOptionDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	option_descriptionModel := models.OptionDescription{}
-	c.Bind(&option_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		option_descriptionModel := models.OptionDescription{}
+		c.Bind(&option_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newOptionDescription := models.NewOptionDescriptionRepository(db.DB)
-	newOptionDescription.Create(&option_descriptionModel)
+		newOptionDescription := models.NewOptionDescriptionRepository(db.DB)
+		newOptionDescription.Create(&option_descriptionModel)
 
-setFlashmessages(c, "success", "OptionDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "OptionDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func option_descriptionListHandler(c *gin.Context) error {
 	allOptionDescription, err := newOptionDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's OptionDescription List",
@@ -89,8 +88,8 @@ func updateOptionDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newOptionDescription := models.NewOptionDescriptionRepository(db.DB)
-	
-	option_descriptionModel , err := newOptionDescription.GetSingle(idParams)
+
+	option_descriptionModel, err := newOptionDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateOptionDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//option_descriptionModel := models.OptionDescription{}
+	//option_descriptionModel := models.OptionDescription{}
 	c.Bind(option_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateOptionDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateOptionDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "OptionDescription successfully updated!!")
+	setFlashmessages(c, "success", "OptionDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/option_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, option_description.OptionDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, option_description.OptionDescriptionIndex(
 		fmt.Sprintf("| Edit OptionDescription #%d", option_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteOptionDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

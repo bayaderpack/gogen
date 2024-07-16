@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/gallery"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createGalleryHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	galleryModel := models.Gallery{}
-	c.Bind(&galleryModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		galleryModel := models.Gallery{}
+		c.Bind(&galleryModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newGallery := models.NewGalleryRepository(db.DB)
-	newGallery.Create(&galleryModel)
+		newGallery := models.NewGalleryRepository(db.DB)
+		newGallery.Create(&galleryModel)
 
-setFlashmessages(c, "success", "Gallery created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Gallery created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func galleryListHandler(c *gin.Context) error {
 	allGallery, err := newGallery.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Gallery List",
@@ -89,8 +88,8 @@ func updateGalleryHandler(c *gin.Context) error {
 		return err
 	}
 	newGallery := models.NewGalleryRepository(db.DB)
-	
-	galleryModel , err := newGallery.GetSingle(idParams)
+
+	galleryModel, err := newGallery.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateGalleryHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//galleryModel := models.Gallery{}
+	//galleryModel := models.Gallery{}
 	c.Bind(galleryModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateGalleryHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateGalleryHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Gallery successfully updated!!")
+	setFlashmessages(c, "success", "Gallery successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/gallery/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, gallery.GalleryIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, gallery.GalleryIndex(
 		fmt.Sprintf("| Edit Gallery #%d", galleryModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteGalleryHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

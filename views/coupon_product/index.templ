@@ -1,14 +1,13 @@
 package coupon_product
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ CouponProductList(titlePage string,  coupon_products []models.CouponProduct) {
+templ CouponProductList(titlePage string, coupon_products []models.CouponProduct) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,8 +23,7 @@ templ CouponProductList(titlePage string,  coupon_products []models.CouponProduc
 				<tr>
 					<th></th>
 					<th class="text-center">Coupon Id</th>
-<th class="text-center">Product Id</th>
-
+					<th class="text-center">Product Id</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -33,22 +31,22 @@ templ CouponProductList(titlePage string,  coupon_products []models.CouponProduc
 				<tbody>
 					for _, coupon_product := range coupon_products {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",coupon_product.CouponID)} </td>\n<td>{fmt.Sprintf("%s",coupon_product.ProductID)} </td>\n
+							<td>{ fmt.Sprintf("%s",coupon_product.CouponID) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon_product.ProductID) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/coupon_product/edit/%d", coupon_product.CouponID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/coupon_product/edit/%d", coupon_product.CouponID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/coupon_product/delete/%d", coupon_product.CouponID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the coupon_product with ID #%d?", coupon_product.CouponID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/coupon_product/delete/%d", coupon_product.CouponID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the coupon_product with ID #%d?", coupon_product.CouponID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -70,13 +68,13 @@ templ CouponProductList(titlePage string,  coupon_products []models.CouponProduc
 }
 
 templ CouponProductIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

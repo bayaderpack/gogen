@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/payment_method"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createPaymentMethodHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	payment_methodModel := models.PaymentMethod{}
-	c.Bind(&payment_methodModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		payment_methodModel := models.PaymentMethod{}
+		c.Bind(&payment_methodModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newPaymentMethod := models.NewPaymentMethodRepository(db.DB)
-	newPaymentMethod.Create(&payment_methodModel)
+		newPaymentMethod := models.NewPaymentMethodRepository(db.DB)
+		newPaymentMethod.Create(&payment_methodModel)
 
-setFlashmessages(c, "success", "PaymentMethod created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "PaymentMethod created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func payment_methodListHandler(c *gin.Context) error {
 	allPaymentMethod, err := newPaymentMethod.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's PaymentMethod List",
@@ -89,8 +88,8 @@ func updatePaymentMethodHandler(c *gin.Context) error {
 		return err
 	}
 	newPaymentMethod := models.NewPaymentMethodRepository(db.DB)
-	
-	payment_methodModel , err := newPaymentMethod.GetSingle(idParams)
+
+	payment_methodModel, err := newPaymentMethod.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updatePaymentMethodHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//payment_methodModel := models.PaymentMethod{}
+	//payment_methodModel := models.PaymentMethod{}
 	c.Bind(payment_methodModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updatePaymentMethodHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updatePaymentMethodHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "PaymentMethod successfully updated!!")
+	setFlashmessages(c, "success", "PaymentMethod successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/payment_method/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, payment_method.PaymentMethodIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, payment_method.PaymentMethodIndex(
 		fmt.Sprintf("| Edit PaymentMethod #%d", payment_methodModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deletePaymentMethodHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

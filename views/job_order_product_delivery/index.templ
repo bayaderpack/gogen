@@ -1,14 +1,13 @@
 package job_order_product_delivery
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ JobOrderProductDeliveryList(titlePage string,  job_order_product_deliveries []models.JobOrderProductDelivery) {
+templ JobOrderProductDeliveryList(titlePage string, job_order_product_deliveries []models.JobOrderProductDelivery) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,14 +23,13 @@ templ JobOrderProductDeliveryList(titlePage string,  job_order_product_deliverie
 				<tr>
 					<th></th>
 					<th class="text-center">Job Order Product Id</th>
-<th class="text-center">Quantity</th>
-<th class="text-center">Boxes</th>
-<th class="text-center">Filling</th>
-<th class="text-center">Last Filling</th>
-<th class="text-center">Note</th>
-<th class="text-center">Delivery Date</th>
-<th class="text-center">Admin Id</th>
-
+					<th class="text-center">Quantity</th>
+					<th class="text-center">Boxes</th>
+					<th class="text-center">Filling</th>
+					<th class="text-center">Last Filling</th>
+					<th class="text-center">Note</th>
+					<th class="text-center">Delivery Date</th>
+					<th class="text-center">Admin Id</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -39,22 +37,28 @@ templ JobOrderProductDeliveryList(titlePage string,  job_order_product_deliverie
 				<tbody>
 					for _, job_order_product_delivery := range job_order_product_deliveries {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",job_order_product_delivery.JobOrderProductID)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.Quantity)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.Boxes)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.Filling)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.LastFilling)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.Note)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.DeliveryDate)} </td>\n<td>{fmt.Sprintf("%s",job_order_product_delivery.AdminID)} </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.JobOrderProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.Quantity) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.Boxes) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.Filling) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.LastFilling) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.Note) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.DeliveryDate) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_product_delivery.AdminID) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/job_order_product_delivery/edit/%d", job_order_product_delivery.JobOrderProductID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/job_order_product_delivery/edit/%d", job_order_product_delivery.JobOrderProductID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/job_order_product_delivery/delete/%d", job_order_product_delivery.JobOrderProductID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_product_delivery with ID #%d?", job_order_product_delivery.JobOrderProductID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/job_order_product_delivery/delete/%d", job_order_product_delivery.JobOrderProductID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_product_delivery with ID #%d?", job_order_product_delivery.JobOrderProductID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -76,13 +80,13 @@ templ JobOrderProductDeliveryList(titlePage string,  job_order_product_deliverie
 }
 
 templ JobOrderProductDeliveryIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/product_view"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createProductViewHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	product_viewModel := models.ProductView{}
-	c.Bind(&product_viewModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		product_viewModel := models.ProductView{}
+		c.Bind(&product_viewModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newProductView := models.NewProductViewRepository(db.DB)
-	newProductView.Create(&product_viewModel)
+		newProductView := models.NewProductViewRepository(db.DB)
+		newProductView.Create(&product_viewModel)
 
-setFlashmessages(c, "success", "ProductView created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "ProductView created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func product_viewListHandler(c *gin.Context) error {
 	allProductView, err := newProductView.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's ProductView List",
@@ -89,8 +88,8 @@ func updateProductViewHandler(c *gin.Context) error {
 		return err
 	}
 	newProductView := models.NewProductViewRepository(db.DB)
-	
-	product_viewModel , err := newProductView.GetSingle(idParams)
+
+	product_viewModel, err := newProductView.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateProductViewHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//product_viewModel := models.ProductView{}
+	//product_viewModel := models.ProductView{}
 	c.Bind(product_viewModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateProductViewHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateProductViewHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "ProductView successfully updated!!")
+	setFlashmessages(c, "success", "ProductView successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/product_view/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, product_view.ProductViewIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, product_view.ProductViewIndex(
 		fmt.Sprintf("| Edit ProductView #%d", product_viewModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteProductViewHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

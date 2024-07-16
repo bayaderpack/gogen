@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/sample_quotation"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSampleQuotationHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	sample_quotationModel := models.SampleQuotation{}
-	c.Bind(&sample_quotationModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		sample_quotationModel := models.SampleQuotation{}
+		c.Bind(&sample_quotationModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSampleQuotation := models.NewSampleQuotationRepository(db.DB)
-	newSampleQuotation.Create(&sample_quotationModel)
+		newSampleQuotation := models.NewSampleQuotationRepository(db.DB)
+		newSampleQuotation.Create(&sample_quotationModel)
 
-setFlashmessages(c, "success", "SampleQuotation created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "SampleQuotation created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func sample_quotationListHandler(c *gin.Context) error {
 	allSampleQuotation, err := newSampleQuotation.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's SampleQuotation List",
@@ -89,8 +88,8 @@ func updateSampleQuotationHandler(c *gin.Context) error {
 		return err
 	}
 	newSampleQuotation := models.NewSampleQuotationRepository(db.DB)
-	
-	sample_quotationModel , err := newSampleQuotation.GetSingle(idParams)
+
+	sample_quotationModel, err := newSampleQuotation.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSampleQuotationHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//sample_quotationModel := models.SampleQuotation{}
+	//sample_quotationModel := models.SampleQuotation{}
 	c.Bind(sample_quotationModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSampleQuotationHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSampleQuotationHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "SampleQuotation successfully updated!!")
+	setFlashmessages(c, "success", "SampleQuotation successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/sample_quotation/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, sample_quotation.SampleQuotationIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, sample_quotation.SampleQuotationIndex(
 		fmt.Sprintf("| Edit SampleQuotation #%d", sample_quotationModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSampleQuotationHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

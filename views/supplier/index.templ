@@ -1,14 +1,13 @@
 package supplier
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ SupplierList(titlePage string,  suppliers []models.Supplier) {
+templ SupplierList(titlePage string, suppliers []models.Supplier) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,15 +23,14 @@ templ SupplierList(titlePage string,  suppliers []models.Supplier) {
 				<tr>
 					<th></th>
 					<th class="text-center">Supplier Id</th>
-<th class="text-center">Group Id</th>
-<th class="text-center">Name</th>
-<th class="text-center">Contact Name</th>
-<th class="text-center">Country Code</th>
-<th class="text-center">Mobile</th>
-<th class="text-center">City</th>
-<th class="text-center">Address</th>
-<th class="text-center">Location</th>
-
+					<th class="text-center">Group Id</th>
+					<th class="text-center">Name</th>
+					<th class="text-center">Contact Name</th>
+					<th class="text-center">Country Code</th>
+					<th class="text-center">Mobile</th>
+					<th class="text-center">City</th>
+					<th class="text-center">Address</th>
+					<th class="text-center">Location</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -40,22 +38,29 @@ templ SupplierList(titlePage string,  suppliers []models.Supplier) {
 				<tbody>
 					for _, supplier := range suppliers {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",supplier.SupplierID)} </td>\n<td>{fmt.Sprintf("%s",supplier.GroupID)} </td>\n<td>{fmt.Sprintf("%s",supplier.Name)} </td>\n<td>{fmt.Sprintf("%s",supplier.ContactName)} </td>\n<td>{fmt.Sprintf("%s",supplier.CountryCode)} </td>\n<td>{fmt.Sprintf("%s",supplier.Mobile)} </td>\n<td>{fmt.Sprintf("%s",supplier.City)} </td>\n<td>{fmt.Sprintf("%s",supplier.Address)} </td>\n<td>{fmt.Sprintf("%s",supplier.Location)} </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.SupplierID) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.GroupID) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.Name) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.ContactName) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.CountryCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.Mobile) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.City) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.Address) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier.Location) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/supplier/edit/%d", supplier.SupplierID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/supplier/edit/%d", supplier.SupplierID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/supplier/delete/%d", supplier.SupplierID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the supplier with ID #%d?", supplier.SupplierID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/supplier/delete/%d", supplier.SupplierID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the supplier with ID #%d?", supplier.SupplierID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -77,13 +82,13 @@ templ SupplierList(titlePage string,  suppliers []models.Supplier) {
 }
 
 templ SupplierIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

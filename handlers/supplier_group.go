@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/supplier_group"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSupplierGroupHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	supplier_groupModel := models.SupplierGroup{}
-	c.Bind(&supplier_groupModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		supplier_groupModel := models.SupplierGroup{}
+		c.Bind(&supplier_groupModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSupplierGroup := models.NewSupplierGroupRepository(db.DB)
-	newSupplierGroup.Create(&supplier_groupModel)
+		newSupplierGroup := models.NewSupplierGroupRepository(db.DB)
+		newSupplierGroup.Create(&supplier_groupModel)
 
-setFlashmessages(c, "success", "SupplierGroup created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "SupplierGroup created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func supplier_groupListHandler(c *gin.Context) error {
 	allSupplierGroup, err := newSupplierGroup.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's SupplierGroup List",
@@ -89,8 +88,8 @@ func updateSupplierGroupHandler(c *gin.Context) error {
 		return err
 	}
 	newSupplierGroup := models.NewSupplierGroupRepository(db.DB)
-	
-	supplier_groupModel , err := newSupplierGroup.GetSingle(idParams)
+
+	supplier_groupModel, err := newSupplierGroup.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSupplierGroupHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//supplier_groupModel := models.SupplierGroup{}
+	//supplier_groupModel := models.SupplierGroup{}
 	c.Bind(supplier_groupModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSupplierGroupHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSupplierGroupHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "SupplierGroup successfully updated!!")
+	setFlashmessages(c, "success", "SupplierGroup successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/supplier_group/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, supplier_group.SupplierGroupIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, supplier_group.SupplierGroupIndex(
 		fmt.Sprintf("| Edit SupplierGroup #%d", supplier_groupModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSupplierGroupHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

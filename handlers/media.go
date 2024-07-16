@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/media"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createMediaHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	mediaModel := models.Media{}
-	c.Bind(&mediaModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		mediaModel := models.Media{}
+		c.Bind(&mediaModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newMedia := models.NewMediaRepository(db.DB)
-	newMedia.Create(&mediaModel)
+		newMedia := models.NewMediaRepository(db.DB)
+		newMedia.Create(&mediaModel)
 
-setFlashmessages(c, "success", "Media created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Media created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func mediaListHandler(c *gin.Context) error {
 	allMedia, err := newMedia.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Media List",
@@ -89,8 +88,8 @@ func updateMediaHandler(c *gin.Context) error {
 		return err
 	}
 	newMedia := models.NewMediaRepository(db.DB)
-	
-	mediaModel , err := newMedia.GetSingle(idParams)
+
+	mediaModel, err := newMedia.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateMediaHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//mediaModel := models.Media{}
+	//mediaModel := models.Media{}
 	c.Bind(mediaModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateMediaHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateMediaHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Media successfully updated!!")
+	setFlashmessages(c, "success", "Media successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/media/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, media.MediaIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, media.MediaIndex(
 		fmt.Sprintf("| Edit Media #%d", mediaModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteMediaHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

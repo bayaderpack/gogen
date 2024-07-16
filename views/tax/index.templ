@@ -1,14 +1,13 @@
 package tax
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ TaxList(titlePage string,  taxes []models.Tax) {
+templ TaxList(titlePage string, taxes []models.Tax) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,10 +23,9 @@ templ TaxList(titlePage string,  taxes []models.Tax) {
 				<tr>
 					<th></th>
 					<th class="text-center">Tax Id</th>
-<th class="text-center">Value</th>
-<th class="text-center">Title</th>
-<th class="text-center">Status</th>
-
+					<th class="text-center">Value</th>
+					<th class="text-center">Title</th>
+					<th class="text-center">Status</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -35,22 +33,24 @@ templ TaxList(titlePage string,  taxes []models.Tax) {
 				<tbody>
 					for _, tax := range taxes {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",tax.TaxID)} </td>\n<td>{fmt.Sprintf("%s",tax.Value)} </td>\n<td>{fmt.Sprintf("%s",tax.Title)} </td>\n<td>{fmt.Sprintf("%s",tax.Status)} </td>\n
+							<td>{ fmt.Sprintf("%s",tax.TaxID) } </td>\n
+							<td>{ fmt.Sprintf("%s",tax.Value) } </td>\n
+							<td>{ fmt.Sprintf("%s",tax.Title) } </td>\n
+							<td>{ fmt.Sprintf("%s",tax.Status) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/tax/edit/%d", tax.TaxID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/tax/edit/%d", tax.TaxID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/tax/delete/%d", tax.TaxID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the tax with ID #%d?", tax.TaxID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/tax/delete/%d", tax.TaxID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the tax with ID #%d?", tax.TaxID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -72,13 +72,13 @@ templ TaxList(titlePage string,  taxes []models.Tax) {
 }
 
 templ TaxIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

@@ -1,9 +1,8 @@
 package unit
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateUnit(unit models.Unit, tz string) {
@@ -12,37 +11,38 @@ templ UpdateUnit(unit models.Unit, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Unit Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="unit_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(unit.UnitID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Single Factor:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="single_factor"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(unit.SingleFactor))}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(unit.Status)} required />
-	  </label>
-	</div>
-		
+			<label class="flex flex-col justify-start gap-2">
+				Unit Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="unit_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(unit.UnitID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Single Factor:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="single_factor"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(unit.SingleFactor)) }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(unit.Status) } required/>
+				</label>
+			</div>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

@@ -1,14 +1,13 @@
 package supplier_contact
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ SupplierContactList(titlePage string,  supplier_contacts []models.SupplierContact) {
+templ SupplierContactList(titlePage string, supplier_contacts []models.SupplierContact) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,10 +23,9 @@ templ SupplierContactList(titlePage string,  supplier_contacts []models.Supplier
 				<tr>
 					<th></th>
 					<th class="text-center">Supplier Id</th>
-<th class="text-center">Name</th>
-<th class="text-center">Country Code</th>
-<th class="text-center">Mobile</th>
-
+					<th class="text-center">Name</th>
+					<th class="text-center">Country Code</th>
+					<th class="text-center">Mobile</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -35,22 +33,24 @@ templ SupplierContactList(titlePage string,  supplier_contacts []models.Supplier
 				<tbody>
 					for _, supplier_contact := range supplier_contacts {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",supplier_contact.SupplierID)} </td>\n<td>{fmt.Sprintf("%s",supplier_contact.Name)} </td>\n<td>{fmt.Sprintf("%s",supplier_contact.CountryCode)} </td>\n<td>{fmt.Sprintf("%s",supplier_contact.Mobile)} </td>\n
+							<td>{ fmt.Sprintf("%s",supplier_contact.SupplierID) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier_contact.Name) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier_contact.CountryCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",supplier_contact.Mobile) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/supplier_contact/edit/%d", supplier_contact.SupplierID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/supplier_contact/edit/%d", supplier_contact.SupplierID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/supplier_contact/delete/%d", supplier_contact.SupplierID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the supplier_contact with ID #%d?", supplier_contact.SupplierID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/supplier_contact/delete/%d", supplier_contact.SupplierID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the supplier_contact with ID #%d?", supplier_contact.SupplierID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -72,13 +72,13 @@ templ SupplierContactList(titlePage string,  supplier_contacts []models.Supplier
 }
 
 templ SupplierContactIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

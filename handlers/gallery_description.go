@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/gallery_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createGalleryDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	gallery_descriptionModel := models.GalleryDescription{}
-	c.Bind(&gallery_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		gallery_descriptionModel := models.GalleryDescription{}
+		c.Bind(&gallery_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newGalleryDescription := models.NewGalleryDescriptionRepository(db.DB)
-	newGalleryDescription.Create(&gallery_descriptionModel)
+		newGalleryDescription := models.NewGalleryDescriptionRepository(db.DB)
+		newGalleryDescription.Create(&gallery_descriptionModel)
 
-setFlashmessages(c, "success", "GalleryDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "GalleryDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func gallery_descriptionListHandler(c *gin.Context) error {
 	allGalleryDescription, err := newGalleryDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's GalleryDescription List",
@@ -89,8 +88,8 @@ func updateGalleryDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newGalleryDescription := models.NewGalleryDescriptionRepository(db.DB)
-	
-	gallery_descriptionModel , err := newGalleryDescription.GetSingle(idParams)
+
+	gallery_descriptionModel, err := newGalleryDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateGalleryDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//gallery_descriptionModel := models.GalleryDescription{}
+	//gallery_descriptionModel := models.GalleryDescription{}
 	c.Bind(gallery_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateGalleryDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateGalleryDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "GalleryDescription successfully updated!!")
+	setFlashmessages(c, "success", "GalleryDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/gallery_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, gallery_description.GalleryDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, gallery_description.GalleryDescriptionIndex(
 		fmt.Sprintf("| Edit GalleryDescription #%d", gallery_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteGalleryDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

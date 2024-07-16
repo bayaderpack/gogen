@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/material_property"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createMaterialPropertyHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	material_propertyModel := models.MaterialProperty{}
-	c.Bind(&material_propertyModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		material_propertyModel := models.MaterialProperty{}
+		c.Bind(&material_propertyModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newMaterialProperty := models.NewMaterialPropertyRepository(db.DB)
-	newMaterialProperty.Create(&material_propertyModel)
+		newMaterialProperty := models.NewMaterialPropertyRepository(db.DB)
+		newMaterialProperty.Create(&material_propertyModel)
 
-setFlashmessages(c, "success", "MaterialProperty created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "MaterialProperty created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func material_propertyListHandler(c *gin.Context) error {
 	allMaterialProperty, err := newMaterialProperty.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's MaterialProperty List",
@@ -89,8 +88,8 @@ func updateMaterialPropertyHandler(c *gin.Context) error {
 		return err
 	}
 	newMaterialProperty := models.NewMaterialPropertyRepository(db.DB)
-	
-	material_propertyModel , err := newMaterialProperty.GetSingle(idParams)
+
+	material_propertyModel, err := newMaterialProperty.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateMaterialPropertyHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//material_propertyModel := models.MaterialProperty{}
+	//material_propertyModel := models.MaterialProperty{}
 	c.Bind(material_propertyModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateMaterialPropertyHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateMaterialPropertyHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "MaterialProperty successfully updated!!")
+	setFlashmessages(c, "success", "MaterialProperty successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/material_property/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, material_property.MaterialPropertyIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, material_property.MaterialPropertyIndex(
 		fmt.Sprintf("| Edit MaterialProperty #%d", material_propertyModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteMaterialPropertyHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/job_order_product_delivery"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createJobOrderProductDeliveryHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	job_order_product_deliveryModel := models.JobOrderProductDelivery{}
-	c.Bind(&job_order_product_deliveryModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		job_order_product_deliveryModel := models.JobOrderProductDelivery{}
+		c.Bind(&job_order_product_deliveryModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newJobOrderProductDelivery := models.NewJobOrderProductDeliveryRepository(db.DB)
-	newJobOrderProductDelivery.Create(&job_order_product_deliveryModel)
+		newJobOrderProductDelivery := models.NewJobOrderProductDeliveryRepository(db.DB)
+		newJobOrderProductDelivery.Create(&job_order_product_deliveryModel)
 
-setFlashmessages(c, "success", "JobOrderProductDelivery created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "JobOrderProductDelivery created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func job_order_product_deliveryListHandler(c *gin.Context) error {
 	allJobOrderProductDelivery, err := newJobOrderProductDelivery.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's JobOrderProductDelivery List",
@@ -89,8 +88,8 @@ func updateJobOrderProductDeliveryHandler(c *gin.Context) error {
 		return err
 	}
 	newJobOrderProductDelivery := models.NewJobOrderProductDeliveryRepository(db.DB)
-	
-	job_order_product_deliveryModel , err := newJobOrderProductDelivery.GetSingle(idParams)
+
+	job_order_product_deliveryModel, err := newJobOrderProductDelivery.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateJobOrderProductDeliveryHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//job_order_product_deliveryModel := models.JobOrderProductDelivery{}
+	//job_order_product_deliveryModel := models.JobOrderProductDelivery{}
 	c.Bind(job_order_product_deliveryModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateJobOrderProductDeliveryHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateJobOrderProductDeliveryHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "JobOrderProductDelivery successfully updated!!")
+	setFlashmessages(c, "success", "JobOrderProductDelivery successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/job_order_product_delivery/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, job_order_product_delivery.JobOrderProductDeliveryIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, job_order_product_delivery.JobOrderProductDeliveryIndex(
 		fmt.Sprintf("| Edit JobOrderProductDelivery #%d", job_order_product_deliveryModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteJobOrderProductDeliveryHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,14 +1,13 @@
 package auth
 
 import (
-	"time"
 	"fmt"
+	"time"
 
 	"github.com/anfen93/goPasetoV4"
 )
 
-
-//Function for generating authentication token
+// Function for generating authentication token
 func GenerateToken() {
 	maker := goPasetoV4.NewPasetoMaker()
 
@@ -21,12 +20,9 @@ func GenerateToken() {
 	// fmt.Printf("Generated Token: %v", a)
 
 	_, err = maker.VerifyToken(a)
-    if err != nil {
-        fmt.Printf("Error verifying token: %v", err)
-    }
+	if err != nil {
+		fmt.Printf("Error verifying token: %v", err)
+	}
 
-    // fmt.Printf("Token Payload: %+v", payload.Username)
+	// fmt.Printf("Token Payload: %+v", payload.Username)
 }
-
-
-

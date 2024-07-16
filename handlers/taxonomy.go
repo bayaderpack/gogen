@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/taxonomy"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createTaxonomyHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	taxonomyModel := models.Taxonomy{}
-	c.Bind(&taxonomyModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		taxonomyModel := models.Taxonomy{}
+		c.Bind(&taxonomyModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newTaxonomy := models.NewTaxonomyRepository(db.DB)
-	newTaxonomy.Create(&taxonomyModel)
+		newTaxonomy := models.NewTaxonomyRepository(db.DB)
+		newTaxonomy.Create(&taxonomyModel)
 
-setFlashmessages(c, "success", "Taxonomy created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Taxonomy created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func taxonomyListHandler(c *gin.Context) error {
 	allTaxonomy, err := newTaxonomy.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Taxonomy List",
@@ -89,8 +88,8 @@ func updateTaxonomyHandler(c *gin.Context) error {
 		return err
 	}
 	newTaxonomy := models.NewTaxonomyRepository(db.DB)
-	
-	taxonomyModel , err := newTaxonomy.GetSingle(idParams)
+
+	taxonomyModel, err := newTaxonomy.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateTaxonomyHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//taxonomyModel := models.Taxonomy{}
+	//taxonomyModel := models.Taxonomy{}
 	c.Bind(taxonomyModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateTaxonomyHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateTaxonomyHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Taxonomy successfully updated!!")
+	setFlashmessages(c, "success", "Taxonomy successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/taxonomy/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, taxonomy.TaxonomyIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, taxonomy.TaxonomyIndex(
 		fmt.Sprintf("| Edit Taxonomy #%d", taxonomyModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteTaxonomyHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

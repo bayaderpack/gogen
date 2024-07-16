@@ -1,9 +1,8 @@
 package order_products_options
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateOrderProductsOptions(order_products_options models.OrderProductsOptions, tz string) {
@@ -12,99 +11,106 @@ templ UpdateOrderProductsOptions(order_products_options models.OrderProductsOpti
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Order Product Option Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="order_product_option_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(order_products_options.OrderProductOptionID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Order Product Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="order_product_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(order_products_options.OrderProductID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Option Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="option_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(order_products_options.OptionID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Option Value Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="option_value_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(order_products_options.OptionValueID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Type:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="type"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={order_products_options.Type}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Op Prefix:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="op_prefix"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={order_products_options.OpPrefix}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Title:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="title"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={order_products_options.Title}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Value:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			value
-			name="required"
-			maxlength="255"
-		>{order_products_options.Value}</textarea>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Order Product Option Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="order_product_option_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(order_products_options.OrderProductOptionID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Order Product Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="order_product_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(order_products_options.OrderProductID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Option Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="option_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(order_products_options.OptionID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Option Value Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="option_value_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(order_products_options.OptionValueID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Type:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="type"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ order_products_options.Type }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Op Prefix:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="op_prefix"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ order_products_options.OpPrefix }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Title:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="title"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ order_products_options.Title }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Value:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					value
+					name="required"
+					maxlength="255"
+				>{ order_products_options.Value }</textarea>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

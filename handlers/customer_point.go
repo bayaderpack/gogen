@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/customer_point"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createCustomerPointHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	customer_pointModel := models.CustomerPoint{}
-	c.Bind(&customer_pointModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		customer_pointModel := models.CustomerPoint{}
+		c.Bind(&customer_pointModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newCustomerPoint := models.NewCustomerPointRepository(db.DB)
-	newCustomerPoint.Create(&customer_pointModel)
+		newCustomerPoint := models.NewCustomerPointRepository(db.DB)
+		newCustomerPoint.Create(&customer_pointModel)
 
-setFlashmessages(c, "success", "CustomerPoint created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "CustomerPoint created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func customer_pointListHandler(c *gin.Context) error {
 	allCustomerPoint, err := newCustomerPoint.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's CustomerPoint List",
@@ -89,8 +88,8 @@ func updateCustomerPointHandler(c *gin.Context) error {
 		return err
 	}
 	newCustomerPoint := models.NewCustomerPointRepository(db.DB)
-	
-	customer_pointModel , err := newCustomerPoint.GetSingle(idParams)
+
+	customer_pointModel, err := newCustomerPoint.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateCustomerPointHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//customer_pointModel := models.CustomerPoint{}
+	//customer_pointModel := models.CustomerPoint{}
 	c.Bind(customer_pointModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateCustomerPointHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateCustomerPointHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "CustomerPoint successfully updated!!")
+	setFlashmessages(c, "success", "CustomerPoint successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/customer_point/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, customer_point.CustomerPointIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, customer_point.CustomerPointIndex(
 		fmt.Sprintf("| Edit CustomerPoint #%d", customer_pointModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteCustomerPointHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

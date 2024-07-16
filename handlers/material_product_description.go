@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/material_product_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createMaterialProductDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	material_product_descriptionModel := models.MaterialProductDescription{}
-	c.Bind(&material_product_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		material_product_descriptionModel := models.MaterialProductDescription{}
+		c.Bind(&material_product_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newMaterialProductDescription := models.NewMaterialProductDescriptionRepository(db.DB)
-	newMaterialProductDescription.Create(&material_product_descriptionModel)
+		newMaterialProductDescription := models.NewMaterialProductDescriptionRepository(db.DB)
+		newMaterialProductDescription.Create(&material_product_descriptionModel)
 
-setFlashmessages(c, "success", "MaterialProductDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "MaterialProductDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func material_product_descriptionListHandler(c *gin.Context) error {
 	allMaterialProductDescription, err := newMaterialProductDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's MaterialProductDescription List",
@@ -89,8 +88,8 @@ func updateMaterialProductDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newMaterialProductDescription := models.NewMaterialProductDescriptionRepository(db.DB)
-	
-	material_product_descriptionModel , err := newMaterialProductDescription.GetSingle(idParams)
+
+	material_product_descriptionModel, err := newMaterialProductDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateMaterialProductDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//material_product_descriptionModel := models.MaterialProductDescription{}
+	//material_product_descriptionModel := models.MaterialProductDescription{}
 	c.Bind(material_product_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateMaterialProductDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateMaterialProductDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "MaterialProductDescription successfully updated!!")
+	setFlashmessages(c, "success", "MaterialProductDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/material_product_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, material_product_description.MaterialProductDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, material_product_description.MaterialProductDescriptionIndex(
 		fmt.Sprintf("| Edit MaterialProductDescription #%d", material_product_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteMaterialProductDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

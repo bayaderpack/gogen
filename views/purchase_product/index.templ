@@ -1,14 +1,13 @@
 package purchase_product
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ PurchaseProductList(titlePage string,  purchase_products []models.PurchaseProduct) {
+templ PurchaseProductList(titlePage string, purchase_products []models.PurchaseProduct) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,15 +23,14 @@ templ PurchaseProductList(titlePage string,  purchase_products []models.Purchase
 				<tr>
 					<th></th>
 					<th class="text-center">Purchase Product Id</th>
-<th class="text-center">Purchase Id</th>
-<th class="text-center">Material Product Id</th>
-<th class="text-center">Unit Id</th>
-<th class="text-center">Supplier Ref Number</th>
-<th class="text-center">Comment</th>
-<th class="text-center">Tax Id</th>
-<th class="text-center">Unit Price</th>
-<th class="text-center">Quantity</th>
-
+					<th class="text-center">Purchase Id</th>
+					<th class="text-center">Material Product Id</th>
+					<th class="text-center">Unit Id</th>
+					<th class="text-center">Supplier Ref Number</th>
+					<th class="text-center">Comment</th>
+					<th class="text-center">Tax Id</th>
+					<th class="text-center">Unit Price</th>
+					<th class="text-center">Quantity</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -40,22 +38,29 @@ templ PurchaseProductList(titlePage string,  purchase_products []models.Purchase
 				<tbody>
 					for _, purchase_product := range purchase_products {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",purchase_product.PurchaseProductID)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.PurchaseID)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.MaterialProductID)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.UnitID)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.SupplierRefNumber)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.Comment)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.TaxID)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.UnitPrice)} </td>\n<td>{fmt.Sprintf("%s",purchase_product.Quantity)} </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.PurchaseProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.PurchaseID) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.MaterialProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.UnitID) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.SupplierRefNumber) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.Comment) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.TaxID) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.UnitPrice) } </td>\n
+							<td>{ fmt.Sprintf("%s",purchase_product.Quantity) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/purchase_product/edit/%d", purchase_product.PurchaseProductID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/purchase_product/edit/%d", purchase_product.PurchaseProductID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/purchase_product/delete/%d", purchase_product.PurchaseProductID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the purchase_product with ID #%d?", purchase_product.PurchaseProductID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/purchase_product/delete/%d", purchase_product.PurchaseProductID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the purchase_product with ID #%d?", purchase_product.PurchaseProductID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -77,13 +82,13 @@ templ PurchaseProductList(titlePage string,  purchase_products []models.Purchase
 }
 
 templ PurchaseProductIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

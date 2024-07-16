@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/sheet_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSheetDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	sheet_descriptionModel := models.SheetDescription{}
-	c.Bind(&sheet_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		sheet_descriptionModel := models.SheetDescription{}
+		c.Bind(&sheet_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSheetDescription := models.NewSheetDescriptionRepository(db.DB)
-	newSheetDescription.Create(&sheet_descriptionModel)
+		newSheetDescription := models.NewSheetDescriptionRepository(db.DB)
+		newSheetDescription.Create(&sheet_descriptionModel)
 
-setFlashmessages(c, "success", "SheetDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "SheetDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func sheet_descriptionListHandler(c *gin.Context) error {
 	allSheetDescription, err := newSheetDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's SheetDescription List",
@@ -89,8 +88,8 @@ func updateSheetDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newSheetDescription := models.NewSheetDescriptionRepository(db.DB)
-	
-	sheet_descriptionModel , err := newSheetDescription.GetSingle(idParams)
+
+	sheet_descriptionModel, err := newSheetDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSheetDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//sheet_descriptionModel := models.SheetDescription{}
+	//sheet_descriptionModel := models.SheetDescription{}
 	c.Bind(sheet_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSheetDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSheetDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "SheetDescription successfully updated!!")
+	setFlashmessages(c, "success", "SheetDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/sheet_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, sheet_description.SheetDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, sheet_description.SheetDescriptionIndex(
 		fmt.Sprintf("| Edit SheetDescription #%d", sheet_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSheetDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,14 +1,13 @@
 package event_history
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ EventHistoryList(titlePage string,  event_histories []models.EventHistory) {
+templ EventHistoryList(titlePage string, event_histories []models.EventHistory) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,12 +23,11 @@ templ EventHistoryList(titlePage string,  event_histories []models.EventHistory)
 				<tr>
 					<th></th>
 					<th class="text-center">Event History Id</th>
-<th class="text-center">Event Id</th>
-<th class="text-center">Customer Id</th>
-<th class="text-center">Admin Id</th>
-<th class="text-center">Message</th>
-<th class="text-center">Args</th>
-
+					<th class="text-center">Event Id</th>
+					<th class="text-center">Customer Id</th>
+					<th class="text-center">Admin Id</th>
+					<th class="text-center">Message</th>
+					<th class="text-center">Args</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -37,22 +35,26 @@ templ EventHistoryList(titlePage string,  event_histories []models.EventHistory)
 				<tbody>
 					for _, event_history := range event_histories {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",event_history.EventHistoryID)} </td>\n<td>{fmt.Sprintf("%s",event_history.EventID)} </td>\n<td>{fmt.Sprintf("%s",event_history.CustomerID)} </td>\n<td>{fmt.Sprintf("%s",event_history.AdminID)} </td>\n<td>{fmt.Sprintf("%s",event_history.Message)} </td>\n<td>{fmt.Sprintf("%s",event_history.Args)} </td>\n
+							<td>{ fmt.Sprintf("%s",event_history.EventHistoryID) } </td>\n
+							<td>{ fmt.Sprintf("%s",event_history.EventID) } </td>\n
+							<td>{ fmt.Sprintf("%s",event_history.CustomerID) } </td>\n
+							<td>{ fmt.Sprintf("%s",event_history.AdminID) } </td>\n
+							<td>{ fmt.Sprintf("%s",event_history.Message) } </td>\n
+							<td>{ fmt.Sprintf("%s",event_history.Args) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/event_history/edit/%d", event_history.EventHistoryID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/event_history/edit/%d", event_history.EventHistoryID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/event_history/delete/%d", event_history.EventHistoryID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the event_history with ID #%d?", event_history.EventHistoryID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/event_history/delete/%d", event_history.EventHistoryID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the event_history with ID #%d?", event_history.EventHistoryID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -74,13 +76,13 @@ templ EventHistoryList(titlePage string,  event_histories []models.EventHistory)
 }
 
 templ EventHistoryIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

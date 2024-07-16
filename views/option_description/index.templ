@@ -1,14 +1,13 @@
 package option_description
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ OptionDescriptionList(titlePage string,  option_descriptions []models.OptionDescription) {
+templ OptionDescriptionList(titlePage string, option_descriptions []models.OptionDescription) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,9 +23,8 @@ templ OptionDescriptionList(titlePage string,  option_descriptions []models.Opti
 				<tr>
 					<th></th>
 					<th class="text-center">Option Id</th>
-<th class="text-center">Language</th>
-<th class="text-center">Title</th>
-
+					<th class="text-center">Language</th>
+					<th class="text-center">Title</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -34,22 +32,23 @@ templ OptionDescriptionList(titlePage string,  option_descriptions []models.Opti
 				<tbody>
 					for _, option_description := range option_descriptions {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",option_description.OptionID)} </td>\n<td>{fmt.Sprintf("%s",option_description.Language)} </td>\n<td>{fmt.Sprintf("%s",option_description.Title)} </td>\n
+							<td>{ fmt.Sprintf("%s",option_description.OptionID) } </td>\n
+							<td>{ fmt.Sprintf("%s",option_description.Language) } </td>\n
+							<td>{ fmt.Sprintf("%s",option_description.Title) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/option_description/edit/%d", option_description.OptionID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/option_description/edit/%d", option_description.OptionID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/option_description/delete/%d", option_description.OptionID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the option_description with ID #%d?", option_description.OptionID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/option_description/delete/%d", option_description.OptionID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the option_description with ID #%d?", option_description.OptionID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -71,13 +70,13 @@ templ OptionDescriptionList(titlePage string,  option_descriptions []models.Opti
 }
 
 templ OptionDescriptionIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

@@ -1,9 +1,8 @@
 package product_option
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateProductOption(product_option models.ProductOption, tz string) {
@@ -12,71 +11,75 @@ templ UpdateProductOption(product_option models.ProductOption, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Product Option Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="product_option_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(product_option.ProductOptionID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Product Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="product_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(product_option.ProductID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Option Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="option_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(product_option.OptionID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Conditions:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			conditions
-			name=""
-			maxlength="255"
-		>{product_option.Conditions}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Value:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			value
-			name=""
-			maxlength="255"
-		>{product_option.Value}</textarea>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Required</span> 
-		<input type="checkbox" name="required" class="checkbox" value={strconv.FormatBool(product_option.Required)} required />
-	  </label>
-	</div>
-		<div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Is Quote</span> 
-		<input type="checkbox" name="is_quote" class="checkbox" value={strconv.FormatBool(product_option.IsQuote)} required />
-	  </label>
-	</div>
-		
+			<label class="flex flex-col justify-start gap-2">
+				Product Option Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="product_option_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(product_option.ProductOptionID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Product Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="product_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(product_option.ProductID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Option Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="option_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(product_option.OptionID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Conditions:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					conditions
+					name=""
+					maxlength="255"
+				>{ product_option.Conditions }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Value:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					value
+					name=""
+					maxlength="255"
+				>{ product_option.Value }</textarea>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Required</span>
+					<input type="checkbox" name="required" class="checkbox" value={ strconv.FormatBool(product_option.Required) } required/>
+				</label>
+			</div>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Is Quote</span>
+					<input type="checkbox" name="is_quote" class="checkbox" value={ strconv.FormatBool(product_option.IsQuote) } required/>
+				</label>
+			</div>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

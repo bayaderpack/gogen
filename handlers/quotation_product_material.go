@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/quotation_product_material"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createQuotationProductMaterialHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	quotation_product_materialModel := models.QuotationProductMaterial{}
-	c.Bind(&quotation_product_materialModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		quotation_product_materialModel := models.QuotationProductMaterial{}
+		c.Bind(&quotation_product_materialModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newQuotationProductMaterial := models.NewQuotationProductMaterialRepository(db.DB)
-	newQuotationProductMaterial.Create(&quotation_product_materialModel)
+		newQuotationProductMaterial := models.NewQuotationProductMaterialRepository(db.DB)
+		newQuotationProductMaterial.Create(&quotation_product_materialModel)
 
-setFlashmessages(c, "success", "QuotationProductMaterial created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "QuotationProductMaterial created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func quotation_product_materialListHandler(c *gin.Context) error {
 	allQuotationProductMaterial, err := newQuotationProductMaterial.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's QuotationProductMaterial List",
@@ -89,8 +88,8 @@ func updateQuotationProductMaterialHandler(c *gin.Context) error {
 		return err
 	}
 	newQuotationProductMaterial := models.NewQuotationProductMaterialRepository(db.DB)
-	
-	quotation_product_materialModel , err := newQuotationProductMaterial.GetSingle(idParams)
+
+	quotation_product_materialModel, err := newQuotationProductMaterial.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateQuotationProductMaterialHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//quotation_product_materialModel := models.QuotationProductMaterial{}
+	//quotation_product_materialModel := models.QuotationProductMaterial{}
 	c.Bind(quotation_product_materialModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateQuotationProductMaterialHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateQuotationProductMaterialHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "QuotationProductMaterial successfully updated!!")
+	setFlashmessages(c, "success", "QuotationProductMaterial successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/quotation_product_material/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, quotation_product_material.QuotationProductMaterialIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, quotation_product_material.QuotationProductMaterialIndex(
 		fmt.Sprintf("| Edit QuotationProductMaterial #%d", quotation_product_materialModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteQuotationProductMaterialHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

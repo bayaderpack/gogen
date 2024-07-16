@@ -1,14 +1,13 @@
 package job_order_supplier
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ JobOrderSupplierList(titlePage string,  job_order_suppliers []models.JobOrderSupplier) {
+templ JobOrderSupplierList(titlePage string, job_order_suppliers []models.JobOrderSupplier) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,9 +23,8 @@ templ JobOrderSupplierList(titlePage string,  job_order_suppliers []models.JobOr
 				<tr>
 					<th></th>
 					<th class="text-center">Job Order Id</th>
-<th class="text-center">Supplier Id</th>
-<th class="text-center">Confirmed</th>
-
+					<th class="text-center">Supplier Id</th>
+					<th class="text-center">Confirmed</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -34,22 +32,23 @@ templ JobOrderSupplierList(titlePage string,  job_order_suppliers []models.JobOr
 				<tbody>
 					for _, job_order_supplier := range job_order_suppliers {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",job_order_supplier.JobOrderID)} </td>\n<td>{fmt.Sprintf("%s",job_order_supplier.SupplierID)} </td>\n<td>{fmt.Sprintf("%s",job_order_supplier.Confirmed)} </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_supplier.JobOrderID) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_supplier.SupplierID) } </td>\n
+							<td>{ fmt.Sprintf("%s",job_order_supplier.Confirmed) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/job_order_supplier/edit/%d", job_order_supplier.JobOrderID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/job_order_supplier/edit/%d", job_order_supplier.JobOrderID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/job_order_supplier/delete/%d", job_order_supplier.JobOrderID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_supplier with ID #%d?", job_order_supplier.JobOrderID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/job_order_supplier/delete/%d", job_order_supplier.JobOrderID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the job_order_supplier with ID #%d?", job_order_supplier.JobOrderID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -71,13 +70,13 @@ templ JobOrderSupplierList(titlePage string,  job_order_suppliers []models.JobOr
 }
 
 templ JobOrderSupplierIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

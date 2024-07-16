@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/job_order"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createJobOrderHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	job_orderModel := models.JobOrder{}
-	c.Bind(&job_orderModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		job_orderModel := models.JobOrder{}
+		c.Bind(&job_orderModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newJobOrder := models.NewJobOrderRepository(db.DB)
-	newJobOrder.Create(&job_orderModel)
+		newJobOrder := models.NewJobOrderRepository(db.DB)
+		newJobOrder.Create(&job_orderModel)
 
-setFlashmessages(c, "success", "JobOrder created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "JobOrder created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func job_orderListHandler(c *gin.Context) error {
 	allJobOrder, err := newJobOrder.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's JobOrder List",
@@ -89,8 +88,8 @@ func updateJobOrderHandler(c *gin.Context) error {
 		return err
 	}
 	newJobOrder := models.NewJobOrderRepository(db.DB)
-	
-	job_orderModel , err := newJobOrder.GetSingle(idParams)
+
+	job_orderModel, err := newJobOrder.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateJobOrderHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//job_orderModel := models.JobOrder{}
+	//job_orderModel := models.JobOrder{}
 	c.Bind(job_orderModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateJobOrderHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateJobOrderHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "JobOrder successfully updated!!")
+	setFlashmessages(c, "success", "JobOrder successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/job_order/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, job_order.JobOrderIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, job_order.JobOrderIndex(
 		fmt.Sprintf("| Edit JobOrder #%d", job_orderModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteJobOrderHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

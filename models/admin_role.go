@@ -1,18 +1,16 @@
 package models
 
 import (
-	
 	"errors"
+
 	"gorm.io/gorm"
 )
-
 
 // admin_role is struct that represent data in Database
 type AdminRole struct {
 	gorm.Model
-	AdminID int `gorm:"column:admin_id;default:" json:"admin_id"`
-Role string `gorm:"column:role;default:" json:"role"`
-
+	AdminID int    `gorm:"column:admin_id;default:" json:"admin_id"`
+	Role    string `gorm:"column:role;default:" json:"role"`
 }
 
 // AdminRole is interface that that model needs to implement
@@ -28,7 +26,6 @@ type admin_roleRepository struct {
 	db *gorm.DB
 }
 
-
 // Create new instance
 func NewAdminRoleRepository(db *gorm.DB) AdminRoleRepository {
 	return &admin_roleRepository{db: db}
@@ -39,8 +36,7 @@ func (r *admin_roleRepository) Create(admin_role *AdminRole) error {
 	return r.db.Create(admin_role).Error
 }
 
-
-//Function to get single instance of admin_role 
+// Function to get single instance of admin_role
 func (r *admin_roleRepository) GetSingle(id int) (*AdminRole, error) {
 	var admin_role AdminRole
 	err := r.db.First(&admin_role, id).Error
@@ -53,20 +49,19 @@ func (r *admin_roleRepository) GetSingle(id int) (*AdminRole, error) {
 	return &admin_role, nil
 }
 
-
-//Function to get all instances of admin_role 
+// Function to get all instances of admin_role
 func (r *admin_roleRepository) GetAll() ([]AdminRole, error) {
 	var admin_role []AdminRole
 	err := r.db.Find(&admin_role).Error
 	return admin_role, err
 }
 
-//Function to update existing instances of admin_role 
+// Function to update existing instances of admin_role
 func (r *admin_roleRepository) Update(admin_role *AdminRole) error {
 	return r.db.Save(admin_role).Error
 }
 
-//Function to delete single instances of admin_role 
+// Function to delete single instances of admin_role
 func (r *admin_roleRepository) Delete(id int) error {
 	result := r.db.Delete(&AdminRole{}, id)
 	return result.Error

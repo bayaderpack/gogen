@@ -1,9 +1,8 @@
 package coupon_product
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateCouponProduct(coupon_product models.CouponProduct, tz string) {
@@ -12,31 +11,32 @@ templ UpdateCouponProduct(coupon_product models.CouponProduct, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Coupon Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="coupon_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(coupon_product.CouponID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Product Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="product_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(coupon_product.ProductID))}
-		/>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Coupon Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="coupon_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(coupon_product.CouponID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Product Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="product_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(coupon_product.ProductID)) }
+				/>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

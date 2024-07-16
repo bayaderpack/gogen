@@ -1,20 +1,18 @@
 package models
 
 import (
-	
 	"errors"
+
 	"gorm.io/gorm"
 )
-
 
 // tax is struct that represent data in Database
 type Tax struct {
 	gorm.Model
-	TaxID int `gorm:"column:tax_id;default:" json:"tax_id"`
-Value float32 `gorm:"column:value;default:" json:"value"`
-Title string `gorm:"column:title;default:" json:"title"`
-Status bool `gorm:"column:status;default:1" json:"status"`
-
+	TaxID  int     `gorm:"column:tax_id;default:" json:"tax_id"`
+	Value  float32 `gorm:"column:value;default:" json:"value"`
+	Title  string  `gorm:"column:title;default:" json:"title"`
+	Status bool    `gorm:"column:status;default:1" json:"status"`
 }
 
 // Tax is interface that that model needs to implement
@@ -30,7 +28,6 @@ type taxRepository struct {
 	db *gorm.DB
 }
 
-
 // Create new instance
 func NewTaxRepository(db *gorm.DB) TaxRepository {
 	return &taxRepository{db: db}
@@ -41,8 +38,7 @@ func (r *taxRepository) Create(tax *Tax) error {
 	return r.db.Create(tax).Error
 }
 
-
-//Function to get single instance of tax 
+// Function to get single instance of tax
 func (r *taxRepository) GetSingle(id int) (*Tax, error) {
 	var tax Tax
 	err := r.db.First(&tax, id).Error
@@ -55,20 +51,19 @@ func (r *taxRepository) GetSingle(id int) (*Tax, error) {
 	return &tax, nil
 }
 
-
-//Function to get all instances of tax 
+// Function to get all instances of tax
 func (r *taxRepository) GetAll() ([]Tax, error) {
 	var tax []Tax
 	err := r.db.Find(&tax).Error
 	return tax, err
 }
 
-//Function to update existing instances of tax 
+// Function to update existing instances of tax
 func (r *taxRepository) Update(tax *Tax) error {
 	return r.db.Save(tax).Error
 }
 
-//Function to delete single instances of tax 
+// Function to delete single instances of tax
 func (r *taxRepository) Delete(id int) error {
 	result := r.db.Delete(&Tax{}, id)
 	return result.Error

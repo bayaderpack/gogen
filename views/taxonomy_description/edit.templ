@@ -1,9 +1,8 @@
 package taxonomy_description
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateTaxonomyDescription(taxonomy_description models.TaxonomyDescription, tz string) {
@@ -12,87 +11,89 @@ templ UpdateTaxonomyDescription(taxonomy_description models.TaxonomyDescription,
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Taxonomy Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="taxonomy_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(taxonomy_description.TaxonomyID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Language:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="language"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={taxonomy_description.Language}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Title:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="title"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={taxonomy_description.Title}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Description:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			description
-			name=""
-			maxlength="255"
-		>{taxonomy_description.Description}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Meta Title:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="meta_title"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={taxonomy_description.MetaTitle}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Meta Description:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="meta_description"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={taxonomy_description.MetaDescription}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Meta Keywords:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="meta_keywords"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={taxonomy_description.MetaKeywords}
-		/>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Taxonomy Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="taxonomy_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(taxonomy_description.TaxonomyID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Language:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="language"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ taxonomy_description.Language }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Title:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="title"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ taxonomy_description.Title }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Description:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					description
+					name=""
+					maxlength="255"
+				>{ taxonomy_description.Description }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Meta Title:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="meta_title"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ taxonomy_description.MetaTitle }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Meta Description:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="meta_description"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ taxonomy_description.MetaDescription }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Meta Keywords:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="meta_keywords"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ taxonomy_description.MetaKeywords }
+				/>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

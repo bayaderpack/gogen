@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/coupon_product"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createCouponProductHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	coupon_productModel := models.CouponProduct{}
-	c.Bind(&coupon_productModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		coupon_productModel := models.CouponProduct{}
+		c.Bind(&coupon_productModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newCouponProduct := models.NewCouponProductRepository(db.DB)
-	newCouponProduct.Create(&coupon_productModel)
+		newCouponProduct := models.NewCouponProductRepository(db.DB)
+		newCouponProduct.Create(&coupon_productModel)
 
-setFlashmessages(c, "success", "CouponProduct created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "CouponProduct created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func coupon_productListHandler(c *gin.Context) error {
 	allCouponProduct, err := newCouponProduct.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's CouponProduct List",
@@ -89,8 +88,8 @@ func updateCouponProductHandler(c *gin.Context) error {
 		return err
 	}
 	newCouponProduct := models.NewCouponProductRepository(db.DB)
-	
-	coupon_productModel , err := newCouponProduct.GetSingle(idParams)
+
+	coupon_productModel, err := newCouponProduct.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateCouponProductHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//coupon_productModel := models.CouponProduct{}
+	//coupon_productModel := models.CouponProduct{}
 	c.Bind(coupon_productModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateCouponProductHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateCouponProductHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "CouponProduct successfully updated!!")
+	setFlashmessages(c, "success", "CouponProduct successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/coupon_product/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, coupon_product.CouponProductIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, coupon_product.CouponProductIndex(
 		fmt.Sprintf("| Edit CouponProduct #%d", coupon_productModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteCouponProductHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,19 +1,17 @@
 package models
 
 import (
-	
 	"errors"
+
 	"gorm.io/gorm"
 )
-
 
 // job_order_supplier is struct that represent data in Database
 type JobOrderSupplier struct {
 	gorm.Model
-	JobOrderID int `gorm:"column:job_order_id;default:" json:"job_order_id"`
-SupplierID int `gorm:"column:supplier_id;default:" json:"supplier_id"`
-Confirmed bool `gorm:"column:confirmed;default:0" json:"confirmed"`
-
+	JobOrderID int  `gorm:"column:job_order_id;default:" json:"job_order_id"`
+	SupplierID int  `gorm:"column:supplier_id;default:" json:"supplier_id"`
+	Confirmed  bool `gorm:"column:confirmed;default:0" json:"confirmed"`
 }
 
 // JobOrderSupplier is interface that that model needs to implement
@@ -29,7 +27,6 @@ type job_order_supplierRepository struct {
 	db *gorm.DB
 }
 
-
 // Create new instance
 func NewJobOrderSupplierRepository(db *gorm.DB) JobOrderSupplierRepository {
 	return &job_order_supplierRepository{db: db}
@@ -40,8 +37,7 @@ func (r *job_order_supplierRepository) Create(job_order_supplier *JobOrderSuppli
 	return r.db.Create(job_order_supplier).Error
 }
 
-
-//Function to get single instance of job_order_supplier 
+// Function to get single instance of job_order_supplier
 func (r *job_order_supplierRepository) GetSingle(id int) (*JobOrderSupplier, error) {
 	var job_order_supplier JobOrderSupplier
 	err := r.db.First(&job_order_supplier, id).Error
@@ -54,20 +50,19 @@ func (r *job_order_supplierRepository) GetSingle(id int) (*JobOrderSupplier, err
 	return &job_order_supplier, nil
 }
 
-
-//Function to get all instances of job_order_supplier 
+// Function to get all instances of job_order_supplier
 func (r *job_order_supplierRepository) GetAll() ([]JobOrderSupplier, error) {
 	var job_order_supplier []JobOrderSupplier
 	err := r.db.Find(&job_order_supplier).Error
 	return job_order_supplier, err
 }
 
-//Function to update existing instances of job_order_supplier 
+// Function to update existing instances of job_order_supplier
 func (r *job_order_supplierRepository) Update(job_order_supplier *JobOrderSupplier) error {
 	return r.db.Save(job_order_supplier).Error
 }
 
-//Function to delete single instances of job_order_supplier 
+// Function to delete single instances of job_order_supplier
 func (r *job_order_supplierRepository) Delete(id int) error {
 	result := r.db.Delete(&JobOrderSupplier{}, id)
 	return result.Error

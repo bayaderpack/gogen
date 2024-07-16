@@ -1,9 +1,8 @@
 package customer_group
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateCustomerGroup(customer_group models.CustomerGroup, tz string) {
@@ -12,41 +11,43 @@ templ UpdateCustomerGroup(customer_group models.CustomerGroup, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Group Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="group_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer_group.GroupID))}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(customer_group.Status)} required />
-	  </label>
-	</div>
-		<label class="flex flex-col justify-start gap-2">
-		Auth Setting:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			auth_setting
-			name=""
-			maxlength="255"
-		>{customer_group.AuthSetting}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Job Setting:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			job_setting
-			name=""
-			maxlength="255"
-		>{customer_group.JobSetting}</textarea>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Group Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="group_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer_group.GroupID)) }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(customer_group.Status) } required/>
+				</label>
+			</div>
+			<label class="flex flex-col justify-start gap-2">
+				Auth Setting:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					auth_setting
+					name=""
+					maxlength="255"
+				>{ customer_group.AuthSetting }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Job Setting:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					job_setting
+					name=""
+					maxlength="255"
+				>{ customer_group.JobSetting }</textarea>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

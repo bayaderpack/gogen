@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/material_product"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createMaterialProductHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	material_productModel := models.MaterialProduct{}
-	c.Bind(&material_productModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		material_productModel := models.MaterialProduct{}
+		c.Bind(&material_productModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newMaterialProduct := models.NewMaterialProductRepository(db.DB)
-	newMaterialProduct.Create(&material_productModel)
+		newMaterialProduct := models.NewMaterialProductRepository(db.DB)
+		newMaterialProduct.Create(&material_productModel)
 
-setFlashmessages(c, "success", "MaterialProduct created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "MaterialProduct created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func material_productListHandler(c *gin.Context) error {
 	allMaterialProduct, err := newMaterialProduct.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's MaterialProduct List",
@@ -89,8 +88,8 @@ func updateMaterialProductHandler(c *gin.Context) error {
 		return err
 	}
 	newMaterialProduct := models.NewMaterialProductRepository(db.DB)
-	
-	material_productModel , err := newMaterialProduct.GetSingle(idParams)
+
+	material_productModel, err := newMaterialProduct.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateMaterialProductHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//material_productModel := models.MaterialProduct{}
+	//material_productModel := models.MaterialProduct{}
 	c.Bind(material_productModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateMaterialProductHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateMaterialProductHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "MaterialProduct successfully updated!!")
+	setFlashmessages(c, "success", "MaterialProduct successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/material_product/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, material_product.MaterialProductIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, material_product.MaterialProductIndex(
 		fmt.Sprintf("| Edit MaterialProduct #%d", material_productModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteMaterialProductHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,14 +1,13 @@
 package address
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ AddressList(titlePage string,  addresses []models.Address) {
+templ AddressList(titlePage string, addresses []models.Address) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,19 +23,18 @@ templ AddressList(titlePage string,  addresses []models.Address) {
 				<tr>
 					<th></th>
 					<th class="text-center">Address Id</th>
-<th class="text-center">Customer Id</th>
-<th class="text-center">Firstname</th>
-<th class="text-center">Lastname</th>
-<th class="text-center">Country Code</th>
-<th class="text-center">Mobile</th>
-<th class="text-center">Line1</th>
-<th class="text-center">Location</th>
-<th class="text-center">Country</th>
-<th class="text-center">City</th>
-<th class="text-center">State Code</th>
-<th class="text-center">Post Code</th>
-<th class="text-center">Is Primary</th>
-
+					<th class="text-center">Customer Id</th>
+					<th class="text-center">Firstname</th>
+					<th class="text-center">Lastname</th>
+					<th class="text-center">Country Code</th>
+					<th class="text-center">Mobile</th>
+					<th class="text-center">Line1</th>
+					<th class="text-center">Location</th>
+					<th class="text-center">Country</th>
+					<th class="text-center">City</th>
+					<th class="text-center">State Code</th>
+					<th class="text-center">Post Code</th>
+					<th class="text-center">Is Primary</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -44,22 +42,33 @@ templ AddressList(titlePage string,  addresses []models.Address) {
 				<tbody>
 					for _, address := range addresses {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",address.AddressID)} </td>\n<td>{fmt.Sprintf("%s",address.CustomerID)} </td>\n<td>{fmt.Sprintf("%s",address.Firstname)} </td>\n<td>{fmt.Sprintf("%s",address.Lastname)} </td>\n<td>{fmt.Sprintf("%s",address.CountryCode)} </td>\n<td>{fmt.Sprintf("%s",address.Mobile)} </td>\n<td>{fmt.Sprintf("%s",address.Line1)} </td>\n<td>{fmt.Sprintf("%s",address.Location)} </td>\n<td>{fmt.Sprintf("%s",address.Country)} </td>\n<td>{fmt.Sprintf("%s",address.City)} </td>\n<td>{fmt.Sprintf("%s",address.StateCode)} </td>\n<td>{fmt.Sprintf("%s",address.PostCode)} </td>\n<td>{fmt.Sprintf("%s",address.IsPrimary)} </td>\n
+							<td>{ fmt.Sprintf("%s",address.AddressID) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.CustomerID) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.Firstname) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.Lastname) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.CountryCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.Mobile) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.Line1) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.Location) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.Country) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.City) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.StateCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.PostCode) } </td>\n
+							<td>{ fmt.Sprintf("%s",address.IsPrimary) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/address/edit/%d", address.AddressID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/address/edit/%d", address.AddressID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/address/delete/%d", address.AddressID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the address with ID #%d?", address.AddressID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/address/delete/%d", address.AddressID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the address with ID #%d?", address.AddressID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -81,13 +90,13 @@ templ AddressList(titlePage string,  addresses []models.Address) {
 }
 
 templ AddressIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

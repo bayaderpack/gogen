@@ -1,11 +1,10 @@
-package models 
-
+package models
 
 type TypeValue string
 
 const (
-    P       TypeValue = "P"
-    F 		TypeValue = "F"
+	P TypeValue = "P"
+	F TypeValue = "F"
 )
 
 type ProductEnum string

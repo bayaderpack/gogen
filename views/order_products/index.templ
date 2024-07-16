@@ -1,14 +1,13 @@
 package order_products
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ OrderProductsList(titlePage string,  order_products []models.OrderProducts) {
+templ OrderProductsList(titlePage string, order_products []models.OrderProducts) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,15 +23,14 @@ templ OrderProductsList(titlePage string,  order_products []models.OrderProducts
 				<tr>
 					<th></th>
 					<th class="text-center">Order Product Id</th>
-<th class="text-center">Order Id</th>
-<th class="text-center">Product Id</th>
-<th class="text-center">Title</th>
-<th class="text-center">Quantity</th>
-<th class="text-center">Price</th>
-<th class="text-center">Total</th>
-<th class="text-center">Tax</th>
-<th class="text-center">Price Code</th>
-
+					<th class="text-center">Order Id</th>
+					<th class="text-center">Product Id</th>
+					<th class="text-center">Title</th>
+					<th class="text-center">Quantity</th>
+					<th class="text-center">Price</th>
+					<th class="text-center">Total</th>
+					<th class="text-center">Tax</th>
+					<th class="text-center">Price Code</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -40,22 +38,29 @@ templ OrderProductsList(titlePage string,  order_products []models.OrderProducts
 				<tbody>
 					for _, order_products := range order_products {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",order_products.OrderProductID)} </td>\n<td>{fmt.Sprintf("%s",order_products.OrderID)} </td>\n<td>{fmt.Sprintf("%s",order_products.ProductID)} </td>\n<td>{fmt.Sprintf("%s",order_products.Title)} </td>\n<td>{fmt.Sprintf("%s",order_products.Quantity)} </td>\n<td>{fmt.Sprintf("%s",order_products.Price)} </td>\n<td>{fmt.Sprintf("%s",order_products.Total)} </td>\n<td>{fmt.Sprintf("%s",order_products.Tax)} </td>\n<td>{fmt.Sprintf("%s",order_products.PriceCode)} </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.OrderProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.OrderID) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.ProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.Title) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.Quantity) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.Price) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.Total) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.Tax) } </td>\n
+							<td>{ fmt.Sprintf("%s",order_products.PriceCode) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/order_products/edit/%d", order_products.OrderProductID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/order_products/edit/%d", order_products.OrderProductID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/order_products/delete/%d", order_products.OrderProductID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the order_products with ID #%d?", order_products.OrderProductID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/order_products/delete/%d", order_products.OrderProductID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the order_products with ID #%d?", order_products.OrderProductID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -77,13 +82,13 @@ templ OrderProductsList(titlePage string,  order_products []models.OrderProducts
 }
 
 templ OrderProductsIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

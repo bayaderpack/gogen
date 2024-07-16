@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/supplier"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSupplierHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	supplierModel := models.Supplier{}
-	c.Bind(&supplierModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		supplierModel := models.Supplier{}
+		c.Bind(&supplierModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSupplier := models.NewSupplierRepository(db.DB)
-	newSupplier.Create(&supplierModel)
+		newSupplier := models.NewSupplierRepository(db.DB)
+		newSupplier.Create(&supplierModel)
 
-setFlashmessages(c, "success", "Supplier created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Supplier created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func supplierListHandler(c *gin.Context) error {
 	allSupplier, err := newSupplier.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Supplier List",
@@ -89,8 +88,8 @@ func updateSupplierHandler(c *gin.Context) error {
 		return err
 	}
 	newSupplier := models.NewSupplierRepository(db.DB)
-	
-	supplierModel , err := newSupplier.GetSingle(idParams)
+
+	supplierModel, err := newSupplier.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSupplierHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//supplierModel := models.Supplier{}
+	//supplierModel := models.Supplier{}
 	c.Bind(supplierModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSupplierHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSupplierHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Supplier successfully updated!!")
+	setFlashmessages(c, "success", "Supplier successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/supplier/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, supplier.SupplierIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, supplier.SupplierIndex(
 		fmt.Sprintf("| Edit Supplier #%d", supplierModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSupplierHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

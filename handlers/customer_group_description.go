@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/customer_group_description"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createCustomerGroupDescriptionHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	customer_group_descriptionModel := models.CustomerGroupDescription{}
-	c.Bind(&customer_group_descriptionModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		customer_group_descriptionModel := models.CustomerGroupDescription{}
+		c.Bind(&customer_group_descriptionModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newCustomerGroupDescription := models.NewCustomerGroupDescriptionRepository(db.DB)
-	newCustomerGroupDescription.Create(&customer_group_descriptionModel)
+		newCustomerGroupDescription := models.NewCustomerGroupDescriptionRepository(db.DB)
+		newCustomerGroupDescription.Create(&customer_group_descriptionModel)
 
-setFlashmessages(c, "success", "CustomerGroupDescription created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "CustomerGroupDescription created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func customer_group_descriptionListHandler(c *gin.Context) error {
 	allCustomerGroupDescription, err := newCustomerGroupDescription.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's CustomerGroupDescription List",
@@ -89,8 +88,8 @@ func updateCustomerGroupDescriptionHandler(c *gin.Context) error {
 		return err
 	}
 	newCustomerGroupDescription := models.NewCustomerGroupDescriptionRepository(db.DB)
-	
-	customer_group_descriptionModel , err := newCustomerGroupDescription.GetSingle(idParams)
+
+	customer_group_descriptionModel, err := newCustomerGroupDescription.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateCustomerGroupDescriptionHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//customer_group_descriptionModel := models.CustomerGroupDescription{}
+	//customer_group_descriptionModel := models.CustomerGroupDescription{}
 	c.Bind(customer_group_descriptionModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateCustomerGroupDescriptionHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateCustomerGroupDescriptionHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "CustomerGroupDescription successfully updated!!")
+	setFlashmessages(c, "success", "CustomerGroupDescription successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/customer_group_description/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, customer_group_description.CustomerGroupDescriptionIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, customer_group_description.CustomerGroupDescriptionIndex(
 		fmt.Sprintf("| Edit CustomerGroupDescription #%d", customer_group_descriptionModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteCustomerGroupDescriptionHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

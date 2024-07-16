@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/media_variation"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createMediaVariationHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	media_variationModel := models.MediaVariation{}
-	c.Bind(&media_variationModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		media_variationModel := models.MediaVariation{}
+		c.Bind(&media_variationModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newMediaVariation := models.NewMediaVariationRepository(db.DB)
-	newMediaVariation.Create(&media_variationModel)
+		newMediaVariation := models.NewMediaVariationRepository(db.DB)
+		newMediaVariation.Create(&media_variationModel)
 
-setFlashmessages(c, "success", "MediaVariation created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "MediaVariation created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func media_variationListHandler(c *gin.Context) error {
 	allMediaVariation, err := newMediaVariation.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's MediaVariation List",
@@ -89,8 +88,8 @@ func updateMediaVariationHandler(c *gin.Context) error {
 		return err
 	}
 	newMediaVariation := models.NewMediaVariationRepository(db.DB)
-	
-	media_variationModel , err := newMediaVariation.GetSingle(idParams)
+
+	media_variationModel, err := newMediaVariation.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateMediaVariationHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//media_variationModel := models.MediaVariation{}
+	//media_variationModel := models.MediaVariation{}
 	c.Bind(media_variationModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateMediaVariationHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateMediaVariationHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "MediaVariation successfully updated!!")
+	setFlashmessages(c, "success", "MediaVariation successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/media_variation/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, media_variation.MediaVariationIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, media_variation.MediaVariationIndex(
 		fmt.Sprintf("| Edit MediaVariation #%d", media_variationModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteMediaVariationHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

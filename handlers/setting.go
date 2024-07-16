@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/setting"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSettingHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	settingModel := models.Setting{}
-	c.Bind(&settingModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		settingModel := models.Setting{}
+		c.Bind(&settingModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSetting := models.NewSettingRepository(db.DB)
-	newSetting.Create(&settingModel)
+		newSetting := models.NewSettingRepository(db.DB)
+		newSetting.Create(&settingModel)
 
-setFlashmessages(c, "success", "Setting created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Setting created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func settingListHandler(c *gin.Context) error {
 	allSetting, err := newSetting.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Setting List",
@@ -89,8 +88,8 @@ func updateSettingHandler(c *gin.Context) error {
 		return err
 	}
 	newSetting := models.NewSettingRepository(db.DB)
-	
-	settingModel , err := newSetting.GetSingle(idParams)
+
+	settingModel, err := newSetting.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSettingHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//settingModel := models.Setting{}
+	//settingModel := models.Setting{}
 	c.Bind(settingModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSettingHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSettingHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Setting successfully updated!!")
+	setFlashmessages(c, "success", "Setting successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/setting/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, setting.SettingIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, setting.SettingIndex(
 		fmt.Sprintf("| Edit Setting #%d", settingModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSettingHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

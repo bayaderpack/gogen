@@ -1,20 +1,19 @@
 package models
 
 import (
-	"time"
 	"errors"
+	"time"
+
 	"gorm.io/gorm"
 )
-
 
 // sample is struct that represent data in Database
 type Sample struct {
 	gorm.Model
-	SampleID int `gorm:"column:sample_id;default:" json:"sample_id"`
-CustomerID int `gorm:"column:customer_id;default:NULL" json:"customer_id"`
-Viewed bool `gorm:"column:viewed;default:0" json:"viewed"`
-Deadline *time.Time `gorm:"column:deadline;default:current_timestamp()" json:"deadline"`
-
+	SampleID   int        `gorm:"column:sample_id;default:" json:"sample_id"`
+	CustomerID int        `gorm:"column:customer_id;default:NULL" json:"customer_id"`
+	Viewed     bool       `gorm:"column:viewed;default:0" json:"viewed"`
+	Deadline   *time.Time `gorm:"column:deadline;default:current_timestamp()" json:"deadline"`
 }
 
 // Sample is interface that that model needs to implement
@@ -30,7 +29,6 @@ type sampleRepository struct {
 	db *gorm.DB
 }
 
-
 // Create new instance
 func NewSampleRepository(db *gorm.DB) SampleRepository {
 	return &sampleRepository{db: db}
@@ -41,8 +39,7 @@ func (r *sampleRepository) Create(sample *Sample) error {
 	return r.db.Create(sample).Error
 }
 
-
-//Function to get single instance of sample 
+// Function to get single instance of sample
 func (r *sampleRepository) GetSingle(id int) (*Sample, error) {
 	var sample Sample
 	err := r.db.First(&sample, id).Error
@@ -55,20 +52,19 @@ func (r *sampleRepository) GetSingle(id int) (*Sample, error) {
 	return &sample, nil
 }
 
-
-//Function to get all instances of sample 
+// Function to get all instances of sample
 func (r *sampleRepository) GetAll() ([]Sample, error) {
 	var sample []Sample
 	err := r.db.Find(&sample).Error
 	return sample, err
 }
 
-//Function to update existing instances of sample 
+// Function to update existing instances of sample
 func (r *sampleRepository) Update(sample *Sample) error {
 	return r.db.Save(sample).Error
 }
 
-//Function to delete single instances of sample 
+// Function to delete single instances of sample
 func (r *sampleRepository) Delete(id int) error {
 	result := r.db.Delete(&Sample{}, id)
 	return result.Error

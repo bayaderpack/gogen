@@ -1,9 +1,8 @@
 package creasing
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateCreasing(creasing models.Creasing, tz string) {
@@ -12,57 +11,60 @@ templ UpdateCreasing(creasing models.Creasing, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Creasing Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="creasing_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(creasing.CreasingID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Title:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="title"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={creasing.Title}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Pricing:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			pricing
-			name="required"
-			maxlength="255"
-		>{creasing.Pricing}</textarea>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(creasing.Status)} required />
-	  </label>
-	</div>
-		<label class="flex flex-col justify-start gap-2">
-		Sort Order:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="sort_order"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(creasing.SortOrder))}
-		/>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Creasing Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="creasing_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(creasing.CreasingID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Title:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="title"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ creasing.Title }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Pricing:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					pricing
+					name="required"
+					maxlength="255"
+				>{ creasing.Pricing }</textarea>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(creasing.Status) } required/>
+				</label>
+			</div>
+			<label class="flex flex-col justify-start gap-2">
+				Sort Order:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="sort_order"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(creasing.SortOrder)) }
+				/>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

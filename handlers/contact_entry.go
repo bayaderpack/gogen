@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/contact_entry"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createContactEntryHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	contact_entryModel := models.ContactEntry{}
-	c.Bind(&contact_entryModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		contact_entryModel := models.ContactEntry{}
+		c.Bind(&contact_entryModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newContactEntry := models.NewContactEntryRepository(db.DB)
-	newContactEntry.Create(&contact_entryModel)
+		newContactEntry := models.NewContactEntryRepository(db.DB)
+		newContactEntry.Create(&contact_entryModel)
 
-setFlashmessages(c, "success", "ContactEntry created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "ContactEntry created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func contact_entryListHandler(c *gin.Context) error {
 	allContactEntry, err := newContactEntry.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's ContactEntry List",
@@ -89,8 +88,8 @@ func updateContactEntryHandler(c *gin.Context) error {
 		return err
 	}
 	newContactEntry := models.NewContactEntryRepository(db.DB)
-	
-	contact_entryModel , err := newContactEntry.GetSingle(idParams)
+
+	contact_entryModel, err := newContactEntry.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateContactEntryHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//contact_entryModel := models.ContactEntry{}
+	//contact_entryModel := models.ContactEntry{}
 	c.Bind(contact_entryModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateContactEntryHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateContactEntryHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "ContactEntry successfully updated!!")
+	setFlashmessages(c, "success", "ContactEntry successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/contact_entry/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, contact_entry.ContactEntryIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, contact_entry.ContactEntryIndex(
 		fmt.Sprintf("| Edit ContactEntry #%d", contact_entryModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteContactEntryHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

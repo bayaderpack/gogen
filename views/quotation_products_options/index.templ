@@ -1,14 +1,13 @@
 package quotation_products_options
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ QuotationProductsOptionsList(titlePage string,  quotation_products_options []models.QuotationProductsOptions) {
+templ QuotationProductsOptionsList(titlePage string, quotation_products_options []models.QuotationProductsOptions) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,13 +23,12 @@ templ QuotationProductsOptionsList(titlePage string,  quotation_products_options
 				<tr>
 					<th></th>
 					<th class="text-center">Quotation Product Option Id</th>
-<th class="text-center">Quotation Product Id</th>
-<th class="text-center">Option Id</th>
-<th class="text-center">Option Value Id</th>
-<th class="text-center">Type</th>
-<th class="text-center">Title</th>
-<th class="text-center">Value</th>
-
+					<th class="text-center">Quotation Product Id</th>
+					<th class="text-center">Option Id</th>
+					<th class="text-center">Option Value Id</th>
+					<th class="text-center">Type</th>
+					<th class="text-center">Title</th>
+					<th class="text-center">Value</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -38,22 +36,27 @@ templ QuotationProductsOptionsList(titlePage string,  quotation_products_options
 				<tbody>
 					for _, quotation_products_options := range quotation_products_options {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",quotation_products_options.QuotationProductOptionID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products_options.QuotationProductID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products_options.OptionID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products_options.OptionValueID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products_options.Type)} </td>\n<td>{fmt.Sprintf("%s",quotation_products_options.Title)} </td>\n<td>{fmt.Sprintf("%s",quotation_products_options.Value)} </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.QuotationProductOptionID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.QuotationProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.OptionID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.OptionValueID) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.Type) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.Title) } </td>\n
+							<td>{ fmt.Sprintf("%s",quotation_products_options.Value) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/quotation_products_options/edit/%d", quotation_products_options.QuotationProductOptionID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/quotation_products_options/edit/%d", quotation_products_options.QuotationProductOptionID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/quotation_products_options/delete/%d", quotation_products_options.QuotationProductOptionID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation_products_options with ID #%d?", quotation_products_options.QuotationProductOptionID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/quotation_products_options/delete/%d", quotation_products_options.QuotationProductOptionID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation_products_options with ID #%d?", quotation_products_options.QuotationProductOptionID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -75,13 +78,13 @@ templ QuotationProductsOptionsList(titlePage string,  quotation_products_options
 }
 
 templ QuotationProductsOptionsIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

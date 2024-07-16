@@ -1,9 +1,8 @@
 package customer
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateCustomer(customer models.Customer, tz string) {
@@ -12,265 +11,280 @@ templ UpdateCustomer(customer models.Customer, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Customer Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="customer_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.CustomerID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Group Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="group_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.GroupID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Seller Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="seller_id"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.SellerID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Kid:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="kid"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Kid}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Firstname:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="firstname"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Firstname}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Lastname:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="lastname"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Lastname}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Position:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="position"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Position}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Email:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="email"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Email}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Country Code:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="country_code"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.CountryCode))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Mobile:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="mobile"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.Mobile))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Company:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="company"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Company}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Company Phone:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="company_phone"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.CompanyPhone}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Address:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="address"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Address}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Location:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="location"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.Location))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Files:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			files
-			name=""
-			maxlength="255"
-		>{customer.Files}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Registration:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			registration
-			name=""
-			maxlength="255"
-		>{customer.Registration}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Registration Expires:
-		<input class="input" name="registration_expires" type="datetime-local"  value={customer.RegistrationExpires.String()} />
-	</label><label class="flex flex-col justify-start gap-2">
-		Vat:
-		<textarea
-			class="textarea textarea-primary h-36 max-h-36"
-			vat
-			name=""
-			maxlength="255"
-		>{customer.Vat}</textarea>
-	</label><label class="flex flex-col justify-start gap-2">
-		Password:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="password"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Password}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Newsletter</span> 
-		<input type="checkbox" name="newsletter" class="checkbox" value={strconv.FormatBool(customer.Newsletter)} required />
-	  </label>
-	</div>
-		<label class="flex flex-col justify-start gap-2">
-		Ip:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="ip"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.Ip}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(customer.Status)} required />
-	  </label>
-	</div>
-		<label class="flex flex-col justify-start gap-2">
-		Reset Token:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="reset_token"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={customer.ResetToken}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Reset Expires:
-		<input class="input" name="reset_expires" type="datetime-local"  value={customer.ResetExpires.String()} />
-	</label><label class="flex flex-col justify-start gap-2">
-		Otp:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="otp"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(customer.Otp))}
-		/>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Customer Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="customer_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.CustomerID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Group Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="group_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.GroupID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Seller Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="seller_id"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.SellerID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Kid:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="kid"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Kid }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Firstname:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="firstname"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Firstname }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Lastname:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="lastname"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Lastname }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Position:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="position"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Position }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Email:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="email"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Email }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Country Code:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="country_code"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.CountryCode)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Mobile:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="mobile"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.Mobile)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Company:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="company"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Company }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Company Phone:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="company_phone"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.CompanyPhone }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Address:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="address"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Address }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Location:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="location"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.Location)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Files:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					files
+					name=""
+					maxlength="255"
+				>{ customer.Files }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Registration:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					registration
+					name=""
+					maxlength="255"
+				>{ customer.Registration }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Registration Expires:
+				<input class="input" name="registration_expires" type="datetime-local" value={ customer.RegistrationExpires.String() }/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Vat:
+				<textarea
+					class="textarea textarea-primary h-36 max-h-36"
+					vat
+					name=""
+					maxlength="255"
+				>{ customer.Vat }</textarea>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Password:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="password"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Password }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Newsletter</span>
+					<input type="checkbox" name="newsletter" class="checkbox" value={ strconv.FormatBool(customer.Newsletter) } required/>
+				</label>
+			</div>
+			<label class="flex flex-col justify-start gap-2">
+				Ip:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="ip"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.Ip }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(customer.Status) } required/>
+				</label>
+			</div>
+			<label class="flex flex-col justify-start gap-2">
+				Reset Token:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="reset_token"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ customer.ResetToken }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Reset Expires:
+				<input class="input" name="reset_expires" type="datetime-local" value={ customer.ResetExpires.String() }/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Otp:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="otp"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(customer.Otp)) }
+				/>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

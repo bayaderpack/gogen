@@ -16,12 +16,12 @@ templ Navbar(username string, fromProtected bool) {
 					Tasks
 				</a>
 				<button
- 					hx-swap="transition:true"
- 					hx-post="/todo/logout"
- 					hx-confirm="Are you sure you want to log out?"
- 					hx-target="body"
- 					hx-push-url="true"
- 					class="btn btn-ghost text-lg"
+					hx-swap="transition:true"
+					hx-post="/todo/logout"
+					hx-confirm="Are you sure you want to log out?"
+					hx-target="body"
+					hx-push-url="true"
+					class="btn btn-ghost text-lg"
 				>
 					Logout
 				</button>

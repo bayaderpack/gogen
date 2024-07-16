@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/sample_products"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createSampleProductsHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	sample_productsModel := models.SampleProducts{}
-	c.Bind(&sample_productsModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		sample_productsModel := models.SampleProducts{}
+		c.Bind(&sample_productsModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newSampleProducts := models.NewSampleProductsRepository(db.DB)
-	newSampleProducts.Create(&sample_productsModel)
+		newSampleProducts := models.NewSampleProductsRepository(db.DB)
+		newSampleProducts.Create(&sample_productsModel)
 
-setFlashmessages(c, "success", "SampleProducts created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "SampleProducts created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func sample_productsListHandler(c *gin.Context) error {
 	allSampleProducts, err := newSampleProducts.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's SampleProducts List",
@@ -89,8 +88,8 @@ func updateSampleProductsHandler(c *gin.Context) error {
 		return err
 	}
 	newSampleProducts := models.NewSampleProductsRepository(db.DB)
-	
-	sample_productsModel , err := newSampleProducts.GetSingle(idParams)
+
+	sample_productsModel, err := newSampleProducts.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateSampleProductsHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//sample_productsModel := models.SampleProducts{}
+	//sample_productsModel := models.SampleProducts{}
 	c.Bind(sample_productsModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateSampleProductsHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateSampleProductsHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "SampleProducts successfully updated!!")
+	setFlashmessages(c, "success", "SampleProducts successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/sample_products/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, sample_products.SampleProductsIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, sample_products.SampleProductsIndex(
 		fmt.Sprintf("| Edit SampleProducts #%d", sample_productsModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteSampleProductsHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

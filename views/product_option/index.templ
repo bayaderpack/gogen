@@ -1,14 +1,13 @@
 package product_option
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ ProductOptionList(titlePage string,  product_options []models.ProductOption) {
+templ ProductOptionList(titlePage string, product_options []models.ProductOption) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,13 +23,12 @@ templ ProductOptionList(titlePage string,  product_options []models.ProductOptio
 				<tr>
 					<th></th>
 					<th class="text-center">Product Option Id</th>
-<th class="text-center">Product Id</th>
-<th class="text-center">Option Id</th>
-<th class="text-center">Conditions</th>
-<th class="text-center">Value</th>
-<th class="text-center">Required</th>
-<th class="text-center">Is Quote</th>
-
+					<th class="text-center">Product Id</th>
+					<th class="text-center">Option Id</th>
+					<th class="text-center">Conditions</th>
+					<th class="text-center">Value</th>
+					<th class="text-center">Required</th>
+					<th class="text-center">Is Quote</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -38,22 +36,27 @@ templ ProductOptionList(titlePage string,  product_options []models.ProductOptio
 				<tbody>
 					for _, product_option := range product_options {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",product_option.ProductOptionID)} </td>\n<td>{fmt.Sprintf("%s",product_option.ProductID)} </td>\n<td>{fmt.Sprintf("%s",product_option.OptionID)} </td>\n<td>{fmt.Sprintf("%s",product_option.Conditions)} </td>\n<td>{fmt.Sprintf("%s",product_option.Value)} </td>\n<td>{fmt.Sprintf("%s",product_option.Required)} </td>\n<td>{fmt.Sprintf("%s",product_option.IsQuote)} </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.ProductOptionID) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.ProductID) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.OptionID) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.Conditions) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.Value) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.Required) } </td>\n
+							<td>{ fmt.Sprintf("%s",product_option.IsQuote) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/product_option/edit/%d", product_option.ProductOptionID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/product_option/edit/%d", product_option.ProductOptionID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/product_option/delete/%d", product_option.ProductOptionID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the product_option with ID #%d?", product_option.ProductOptionID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/product_option/delete/%d", product_option.ProductOptionID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the product_option with ID #%d?", product_option.ProductOptionID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -75,13 +78,13 @@ templ ProductOptionList(titlePage string,  product_options []models.ProductOptio
 }
 
 templ ProductOptionIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

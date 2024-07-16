@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/machine"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createMachineHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	machineModel := models.Machine{}
-	c.Bind(&machineModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		machineModel := models.Machine{}
+		c.Bind(&machineModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newMachine := models.NewMachineRepository(db.DB)
-	newMachine.Create(&machineModel)
+		newMachine := models.NewMachineRepository(db.DB)
+		newMachine.Create(&machineModel)
 
-setFlashmessages(c, "success", "Machine created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Machine created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func machineListHandler(c *gin.Context) error {
 	allMachine, err := newMachine.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Machine List",
@@ -89,8 +88,8 @@ func updateMachineHandler(c *gin.Context) error {
 		return err
 	}
 	newMachine := models.NewMachineRepository(db.DB)
-	
-	machineModel , err := newMachine.GetSingle(idParams)
+
+	machineModel, err := newMachine.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateMachineHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//machineModel := models.Machine{}
+	//machineModel := models.Machine{}
 	c.Bind(machineModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateMachineHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateMachineHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Machine successfully updated!!")
+	setFlashmessages(c, "success", "Machine successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/machine/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, machine.MachineIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, machine.MachineIndex(
 		fmt.Sprintf("| Edit Machine #%d", machineModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteMachineHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

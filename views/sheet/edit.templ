@@ -1,9 +1,8 @@
 package sheet
 
 import (
-	"strconv"
-
 	"bajscheme/models"
+	"strconv"
 )
 
 templ UpdateSheet(sheet models.Sheet, tz string) {
@@ -12,85 +11,88 @@ templ UpdateSheet(sheet models.Sheet, tz string) {
 	</h1>
 	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
 		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
-        <label class="flex flex-col justify-start gap-2">
-		Sheet Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="sheet_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(sheet.SheetID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Parent Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="parent_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(sheet.ParentID))}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Weight Unit:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="weight_unit"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={sheet.WeightUnit}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Thickness Unit:
-		<input
-			class="input input-bordered input-primary"
-			type="text"
-			name="thickness_unit"
-			
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={sheet.ThicknessUnit}
-		/>
-	</label><label class="flex flex-col justify-start gap-2">
-		Media Id:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="media_id"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(sheet.MediaID))}
-		/>
-	</label><div class="form-control">
-	  <label class="label cursor-pointer">
-		<span class="label-text">Status</span> 
-		<input type="checkbox" name="status" class="checkbox" value={strconv.FormatBool(sheet.Status)} required />
-	  </label>
-	</div>
-		<label class="flex flex-col justify-start gap-2">
-		Sort Order:
-		<input
-			class="input input-bordered input-primary"
-			type="number"
-			name="sort_order"
-			required
-			autofocus
-			minlength="3"
-			maxlength="64"
-			value={strconv.Itoa(int(sheet.SortOrder))}
-		/>
-	</label>
+			<label class="flex flex-col justify-start gap-2">
+				Sheet Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="sheet_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(sheet.SheetID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Parent Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="parent_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(sheet.ParentID)) }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Weight Unit:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="weight_unit"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ sheet.WeightUnit }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Thickness Unit:
+				<input
+					class="input input-bordered input-primary"
+					type="text"
+					name="thickness_unit"
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ sheet.ThicknessUnit }
+				/>
+			</label>
+			<label class="flex flex-col justify-start gap-2">
+				Media Id:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="media_id"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(sheet.MediaID)) }
+				/>
+			</label>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Status</span>
+					<input type="checkbox" name="status" class="checkbox" value={ strconv.FormatBool(sheet.Status) } required/>
+				</label>
+			</div>
+			<label class="flex flex-col justify-start gap-2">
+				Sort Order:
+				<input
+					class="input input-bordered input-primary"
+					type="number"
+					name="sort_order"
+					required
+					autofocus
+					minlength="3"
+					maxlength="64"
+					value={ strconv.Itoa(int(sheet.SortOrder)) }
+				/>
+			</label>
 			<footer class="card-actions flex justify-between">
 				<div class="flex gap-4">
 					<button class="btn btn-primary p-4 hover:scale-[1.1]">

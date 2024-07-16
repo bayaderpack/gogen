@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/product_favorite"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createProductFavoriteHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	product_favoriteModel := models.ProductFavorite{}
-	c.Bind(&product_favoriteModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		product_favoriteModel := models.ProductFavorite{}
+		c.Bind(&product_favoriteModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newProductFavorite := models.NewProductFavoriteRepository(db.DB)
-	newProductFavorite.Create(&product_favoriteModel)
+		newProductFavorite := models.NewProductFavoriteRepository(db.DB)
+		newProductFavorite.Create(&product_favoriteModel)
 
-setFlashmessages(c, "success", "ProductFavorite created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "ProductFavorite created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func product_favoriteListHandler(c *gin.Context) error {
 	allProductFavorite, err := newProductFavorite.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's ProductFavorite List",
@@ -89,8 +88,8 @@ func updateProductFavoriteHandler(c *gin.Context) error {
 		return err
 	}
 	newProductFavorite := models.NewProductFavoriteRepository(db.DB)
-	
-	product_favoriteModel , err := newProductFavorite.GetSingle(idParams)
+
+	product_favoriteModel, err := newProductFavorite.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateProductFavoriteHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//product_favoriteModel := models.ProductFavorite{}
+	//product_favoriteModel := models.ProductFavorite{}
 	c.Bind(product_favoriteModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateProductFavoriteHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateProductFavoriteHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "ProductFavorite successfully updated!!")
+	setFlashmessages(c, "success", "ProductFavorite successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/product_favorite/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, product_favorite.ProductFavoriteIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, product_favorite.ProductFavoriteIndex(
 		fmt.Sprintf("| Edit ProductFavorite #%d", product_favoriteModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteProductFavoriteHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

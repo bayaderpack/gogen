@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/product_option_value"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createProductOptionValueHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	product_option_valueModel := models.ProductOptionValue{}
-	c.Bind(&product_option_valueModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		product_option_valueModel := models.ProductOptionValue{}
+		c.Bind(&product_option_valueModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newProductOptionValue := models.NewProductOptionValueRepository(db.DB)
-	newProductOptionValue.Create(&product_option_valueModel)
+		newProductOptionValue := models.NewProductOptionValueRepository(db.DB)
+		newProductOptionValue.Create(&product_option_valueModel)
 
-setFlashmessages(c, "success", "ProductOptionValue created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "ProductOptionValue created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func product_option_valueListHandler(c *gin.Context) error {
 	allProductOptionValue, err := newProductOptionValue.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's ProductOptionValue List",
@@ -89,8 +88,8 @@ func updateProductOptionValueHandler(c *gin.Context) error {
 		return err
 	}
 	newProductOptionValue := models.NewProductOptionValueRepository(db.DB)
-	
-	product_option_valueModel , err := newProductOptionValue.GetSingle(idParams)
+
+	product_option_valueModel, err := newProductOptionValue.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateProductOptionValueHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//product_option_valueModel := models.ProductOptionValue{}
+	//product_option_valueModel := models.ProductOptionValue{}
 	c.Bind(product_option_valueModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateProductOptionValueHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateProductOptionValueHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "ProductOptionValue successfully updated!!")
+	setFlashmessages(c, "success", "ProductOptionValue successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/product_option_value/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, product_option_value.ProductOptionValueIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, product_option_value.ProductOptionValueIndex(
 		fmt.Sprintf("| Edit ProductOptionValue #%d", product_option_valueModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteProductOptionValueHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/coupon_category"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createCouponCategoryHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	coupon_categoryModel := models.CouponCategory{}
-	c.Bind(&coupon_categoryModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		coupon_categoryModel := models.CouponCategory{}
+		c.Bind(&coupon_categoryModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newCouponCategory := models.NewCouponCategoryRepository(db.DB)
-	newCouponCategory.Create(&coupon_categoryModel)
+		newCouponCategory := models.NewCouponCategoryRepository(db.DB)
+		newCouponCategory.Create(&coupon_categoryModel)
 
-setFlashmessages(c, "success", "CouponCategory created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "CouponCategory created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func coupon_categoryListHandler(c *gin.Context) error {
 	allCouponCategory, err := newCouponCategory.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's CouponCategory List",
@@ -89,8 +88,8 @@ func updateCouponCategoryHandler(c *gin.Context) error {
 		return err
 	}
 	newCouponCategory := models.NewCouponCategoryRepository(db.DB)
-	
-	coupon_categoryModel , err := newCouponCategory.GetSingle(idParams)
+
+	coupon_categoryModel, err := newCouponCategory.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateCouponCategoryHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//coupon_categoryModel := models.CouponCategory{}
+	//coupon_categoryModel := models.CouponCategory{}
 	c.Bind(coupon_categoryModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateCouponCategoryHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateCouponCategoryHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "CouponCategory successfully updated!!")
+	setFlashmessages(c, "success", "CouponCategory successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/coupon_category/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, coupon_category.CouponCategoryIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, coupon_category.CouponCategoryIndex(
 		fmt.Sprintf("| Edit CouponCategory #%d", coupon_categoryModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteCouponCategoryHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

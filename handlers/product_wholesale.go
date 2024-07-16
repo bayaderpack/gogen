@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/product_wholesale"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createProductWholesaleHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	product_wholesaleModel := models.ProductWholesale{}
-	c.Bind(&product_wholesaleModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		product_wholesaleModel := models.ProductWholesale{}
+		c.Bind(&product_wholesaleModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newProductWholesale := models.NewProductWholesaleRepository(db.DB)
-	newProductWholesale.Create(&product_wholesaleModel)
+		newProductWholesale := models.NewProductWholesaleRepository(db.DB)
+		newProductWholesale.Create(&product_wholesaleModel)
 
-setFlashmessages(c, "success", "ProductWholesale created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "ProductWholesale created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func product_wholesaleListHandler(c *gin.Context) error {
 	allProductWholesale, err := newProductWholesale.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's ProductWholesale List",
@@ -89,8 +88,8 @@ func updateProductWholesaleHandler(c *gin.Context) error {
 		return err
 	}
 	newProductWholesale := models.NewProductWholesaleRepository(db.DB)
-	
-	product_wholesaleModel , err := newProductWholesale.GetSingle(idParams)
+
+	product_wholesaleModel, err := newProductWholesale.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateProductWholesaleHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//product_wholesaleModel := models.ProductWholesale{}
+	//product_wholesaleModel := models.ProductWholesale{}
 	c.Bind(product_wholesaleModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateProductWholesaleHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateProductWholesaleHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "ProductWholesale successfully updated!!")
+	setFlashmessages(c, "success", "ProductWholesale successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/product_wholesale/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, product_wholesale.ProductWholesaleIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, product_wholesale.ProductWholesaleIndex(
 		fmt.Sprintf("| Edit ProductWholesale #%d", product_wholesaleModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteProductWholesaleHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

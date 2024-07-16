@@ -1,14 +1,13 @@
 package coupon
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ CouponList(titlePage string,  coupons []models.Coupon) {
+templ CouponList(titlePage string, coupons []models.Coupon) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,17 +23,16 @@ templ CouponList(titlePage string,  coupons []models.Coupon) {
 				<tr>
 					<th></th>
 					<th class="text-center">Coupon Id</th>
-<th class="text-center">Title</th>
-<th class="text-center">Code</th>
-<th class="text-center">Type</th>
-<th class="text-center">Amount</th>
-<th class="text-center">Min Total</th>
-<th class="text-center">Date Start</th>
-<th class="text-center">Date End</th>
-<th class="text-center">Total Limit</th>
-<th class="text-center">Customer Limit</th>
-<th class="text-center">Status</th>
-
+					<th class="text-center">Title</th>
+					<th class="text-center">Code</th>
+					<th class="text-center">Type</th>
+					<th class="text-center">Amount</th>
+					<th class="text-center">Min Total</th>
+					<th class="text-center">Date Start</th>
+					<th class="text-center">Date End</th>
+					<th class="text-center">Total Limit</th>
+					<th class="text-center">Customer Limit</th>
+					<th class="text-center">Status</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -42,22 +40,31 @@ templ CouponList(titlePage string,  coupons []models.Coupon) {
 				<tbody>
 					for _, coupon := range coupons {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",coupon.CouponID)} </td>\n<td>{fmt.Sprintf("%s",coupon.Title)} </td>\n<td>{fmt.Sprintf("%s",coupon.Code)} </td>\n<td>{fmt.Sprintf("%s",coupon.Type)} </td>\n<td>{fmt.Sprintf("%s",coupon.Amount)} </td>\n<td>{fmt.Sprintf("%s",coupon.MinTotal)} </td>\n<td>{fmt.Sprintf("%s",coupon.DateStart)} </td>\n<td>{fmt.Sprintf("%s",coupon.DateEnd)} </td>\n<td>{fmt.Sprintf("%s",coupon.TotalLimit)} </td>\n<td>{fmt.Sprintf("%s",coupon.CustomerLimit)} </td>\n<td>{fmt.Sprintf("%s",coupon.Status)} </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.CouponID) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.Title) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.Code) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.Type) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.Amount) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.MinTotal) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.DateStart) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.DateEnd) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.TotalLimit) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.CustomerLimit) } </td>\n
+							<td>{ fmt.Sprintf("%s",coupon.Status) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/coupon/edit/%d", coupon.CouponID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/coupon/edit/%d", coupon.CouponID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/coupon/delete/%d", coupon.CouponID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the coupon with ID #%d?", coupon.CouponID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/coupon/delete/%d", coupon.CouponID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the coupon with ID #%d?", coupon.CouponID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -79,13 +86,13 @@ templ CouponList(titlePage string,  coupons []models.Coupon) {
 }
 
 templ CouponIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

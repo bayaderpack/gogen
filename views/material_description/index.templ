@@ -1,14 +1,13 @@
 package material_description
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ MaterialDescriptionList(titlePage string,  material_descriptions []models.MaterialDescription) {
+templ MaterialDescriptionList(titlePage string, material_descriptions []models.MaterialDescription) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,9 +23,8 @@ templ MaterialDescriptionList(titlePage string,  material_descriptions []models.
 				<tr>
 					<th></th>
 					<th class="text-center">Material Id</th>
-<th class="text-center">Language</th>
-<th class="text-center">Title</th>
-
+					<th class="text-center">Language</th>
+					<th class="text-center">Title</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -34,22 +32,23 @@ templ MaterialDescriptionList(titlePage string,  material_descriptions []models.
 				<tbody>
 					for _, material_description := range material_descriptions {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",material_description.MaterialID)} </td>\n<td>{fmt.Sprintf("%s",material_description.Language)} </td>\n<td>{fmt.Sprintf("%s",material_description.Title)} </td>\n
+							<td>{ fmt.Sprintf("%s",material_description.MaterialID) } </td>\n
+							<td>{ fmt.Sprintf("%s",material_description.Language) } </td>\n
+							<td>{ fmt.Sprintf("%s",material_description.Title) } </td>\n
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/material_description/edit/%d", material_description.MaterialID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/material_description/edit/%d", material_description.MaterialID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/material_description/delete/%d", material_description.MaterialID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the material_description with ID #%d?", material_description.MaterialID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/material_description/delete/%d", material_description.MaterialID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the material_description with ID #%d?", material_description.MaterialID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -71,13 +70,13 @@ templ MaterialDescriptionList(titlePage string,  material_descriptions []models.
 }
 
 templ MaterialDescriptionIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}

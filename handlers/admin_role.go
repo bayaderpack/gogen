@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/admin_role"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createAdminRoleHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	admin_roleModel := models.AdminRole{}
-	c.Bind(&admin_roleModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		admin_roleModel := models.AdminRole{}
+		c.Bind(&admin_roleModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newAdminRole := models.NewAdminRoleRepository(db.DB)
-	newAdminRole.Create(&admin_roleModel)
+		newAdminRole := models.NewAdminRoleRepository(db.DB)
+		newAdminRole.Create(&admin_roleModel)
 
-setFlashmessages(c, "success", "AdminRole created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "AdminRole created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func admin_roleListHandler(c *gin.Context) error {
 	allAdminRole, err := newAdminRole.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's AdminRole List",
@@ -89,8 +88,8 @@ func updateAdminRoleHandler(c *gin.Context) error {
 		return err
 	}
 	newAdminRole := models.NewAdminRoleRepository(db.DB)
-	
-	admin_roleModel , err := newAdminRole.GetSingle(idParams)
+
+	admin_roleModel, err := newAdminRole.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateAdminRoleHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//admin_roleModel := models.AdminRole{}
+	//admin_roleModel := models.AdminRole{}
 	c.Bind(admin_roleModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateAdminRoleHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateAdminRoleHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "AdminRole successfully updated!!")
+	setFlashmessages(c, "success", "AdminRole successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/admin_role/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, admin_role.AdminRoleIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, admin_role.AdminRoleIndex(
 		fmt.Sprintf("| Edit AdminRole #%d", admin_roleModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteAdminRoleHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

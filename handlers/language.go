@@ -1,41 +1,41 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"errors"
 
-	"bajscheme/models"
 	"bajscheme/db"
+	"bajscheme/models"
 	"bajscheme/views/language"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	lang "golang.org/x/text/language"
 	"gorm.io/gorm"
 )
 
-
 func createLanguageHandler(c *gin.Context) error {
-isError = false
-if c.Request.Method == http.MethodPost {
-	languageModel := models.Language{}
-	c.Bind(&languageModel)
-	//err := ctx.ShouldBindJSON(&createTagRequest)
-	//helper.ErrorPanic(err)
+	isError = false
+	if c.Request.Method == http.MethodPost {
+		languageModel := models.Language{}
+		c.Bind(&languageModel)
+		//err := ctx.ShouldBindJSON(&createTagRequest)
+		//helper.ErrorPanic(err)
 
-	newLanguage := models.NewLanguageRepository(db.DB)
-	newLanguage.Create(&languageModel)
+		newLanguage := models.NewLanguageRepository(db.DB)
+		newLanguage.Create(&languageModel)
 
-setFlashmessages(c, "success", "Language created successfully!!")
-	c.JSON(http.StatusOK, gin.H{
+		setFlashmessages(c, "success", "Language created successfully!!")
+		c.JSON(http.StatusOK, gin.H{
 			"Code":   200,
-		"Status": "Ok",
-		"Data":   nil,
-	})
+			"Status": "Ok",
+			"Data":   nil,
+		})
 	}
-	username_key_value, ok  := c.Get(username_key)
+	username_key_value, ok := c.Get(username_key)
 	if !ok {
 		fmt.Println("Some error")
 	}
@@ -61,9 +61,8 @@ func languageListHandler(c *gin.Context) error {
 	allLanguage, err := newLanguage.GetAll()
 
 	if err != nil {
-	fmt.Println(err)
+		fmt.Println(err)
 	}
-
 
 	titlePage := fmt.Sprintf(
 		"| %s's Language List",
@@ -89,8 +88,8 @@ func updateLanguageHandler(c *gin.Context) error {
 		return err
 	}
 	newLanguage := models.NewLanguageRepository(db.DB)
-	
-	languageModel , err := newLanguage.GetSingle(idParams)
+
+	languageModel, err := newLanguage.GetSingle(idParams)
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -100,11 +99,11 @@ func updateLanguageHandler(c *gin.Context) error {
 			))
 		}
 		c.AbortWithError(http.StatusInternalServerError, fmt.Errorf(
-				"something went wrong: %s",
-				err,
-			))
+			"something went wrong: %s",
+			err,
+		))
 	}
-		//languageModel := models.Language{}
+	//languageModel := models.Language{}
 	c.Bind(languageModel)
 	//err := ctx.ShouldBindJSON(&createTagRequest)
 	//helper.ErrorPanic(err)
@@ -119,7 +118,6 @@ func updateLanguageHandler(c *gin.Context) error {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 
@@ -130,15 +128,14 @@ func updateLanguageHandler(c *gin.Context) error {
 
 	}
 
-
-		setFlashmessages(c, "success", "Language successfully updated!!")
+	setFlashmessages(c, "success", "Language successfully updated!!")
 
 	//	return c.Redirect(http.StatusSeeOther, "/language/list")
 	//}
 
-username, _ := c.Get(username_key)
-tz, _ := c.Get(tzone_key)
-		return renderView(c, language.LanguageIndex(
+	username, _ := c.Get(username_key)
+	tz, _ := c.Get(tzone_key)
+	return renderView(c, language.LanguageIndex(
 		fmt.Sprintf("| Edit Language #%d", languageModel),
 		username.(string),
 		fromProtected,
@@ -170,7 +167,6 @@ func deleteLanguageHandler(c *gin.Context) {
 				"something went wrong: %s",
 				err,
 			))
-			
 
 		}
 

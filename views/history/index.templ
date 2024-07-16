@@ -1,14 +1,13 @@
 package history
 
 import (
-	"fmt"
-	"strings"
-
 	"bajscheme/models"
 	"bajscheme/views/layout"
+	"fmt"
+	"strings"
 )
 
-templ HistoryList(titlePage string,  histories []models.History) {
+templ HistoryList(titlePage string, histories []models.History) {
 	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
 		<h1 class="text-2xl font-bold text-center">
 			{ strings.Trim(titlePage, "| ") }
@@ -24,18 +23,17 @@ templ HistoryList(titlePage string,  histories []models.History) {
 				<tr>
 					<th></th>
 					<th class="text-center">History Id</th>
-<th class="text-center">Status Id</th>
-<th class="text-center">Order Id</th>
-<th class="text-center">Quotation Id</th>
-<th class="text-center">Sample Id</th>
-<th class="text-center">Job Id</th>
-<th class="text-center">Customer Id</th>
-<th class="text-center">Admin Id</th>
-<th class="text-center">Comment</th>
-<th class="text-center">Notified</th>
-<th class="text-center">Show Customer</th>
-<th class="text-center">Uploads</th>
-
+					<th class="text-center">Status Id</th>
+					<th class="text-center">Order Id</th>
+					<th class="text-center">Quotation Id</th>
+					<th class="text-center">Sample Id</th>
+					<th class="text-center">Job Id</th>
+					<th class="text-center">Customer Id</th>
+					<th class="text-center">Admin Id</th>
+					<th class="text-center">Comment</th>
+					<th class="text-center">Notified</th>
+					<th class="text-center">Show Customer</th>
+					<th class="text-center">Uploads</th>
 					<th class="text-center">Options</th>
 				</tr>
 			</thead>
@@ -43,22 +41,32 @@ templ HistoryList(titlePage string,  histories []models.History) {
 				<tbody>
 					for _, history := range histories {
 						<tr>
-
-                            <td>{fmt.Sprintf("%s",history.HistoryID)} </td><td>{fmt.Sprintf("%s",history.StatusID)} </td><td>{fmt.Sprintf("%s",history.OrderID)} </td><td>{fmt.Sprintf("%s",history.QuotationID)} </td><td>{fmt.Sprintf("%s",history.SampleID)} </td><td>{fmt.Sprintf("%s",history.JobID)} </td><td>{fmt.Sprintf("%s",history.CustomerID)} </td><td>{fmt.Sprintf("%s",history.AdminID)} </td><td>{fmt.Sprintf("%s",history.Comment)} </td><td>{fmt.Sprintf("%s",history.Notified)} </td><td>{fmt.Sprintf("%s",history.ShowCustomer)} </td><td>{fmt.Sprintf("%s",history.Uploads)} </td>
+							<td>{ fmt.Sprintf("%s",history.HistoryID) } </td>
+							<td>{ fmt.Sprintf("%s",history.StatusID) } </td>
+							<td>{ fmt.Sprintf("%s",history.OrderID) } </td>
+							<td>{ fmt.Sprintf("%s",history.QuotationID) } </td>
+							<td>{ fmt.Sprintf("%s",history.SampleID) } </td>
+							<td>{ fmt.Sprintf("%s",history.JobID) } </td>
+							<td>{ fmt.Sprintf("%s",history.CustomerID) } </td>
+							<td>{ fmt.Sprintf("%s",history.AdminID) } </td>
+							<td>{ fmt.Sprintf("%s",history.Comment) } </td>
+							<td>{ fmt.Sprintf("%s",history.Notified) } </td>
+							<td>{ fmt.Sprintf("%s",history.ShowCustomer) } </td>
+							<td>{ fmt.Sprintf("%s",history.Uploads) } </td>
 							<td class="flex justify-center gap-2">
 								<a
- 									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/history/edit/%d", history.HistoryID)) }
- 									class="btn btn-primary p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									href={ templ.URL(fmt.Sprintf("/history/edit/%d", history.HistoryID)) }
+									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
- 									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/history/delete/%d", history.HistoryID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the history with ID #%d?", history.HistoryID) }
- 									hx-target="body"
- 									class="btn btn-error p-3 hover:scale-[1.1]"
+									hx-swap="transition:true"
+									hx-delete={ fmt.Sprintf("/history/delete/%d", history.HistoryID) }
+									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the history with ID #%d?", history.HistoryID) }
+									hx-target="body"
+									class="btn btn-error p-3 hover:scale-[1.1]"
 								>
 									Delete
 								</button>
@@ -80,13 +88,13 @@ templ HistoryList(titlePage string,  histories []models.History) {
 }
 
 templ HistoryIndex(
-    title,
-    username string,
-    fromProtected bool,
-    isError bool,
+	title,
+	username string,
+	fromProtected bool,
+	isError bool,
 	errMsgs, sucMsgs []string,
-    cmp templ.Component,
-    ) {
+	cmp templ.Component,
+) {
 	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
 		@cmp
 	}
