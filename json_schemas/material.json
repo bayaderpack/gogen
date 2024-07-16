@@ -1,0 +1,23 @@
+{
+  "name": "material",
+  "columns": [
+    {
+      "name": "material_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quotable",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

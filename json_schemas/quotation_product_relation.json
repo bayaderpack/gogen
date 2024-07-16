@@ -1,0 +1,17 @@
+{
+  "name": "quotation_product_relation",
+  "columns": [
+    {
+      "name": "quotation_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quotation_product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+package event
+
+import (
+	"fmt"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ EventList(titlePage string,  events []models.Event) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/event/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Event Id</th>
+<th class="text-center">Title</th>
+<th class="text-center">Name</th>
+<th class="text-center">Start</th>
+<th class="text-center">End</th>
+<th class="text-center">Country Code</th>
+<th class="text-center">Mobile</th>
+<th class="text-center">Company</th>
+<th class="text-center">Company Desc</th>
+<th class="text-center">Address</th>
+<th class="text-center">Location</th>
+<th class="text-center">Type</th>
+<th class="text-center">Status</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(events) != 0 {
+				<tbody>
+					for _, event := range events {
+						<tr>
+
+                            <td>{fmt.Sprintf("%s",event.EventID)} </td>\n<td>{fmt.Sprintf("%s",event.Title)} </td>\n<td>{fmt.Sprintf("%s",event.Name)} </td>\n<td>{fmt.Sprintf("%s",event.Start)} </td>\n<td>{fmt.Sprintf("%s",event.End)} </td>\n<td>{fmt.Sprintf("%s",event.CountryCode)} </td>\n<td>{fmt.Sprintf("%s",event.Mobile)} </td>\n<td>{fmt.Sprintf("%s",event.Company)} </td>\n<td>{fmt.Sprintf("%s",event.CompanyDesc)} </td>\n<td>{fmt.Sprintf("%s",event.Address)} </td>\n<td>{fmt.Sprintf("%s",event.Location)} </td>\n<td>{fmt.Sprintf("%s",event.Type)} </td>\n<td>{fmt.Sprintf("%s",event.Status)} </td>\n
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/event/edit/%d", event.EventID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/event/delete/%d", event.EventID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the event with ID #%d?", event.EventID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							event is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ EventIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

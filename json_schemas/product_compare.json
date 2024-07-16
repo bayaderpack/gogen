@@ -1,0 +1,17 @@
+{
+  "name": "product_compare",
+  "columns": [
+    {
+      "name": "customer_id",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

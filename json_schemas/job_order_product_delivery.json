@@ -1,0 +1,65 @@
+{
+  "name": "job_order_product_delivery",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "job_order_product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quantity",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "boxes",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "filling",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "last_filling",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "note",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "delivery_date",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    },
+    {
+      "name": "admin_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

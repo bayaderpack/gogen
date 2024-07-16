@@ -2,19 +2,24 @@ package main
 
 import (
 	// "encoding/json"
+	"bajscheme/handlers"
 	"fmt"
 	"os"
 	"regexp"
 	"strings"
-	"time"
 
-	"bajscheme/auth"
+	// "time"
+
+	// "bajscheme/auth"
 
 	pluralize "github.com/gertd/go-pluralize"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-	"gorm.io/driver/mysql"
+	// "gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	// "github.com/gin-gonic/gin"
+	// "bajscheme/handlers"
 )
 
 var dbName = "bayaderpack"
@@ -31,114 +36,137 @@ type TableSchema struct {
 	Columns []ColumnSchema `json:"columns"`
 }
 
-var db *gorm.DB
+// var db *gorm.DB
 
 func main() {
 
-	timeNow := time.Now()
-	dsn := "root:@tcp(127.0.0.1:3307)/bayaderpack?charset=utf8mb4&parseTime=True&loc=Local"
-	db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	// if err != nil {
-	// 	panic(err.Error())
+	router := gin.Default()
+	// router.LoadHTMLGlob("templates/*")
+	//router.LoadHTMLFiles("templates/template1.html", "templates/template2.html")
+	router.GET("/index", handlers.HistoryListHandler)
+	router.GET("/quotation/edit/:id", handlers.UpdateQuotationProductsHandler)
+	router.Run(":9092")
+	// // timeNow := time.Now()
+	// dsn := "root:@tcp(127.0.0.1:3307)/bayaderpack?charset=utf8mb4&parseTime=True&loc=Local"
+	// db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	// // if err != nil {
+	// // 	panic(err.Error())
+	// // }
+	// // r := gin.Default()
+	// // r.GET("/ping", handlers.HistoryListHandler)
+	// // r.Run(":9090")
+	// var tableNames []string
+	// db.Table("information_schema.tables").Where("table_schema = ?", dbName).Pluck("table_name", &tableNames)
+
+	// for _, tableName := range tableNames {
+	// 	columns := getTableColumnsWithDetails(db, tableName)
+	// 	tableSchema := TableSchema{Name: tableName, Columns: []ColumnSchema{}}
+	// 	columnsFileds := ""
+	// 	headerFields := ""
+	// 	tableFields := ""
+	// 	formFields := ""
+	// 	editFields := ""
+	// 	firstField := ""
+	// 	isItFirst := 0
+	// 	needsTime := false
+	// 	for _, column := range columns {
+
+	// 		// fmt.Printf("%s ---- %s", column["column_name"].(string), column["column_type"].(string))
+	// 		columnName, ok := column["column_name"].(string)
+	// 		if ok {
+	// 			tableSchema.Columns = append(tableSchema.Columns, ColumnSchema{
+	// 				Name:     columnName,
+	// 				Type:     column["column_type"].(string),
+	// 				Nullable: column["is_nullable"].(string),
+	// 			})
+	// 			if columnName == "id" || columnName == "date_added" || columnName == "date_modified" || columnName == "created_at" || columnName == "updated_at" {
+	// 				continue
+	// 			}
+	// 			columnType := column["column_type"].(string)
+
+	// 			if strings.Contains(column["column_type"].(string), "tinyint") {
+	// 				columnType = "bool"
+	// 			} else if strings.Contains(column["column_type"].(string), "varchar") || strings.Contains(column["column_type"].(string), "text") {
+	// 				columnType = "string"
+	// 			} else if strings.Contains(column["column_type"].(string), "int") {
+	// 				columnType = "int"
+	// 			} else if strings.Contains(column["column_type"].(string), "datetime") || strings.Contains(column["column_type"].(string), "timestamp") {
+	// 				columnType = "*time.Time"
+	// 			} else if strings.Contains(column["column_type"].(string), "decimal") {
+	// 				columnType = "float32"
+	// 			}
+
+	// 			if strings.Contains(column["column_type"].(string), "time") {
+	// 				needsTime = true
+	// 			}
+	// 			if defaultVal, ok := column["column_default"]; ok {
+	// 				if defaultVal != nil {
+	// 					tableSchema.Columns[len(tableSchema.Columns)-1].Default = defaultVal.(string)
+	// 					nameINeed := toCamelCase(columnName)
+	// 					// fmt.Println(strings.Contains(nameINeed, "Id"))
+
+	// 					if strings.Contains(nameINeed, "Id") {
+	// 						nameINeed = strings.ReplaceAll(nameINeed, "Id", "ID")
+	// 					}
+
+	// 					// fmt.Println(defaultVal.(string))
+
+	// 					columnsFileds += fmt.Sprintf("%s %s `gorm:\"column:%s;default:%s\" json:\"%s\"`\n", nameINeed, columnType, columnName, defaultVal.(string), columnName)
+	// 					headerFields += fmt.Sprintf("<th class=\"text-center\">%s</th>\n", capitalizeWords(splitWords(columnName)))
+	// 					tableFields += fmt.Sprintf(`<td>{fmt.Sprintf("%%s",%s.%s)} </td>\n`, tableName, relaceID(toCamelCase(columnName)))
+	// 					if isItFirst == 0 {
+	// 						firstField = relaceID(fmt.Sprintf("%s.%s",tableName, relaceID(toCamelCase(columnName))))
+	// 					}
+	// 					formFields += generateFieldsTypes(column, columnName, defaultVal.(string), column["is_nullable"].(string))
+
+	// 					editFields += generateEditFields(tableName, column, columnName, defaultVal.(string), column["is_nullable"].(string))
+
+	// 				} else {
+	// 					nameINeed := toCamelCase(columnName)
+
+	// 					// if strings.Contains(nameINeed, "Id") {
+	// 					nameINeed = strings.Replace(nameINeed, "Id", "ID", -1)
+	// 					// }
+	// 					tableSchema.Columns[len(tableSchema.Columns)-1].Default = "nil"
+	// 					if isItFirst == 0 {
+	// 						firstField = relaceID(fmt.Sprintf("%s.%s",tableName, relaceID(toCamelCase(columnName))))
+	// 					}
+	// 					columnsFileds += fmt.Sprintf("%s %s `gorm:\"column:%s;default:%s\" json:\"%s\"`\n", nameINeed, columnType, columnName, "", columnName)
+
+	// 					formFields += generateFieldsTypes(column, columnName, "", column["is_nullable"].(string))
+	// 					editFields += generateEditFields(tableName, column, columnName, "", column["is_nullable"].(string))
+
+	// 					headerFields += fmt.Sprintf("<th class=\"text-center\">%s</th>\n", capitalizeWords(splitWords(columnName)))
+	// 					tableFields += fmt.Sprintf(`<td>{fmt.Sprintf("%%s",%s.%s)} </td>\n`, tableName, relaceID(toCamelCase(columnName)))
+
+	// 				}
+	// 			}
+	// 			isItFirst += 1
+	// 		} else {
+	// 			continue
+	// 		}
+
+	// 	}
+
+	// 	generateViewFolders(tableName)
+	// 	generateModelTemplate(tableName, needsTime, columnsFileds)
+	// 	// 	auth.GenerateToken()
+	// 	generateIndexFiles(tableName, headerFields, firstField, tableFields)
+	// 	generateCreateFiles(tableName, formFields)
+	// 	generateEditFiles(tableName, editFields)
+	// 	generateHandlersTemplate(tableName)
+
 	// }
 
-	var tableNames []string
-	db.Table("information_schema.tables").Where("table_schema = ?", dbName).Pluck("table_name", &tableNames)
+	// fmt.Println("Project generated it takes ", time.Since(timeNow))
+}
 
-	for _, tableName := range tableNames {
-		columns := getTableColumnsWithDetails(db, tableName)
-		tableSchema := TableSchema{Name: tableName, Columns: []ColumnSchema{}}
-		columnsFileds := ""
-		headerFields := ""
-		tableFields := ""
-		formFields := ""
-		editFields := ""
-		needsTime := false
-		for _, column := range columns {
-
-			// fmt.Printf("%s ---- %s", column["column_name"].(string), column["column_type"].(string))
-			columnName, ok := column["column_name"].(string)
-			if ok {
-				tableSchema.Columns = append(tableSchema.Columns, ColumnSchema{
-					Name:     columnName,
-					Type:     column["column_type"].(string),
-					Nullable: column["is_nullable"].(string),
-				})
-				if columnName == "id" || columnName == "date_added" || columnName == "date_modified" || columnName == "created_at" || columnName == "updated_at" {
-					continue
-				}
-				columnType := column["column_type"].(string)
-
-				if strings.Contains(column["column_type"].(string), "tinyint") {
-					columnType = "bool"
-				} else if strings.Contains(column["column_type"].(string), "varchar") || strings.Contains(column["column_type"].(string), "text") {
-					columnType = "string"
-				} else if strings.Contains(column["column_type"].(string), "int") {
-					columnType = "int"
-				} else if strings.Contains(column["column_type"].(string), "datetime") || strings.Contains(column["column_type"].(string), "timestamp") {
-					columnType = "*time.Time"
-				} else if strings.Contains(column["column_type"].(string), "decimal") {
-					columnType = "float32"
-				}
-
-				if strings.Contains(column["column_type"].(string), "time") {
-					needsTime = true
-				}
-				if defaultVal, ok := column["column_default"]; ok {
-					if defaultVal != nil {
-						tableSchema.Columns[len(tableSchema.Columns)-1].Default = defaultVal.(string)
-						nameINeed := toCamelCase(columnName)
-						// fmt.Println(strings.Contains(nameINeed, "Id"))
-
-						if strings.Contains(nameINeed, "Id") {
-							nameINeed = strings.ReplaceAll(nameINeed, "Id", "ID")
-						}
-
-						// fmt.Println(defaultVal.(string))
-
-						columnsFileds += fmt.Sprintf("%s %s `gorm:\"column:%s;default:%s\" json:\"%s\"`\n", nameINeed, columnType, columnName, defaultVal.(string), columnName)
-						headerFields += fmt.Sprintf("<th class=\"text-center\">%s</th>\n", capitalizeWords(splitWords(columnName)))
-						tableFields += fmt.Sprintf("<td>{%s.%s}</td>\n", tableName, toCamelCase(columnName))
-
-						formFields += generateFieldsTypes(column, columnName, defaultVal.(string), column["is_nullable"].(string))
-
-						editFields += generateEditFields(tableName, column, columnName, defaultVal.(string), column["is_nullable"].(string))
-
-					} else {
-						nameINeed := toCamelCase(columnName)
-
-						// if strings.Contains(nameINeed, "Id") {
-						nameINeed = strings.Replace(nameINeed, "Id", "ID", -1)
-						// }
-						tableSchema.Columns[len(tableSchema.Columns)-1].Default = "nil"
-
-						columnsFileds += fmt.Sprintf("%s %s `gorm:\"column:%s;default:%s\" json:\"%s\"`\n", nameINeed, columnType, columnName, "", columnName)
-
-						formFields += generateFieldsTypes(column, columnName, "", column["is_nullable"].(string))
-						editFields += generateEditFields(tableName, column, columnName, "", column["is_nullable"].(string))
-
-						headerFields += fmt.Sprintf("<th class=\"text-center\">%s</th>\n", capitalizeWords(splitWords(columnName)))
-						tableFields += fmt.Sprintf("<td>{%s.%s}</td>\n", tableName, toCamelCase(columnName))
-
-					}
-				}
-			} else {
-				continue
-			}
-
-		}
-
-		generateViewFolders(tableName)
-		generateModelTemplate(tableName, needsTime, columnsFileds)
-		auth.GenerateToken()
-		generateIndexFiles(tableName, headerFields)
-		generateCreateFiles(tableName, formFields)
-		generateEditFiles(tableName, editFields)
-		generateHandlersTemplate(tableName)
-
+func relaceID(field string) string {
+	if strings.Contains(field, "Id") {
+		field = strings.ReplaceAll(field, "Id", "ID")
+		return field
 	}
-
-	fmt.Println("Project generated it takes ", time.Since(timeNow))
+	return field
 }
 
 func getTableColumnsWithDetails(db *gorm.DB, tableName string) []map[string]interface{} {
@@ -385,7 +413,7 @@ func generateViewFolders(parent string) {
 	defer e.Close()
 }
 
-func generateIndexFiles(tableName string, tableHeader string) {
+func generateIndexFiles(tableName string, tableHeader string, firstField string, tableFields string) {
 	indexTempl, err := os.ReadFile("./templates/index.tmpl")
 
 	if err != nil {
@@ -403,7 +431,8 @@ func generateIndexFiles(tableName string, tableHeader string) {
 	pluranForm := pluralize.NewClient().Plural(tableName)
 	indexTemplate = strings.ReplaceAll(indexTemplate, "^tableNamePlural^", pluranForm)
 	indexTemplate = strings.ReplaceAll(indexTemplate, "^tableFieldsHeader^", tableHeader)
-	indexTemplate = strings.ReplaceAll(indexTemplate, "^tableFields^", tableName)
+	indexTemplate = strings.ReplaceAll(indexTemplate, "^tableFields^", tableFields)
+	indexTemplate = strings.ReplaceAll(indexTemplate, "^tableNameFirst^", firstField)
 	f, err := os.Create("./views/" + tableName + "/index.templ")
 	if err != nil {
 		fmt.Println(err)

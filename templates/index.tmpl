@@ -2,7 +2,6 @@ package ^tableName^
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"bajscheme/models"
@@ -32,20 +31,20 @@ templ ^CtableName^List(titlePage string,  ^tableNamePlural^ []models.^CtableName
 				<tbody>
 					for _, ^tableName^ := range ^tableNamePlural^ {
 						<tr>
-							<th>{ strconv.Itoa(int(^tableName^.ID)) }</th>
+
                             ^tableFields^
 							<td class="flex justify-center gap-2">
 								<a
  									hx-swap="transition:true"
- 									href={ templ.URL(fmt.Sprintf("/^tableName^/edit/%d", ^tableName^.ID)) }
+ 									href={ templ.URL(fmt.Sprintf("/^tableName^/edit/%d", ^tableNameFirst^)) }
  									class="btn btn-primary p-3 hover:scale-[1.1]"
 								>
 									Edit
 								</a>
 								<button
  									hx-swap="transition:true"
- 									hx-delete={ fmt.Sprintf("/^tableName^/delete/%d", ^tableName^.ID) }
- 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the ^tableName^ with ID #%d?", ^tableName^.ID) }
+ 									hx-delete={ fmt.Sprintf("/^tableName^/delete/%d", ^tableNameFirst^) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the ^tableName^ with ID #%d?", ^tableNameFirst^) }
  									hx-target="body"
  									class="btn btn-error p-3 hover:scale-[1.1]"
 								>

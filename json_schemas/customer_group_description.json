@@ -1,0 +1,23 @@
+{
+  "name": "customer_group_description",
+  "columns": [
+    {
+      "name": "group_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "language",
+      "type": "varchar(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "title",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

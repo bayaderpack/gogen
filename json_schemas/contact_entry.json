@@ -1,0 +1,77 @@
+{
+  "name": "contact_entry",
+  "columns": [
+    {
+      "name": "entry_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "customer_id",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "name",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "country_code",
+      "type": "varchar(4)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "mobile",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "email",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "company",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "content",
+      "type": "mediumtext",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "know",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "ip",
+      "type": "varchar(32)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "viewed",
+      "type": "tinyint(1) unsigned",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

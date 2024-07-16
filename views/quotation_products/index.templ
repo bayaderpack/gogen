@@ -1,0 +1,113 @@
+package quotation_products
+
+import (
+	"fmt"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ QuotationProductsList(titlePage string,  quotation_products []models.QuotationProducts) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/quotation_products/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Quotation Product Id</th>
+<th class="text-center">Product Id</th>
+<th class="text-center">Quotation Id</th>
+<th class="text-center">Title</th>
+<th class="text-center">Length</th>
+<th class="text-center">Width</th>
+<th class="text-center">Height</th>
+<th class="text-center">Quantity</th>
+<th class="text-center">Die Value</th>
+<th class="text-center">Die Cost</th>
+<th class="text-center">Magnetic Value</th>
+<th class="text-center">Magnetic Cost</th>
+<th class="text-center">Filling</th>
+<th class="text-center">Miscellaneous</th>
+<th class="text-center">Miscellaneous Notice</th>
+<th class="text-center">Rope Value</th>
+<th class="text-center">Rope Cost</th>
+<th class="text-center">Designer Notice</th>
+<th class="text-center">Designer Files</th>
+<th class="text-center">Comment</th>
+<th class="text-center">Operational</th>
+<th class="text-center">Revenue</th>
+<th class="text-center">Discount</th>
+<th class="text-center">Discount Type</th>
+<th class="text-center">Revenue Type</th>
+<th class="text-center">Unit Price Commission</th>
+<th class="text-center">Commission Salesman</th>
+<th class="text-center">Unit Price</th>
+<th class="text-center">Gross</th>
+<th class="text-center">Net</th>
+<th class="text-center">Sort Order</th>
+<th class="text-center">Version</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(quotation_products) != 0 {
+				<tbody>
+					for _, quotation_products := range quotation_products {
+						<tr>
+
+                            <td>{fmt.Sprintf("%s",quotation_products.QuotationProductID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.ProductID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.QuotationID)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Title)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Length)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Width)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Height)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Quantity)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.DieValue)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.DieCost)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.MagneticValue)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.MagneticCost)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Filling)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Miscellaneous)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.MiscellaneousNotice)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.RopeValue)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.RopeCost)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.DesignerNotice)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.DesignerFiles)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Comment)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Operational)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Revenue)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Discount)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.DiscountType)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.RevenueType)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.UnitPriceCommission)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.CommissionSalesman)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.UnitPrice)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Gross)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Net)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.SortOrder)} </td>\n<td>{fmt.Sprintf("%s",quotation_products.Version)} </td>\n
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/quotation_products/edit/%d", quotation_products.QuotationProductID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/quotation_products/delete/%d", quotation_products.QuotationProductID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the quotation_products with ID #%d?", quotation_products.QuotationProductID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							quotation_products is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ QuotationProductsIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "name": "sample_assignee",
+  "columns": [
+    {
+      "name": "sample_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "admin_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "product_description",
+  "columns": [
+    {
+      "name": "product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "language",
+      "type": "varchar(2)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "title",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "description",
+      "type": "mediumtext",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "meta_title",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "meta_description",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "meta_keywords",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "media_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

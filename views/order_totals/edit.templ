@@ -1,0 +1,82 @@
+package order_totals
+
+import (
+	"strconv"
+
+	"bajscheme/models"
+)
+
+templ UpdateOrderTotals(order_totals models.OrderTotals, tz string) {
+	<h1 class="text-2xl font-bold text-center mb-8">
+		Update Order Totals #{ strconv.Itoa(int(order_totals.ID)) }
+	</h1>
+	<section class="max-w-2xl w-4/5 h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<form class="rounded-xl flex flex-col gap-4 w-11/12 p-4 mx-auto" action="" method="post" hx-swap="transition:true">
+        <label class="flex flex-col justify-start gap-2">
+		Order Total Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="order_total_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={strconv.Itoa(int(order_totals.OrderTotalID))}
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Order Id:
+		<input
+			class="input input-bordered input-primary"
+			type="number"
+			name="order_id"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={strconv.Itoa(int(order_totals.OrderID))}
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Text:
+		<input
+			class="input input-bordered input-primary"
+			type="text"
+			name="text"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={order_totals.Text}
+		/>
+	</label><label class="flex flex-col justify-start gap-2">
+		Code:
+		<input
+			class="input input-bordered input-primary"
+			type="text"
+			name="code"
+			required
+			autofocus
+			minlength="3"
+			maxlength="64"
+			value={order_totals.Code}
+		/>
+	</label><div class="form-control">
+	  <label class="label cursor-pointer">
+		<span class="label-text">Sort Order</span> 
+		<input type="checkbox" name="sort_order" class="checkbox" value={strconv.FormatBool(order_totals.SortOrder)} required />
+	  </label>
+	</div>
+		
+			<footer class="card-actions flex justify-between">
+				<div class="flex gap-4">
+					<button class="btn btn-primary p-4 hover:scale-[1.1]">
+						Update
+					</button>
+					<a href="/order_totals/list" class="btn btn-neutral p-4 hover:scale-[1.1]">
+						Cancel
+					</a>
+				</div>
+			</footer>
+		</form>
+	</section>
+}

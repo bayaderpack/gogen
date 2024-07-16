@@ -1,0 +1,83 @@
+{
+  "name": "history",
+  "columns": [
+    {
+      "name": "history_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "status_id",
+      "type": "int(2) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "order_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "quotation_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "sample_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "job_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "customer_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "admin_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "comment",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "notified",
+      "type": "text",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "show_customer",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "uploads",
+      "type": "text",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

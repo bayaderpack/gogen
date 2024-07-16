@@ -1,0 +1,83 @@
+{
+  "name": "coupon",
+  "columns": [
+    {
+      "name": "coupon_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "title",
+      "type": "varchar(128)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "code",
+      "type": "varchar(20)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "type",
+      "type": "enum('P','F')",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "amount",
+      "type": "decimal(8,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "min_total",
+      "type": "decimal(8,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    },
+    {
+      "name": "date_start",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    },
+    {
+      "name": "date_end",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    },
+    {
+      "name": "total_limit",
+      "type": "int(4)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "customer_limit",
+      "type": "int(4)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "status",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    },
+    {
+      "name": "date_modified",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

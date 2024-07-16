@@ -1,0 +1,101 @@
+{
+  "name": "quotation_invoice",
+  "columns": [
+    {
+      "name": "invoice_id",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quotation_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "discount",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "final",
+      "type": "decimal(15,4)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "upfront_payment",
+      "type": "int(3)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quantity_diff",
+      "type": "int(3)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "delivery_days",
+      "type": "int(3)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "valid_days",
+      "type": "int(3)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "admin_comment",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "customer_comment",
+      "type": "text",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "customer_visible",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "customer_totals",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "created_by",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "modified_by",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    },
+    {
+      "name": "date_modified",
+      "type": "datetime",
+      "nullable": "YES",
+      "default": "NULL"
+    }
+  ]
+}

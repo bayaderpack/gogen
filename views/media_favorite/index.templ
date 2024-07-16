@@ -1,0 +1,83 @@
+package media_favorite
+
+import (
+	"fmt"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ MediaFavoriteList(titlePage string,  media_favorites []models.MediaFavorite) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/media_favorite/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Media Id</th>
+<th class="text-center">Customer Id</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(media_favorites) != 0 {
+				<tbody>
+					for _, media_favorite := range media_favorites {
+						<tr>
+
+                            <td>{fmt.Sprintf("%s",media_favorite.MediaID)} </td>\n<td>{fmt.Sprintf("%s",media_favorite.CustomerID)} </td>\n
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/media_favorite/edit/%d", media_favorite.MediaID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/media_favorite/delete/%d", media_favorite.MediaID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the media_favorite with ID #%d?", media_favorite.MediaID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							media_favorite is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ MediaFavoriteIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

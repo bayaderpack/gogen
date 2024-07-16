@@ -1,0 +1,101 @@
+{
+  "name": "admin",
+  "columns": [
+    {
+      "name": "admin_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "kid",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "username",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "firstname",
+      "type": "varchar(32)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "lastname",
+      "type": "varchar(32)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "email",
+      "type": "varchar(96)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "country_code",
+      "type": "int(4)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "mobile",
+      "type": "int(10)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "password",
+      "type": "varchar(64)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "ip",
+      "type": "varchar(40)",
+      "nullable": "NO",
+      "default": "'0'"
+    },
+    {
+      "name": "lng",
+      "type": "varchar(3)",
+      "nullable": "NO",
+      "default": "'ar'"
+    },
+    {
+      "name": "status",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "reset_token",
+      "type": "varchar(255)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "otp",
+      "type": "int(4)",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "reset_expires",
+      "type": "datetime",
+      "nullable": "YES",
+      "default": "NULL"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

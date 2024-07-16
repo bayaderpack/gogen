@@ -1,0 +1,102 @@
+package product
+
+import (
+	"fmt"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ ProductList(titlePage string,  products []models.Product) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/product/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Product Id</th>
+<th class="text-center">Sku</th>
+<th class="text-center">Item Code</th>
+<th class="text-center">Quantity</th>
+<th class="text-center">Per Carton</th>
+<th class="text-center">Price</th>
+<th class="text-center">Points</th>
+<th class="text-center">Tax Id</th>
+<th class="text-center">Weight</th>
+<th class="text-center">Subtract</th>
+<th class="text-center">Minimum</th>
+<th class="text-center">Maximum</th>
+<th class="text-center">Fixed Range</th>
+<th class="text-center">Available At</th>
+<th class="text-center">Status</th>
+<th class="text-center">Sold</th>
+<th class="text-center">Slug</th>
+<th class="text-center">Recyclable</th>
+<th class="text-center">Sustainable</th>
+<th class="text-center">Compostable</th>
+<th class="text-center">Dae</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(products) != 0 {
+				<tbody>
+					for _, product := range products {
+						<tr>
+
+                            <td>{fmt.Sprintf("%s",product.ProductID)} </td>\n<td>{fmt.Sprintf("%s",product.Sku)} </td>\n<td>{fmt.Sprintf("%s",product.ItemCode)} </td>\n<td>{fmt.Sprintf("%s",product.Quantity)} </td>\n<td>{fmt.Sprintf("%s",product.PerCarton)} </td>\n<td>{fmt.Sprintf("%s",product.Price)} </td>\n<td>{fmt.Sprintf("%s",product.Points)} </td>\n<td>{fmt.Sprintf("%s",product.TaxID)} </td>\n<td>{fmt.Sprintf("%s",product.Weight)} </td>\n<td>{fmt.Sprintf("%s",product.Subtract)} </td>\n<td>{fmt.Sprintf("%s",product.Minimum)} </td>\n<td>{fmt.Sprintf("%s",product.Maximum)} </td>\n<td>{fmt.Sprintf("%s",product.FixedRange)} </td>\n<td>{fmt.Sprintf("%s",product.AvailableAt)} </td>\n<td>{fmt.Sprintf("%s",product.Status)} </td>\n<td>{fmt.Sprintf("%s",product.Sold)} </td>\n<td>{fmt.Sprintf("%s",product.Slug)} </td>\n<td>{fmt.Sprintf("%s",product.Recyclable)} </td>\n<td>{fmt.Sprintf("%s",product.Sustainable)} </td>\n<td>{fmt.Sprintf("%s",product.Compostable)} </td>\n<td>{fmt.Sprintf("%s",product.Dae)} </td>\n
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/product/edit/%d", product.ProductID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/product/delete/%d", product.ProductID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the product with ID #%d?", product.ProductID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							product is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ ProductIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}

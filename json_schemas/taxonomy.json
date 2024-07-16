@@ -1,0 +1,71 @@
+{
+  "name": "taxonomy",
+  "columns": [
+    {
+      "name": "taxonomy_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "parent_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "media_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "seo_media_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "banner_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "type",
+      "type": "enum('product_category','product_tag','product_filter','product_brand','product_suitability','product_attribute','media_tag','media_category')",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "slug",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "filterable",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "sort_order",
+      "type": "int(2)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "status",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

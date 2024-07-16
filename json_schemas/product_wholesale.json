@@ -1,0 +1,35 @@
+{
+  "name": "product_wholesale",
+  "columns": [
+    {
+      "name": "id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "product_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "group_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "quantity",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "price",
+      "type": "decimal(15,2)",
+      "nullable": "NO",
+      "default": "0.00"
+    }
+  ]
+}

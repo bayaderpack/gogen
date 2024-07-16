@@ -1,0 +1,41 @@
+{
+  "name": "options",
+  "columns": [
+    {
+      "name": "option_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "type",
+      "type": "varchar(32)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "status",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "1"
+    },
+    {
+      "name": "sort_order",
+      "type": "int(3)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "filterable",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

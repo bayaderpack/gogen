@@ -1,0 +1,35 @@
+{
+  "name": "quotation",
+  "columns": [
+    {
+      "name": "quotation_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "customer_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "number",
+      "type": "varchar(255)",
+      "nullable": "NO",
+      "default": "'0'"
+    },
+    {
+      "name": "viewed",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0"
+    },
+    {
+      "name": "date_added",
+      "type": "datetime",
+      "nullable": "NO",
+      "default": "current_timestamp()"
+    }
+  ]
+}

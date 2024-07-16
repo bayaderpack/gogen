@@ -1,0 +1,17 @@
+{
+  "name": "taxonomy_relationship",
+  "columns": [
+    {
+      "name": "object_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    },
+    {
+      "name": "taxonomy_id",
+      "type": "int(11) unsigned",
+      "nullable": "NO",
+      "default": "nil"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+package payment_method
+
+import (
+	"fmt"
+	"strings"
+
+	"bajscheme/models"
+	"bajscheme/views/layout"
+)
+
+templ PaymentMethodList(titlePage string,  payment_methods []models.PaymentMethod) {
+	<div class="flex justify-between max-w-2xl mx-auto border-b border-b-slate-600 mb-8 pb-2">
+		<h1 class="text-2xl font-bold text-center">
+			{ strings.Trim(titlePage, "| ") }
+		</h1>
+		<a hx-swap="transition:true" class="btn btn-info p-4 hover:scale-[1.1]" href="/payment_method/create">
+			New
+		</a>
+	</div>
+	<section class="overflow-auto max-w-2xl max-h-96 mx-auto bg-slate-600 rounded-lg shadow-xl">
+		<table class="table table-zebra">
+			<!-- head -->
+			<thead class="bg-slate-700">
+				<tr>
+					<th></th>
+					<th class="text-center">Payment Id</th>
+<th class="text-center">Title</th>
+<th class="text-center">Status</th>
+<th class="text-center">Is Primary</th>
+<th class="text-center">Configuration</th>
+
+					<th class="text-center">Options</th>
+				</tr>
+			</thead>
+			if len(payment_methods) != 0 {
+				<tbody>
+					for _, payment_method := range payment_methods {
+						<tr>
+
+                            <td>{fmt.Sprintf("%s",payment_method.PaymentID)} </td>\n<td>{fmt.Sprintf("%s",payment_method.Title)} </td>\n<td>{fmt.Sprintf("%s",payment_method.Status)} </td>\n<td>{fmt.Sprintf("%s",payment_method.IsPrimary)} </td>\n<td>{fmt.Sprintf("%s",payment_method.Configuration)} </td>\n
+							<td class="flex justify-center gap-2">
+								<a
+ 									hx-swap="transition:true"
+ 									href={ templ.URL(fmt.Sprintf("/payment_method/edit/%d", payment_method.PaymentID)) }
+ 									class="btn btn-primary p-3 hover:scale-[1.1]"
+								>
+									Edit
+								</a>
+								<button
+ 									hx-swap="transition:true"
+ 									hx-delete={ fmt.Sprintf("/payment_method/delete/%d", payment_method.PaymentID) }
+ 									hx-confirm={ fmt.Sprintf("Are you sure you want to delete the payment_method with ID #%d?", payment_method.PaymentID) }
+ 									hx-target="body"
+ 									class="btn btn-error p-3 hover:scale-[1.1]"
+								>
+									Delete
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			} else {
+				<tbody>
+					<tr>
+						<td colspan="4" align="center">
+							payment_method is empty
+						</td>
+					</tr>
+				</tbody>
+			}
+		</table>
+	</section>
+}
+
+templ PaymentMethodIndex(
+    title,
+    username string,
+    fromProtected bool,
+    isError bool,
+	errMsgs, sucMsgs []string,
+    cmp templ.Component,
+    ) {
+	@layout.Base(title, username, fromProtected, isError, errMsgs, sucMsgs) {
+		@cmp
+	}
+}
